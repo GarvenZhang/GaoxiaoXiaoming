@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.AssignmentMember" table="ASSIGNMENTMEMBER">
+        <id name="id" type="java.lang.Long" access="field">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="exerciser" class="com.xiaoming.domain.Member" fetch="join">
+            <column name="EXERCISER" />
+        </many-to-one>
+        <property name="finishTime" type="java.util.Date">
+            <column name="FINISHTIME" />
+        </property>
+        <property name="isFinished" type="java.lang.Boolean">
+            <column name="ISFINISHED" default="false" />
+        </property>
+
+        <many-to-one name="assignment" class="com.xiaoming.domain.Assignment" cascade="save-update" fetch="join">
+            <column name="ASSIGNMENT" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

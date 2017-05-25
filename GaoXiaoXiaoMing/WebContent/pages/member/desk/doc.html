@@ -1,0 +1,182 @@
+    <link rel="stylesheet" href="assets/js/tree/treetable/stylesheets/jquery.treetable.css">
+<link rel="stylesheet" href="assets/js/tree/treetable/stylesheets/jquery.treetable.theme.default.css">
+<link rel="stylesheet" href="assets/js/dropZone/downloads/css/dropzone.css">
+
+
+<!--TITLE -->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="fontawesome-folder-close"></span>
+                <span>组织文档</span>
+            </h2>
+        </div>
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ TITLE -->
+        
+<div class="row">
+    <div class="col-sm-12">
+        <div class="nest">
+            <div class="body-nest" id="tabletree">
+
+                <table id="example-advanced" class="table-striped footable-res footable metro-blue">
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="!doc.allDocs.length">
+                            <td colspan="3" style="text-align: center">暂无数据</td>
+                        </tr>
+                        <tr ng-repeat="allDocs in doc.allDocs">
+                            <td>
+                                <span  class='file' ng-bind="allDocs.name"></span>
+                            </td>
+                            <td ng-bind="allDocs.fileType"></td>
+                            <td>
+                                <a href="GaoXiaoXiaoMing/document_download.action?id={{allDocs.id}}" target="_blank" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a target="_blank" class="entypo-trash deleteBtn" title="删除" ng-click="doc.deleteDoc(allDocs.id)"></a>&nbsp;&nbsp;&nbsp;
+                                <a href="" class="entypo-tag" title="修改" data-toggle="modal" ng-click="doc.showModal(allDocs.id)"></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="body-nest" id="DropZone">
+            <form action="" class="dropzone"  id="my-dropzone" enctype="multipart/form-data"></form>
+            <button class="btn btn-info" id="submit-all">上传所有文件</button>
+            <span style="font-size: 16px;color: red;display: inline-block;padding-top: 20px;">(文件类型只能是word,excel,txt,ppt，文件大小不能超过20M)</span>
+        </div>
+    </div>
+</div>
+    <!--模拟点击-->
+<button id="showBtn" type="button" ng-click="doc.showBtn=false" ng-hide="true"></button>
+    <!--修改信息 开始-->
+<div class="modal fade modification" id="modification">
+        <div class="modal-dialog modal-sm" style="width: 50%;margin-top: 10%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="close" aria-label="Close"><span aria-hidden="true" ng-click="doc.documents={}">&times;</span></button>
+                    <h4 class="modal-title entypo-users">修改</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="staff-list-wrap">
+                        <div class="skin skin-flat">
+                            <form id="moDocForm"  name="moDocForm" class="form-horizontal bucket-form">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="">文件名：</label>
+                                    <div class="col-sm-6">
+                                        <input name="docName" ng-model="doc.documents.docName" id="docNames" class="form-control" type="text" required>
+                                        <div class="alert help-block alert-info">
+                                           提示：请填写需要修改的文件名
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-hide="true">
+                                    <label class="col-sm-3 control-label" for="">id：</label>
+                                    <div class="col-sm-6">
+                                        <input class="form-control allId" id="allId" type="text">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" >
+                    <button type="button" class="btn btn-primary"  ng-click="doc.makeSureModificaiton();doc.documents={};doc.makeModalDispear()">确定</button>
+                    <button id="delBtn" class="btn btn-primary"  data-dismiss="modal" type="button" ng-click="doc.documents={}">取消</button>
+                    <button ng-hide="true" id="helpBtn" class="btn btn-primary"  data-dismiss="modal" type="button">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--修改信息 结束-->
+
+    <script type="text/javascript" src="assets/js/toggle_close.js"></script>
+<script src="assets/js/tree/treetable/vendor/jquery-ui.js"></script>
+<script src="assets/js/tree/treetable/javascripts/src/jquery.treetable.js"></script>
+<script src="assets/js/dropZone/lib/dropzone.js"></script>
+
+
+
+<script type="text/javascript">
+//$(function(){
+//
+//    var myDropzone = new Dropzone("#my-dropzone", {
+//
+//        method: "post",
+//        url:"/GaoXiaoXiaoMing/document_add.action",
+//        // Prevents Dropzone from uploading dropped files immediately
+//        autoProcessQueue: false,
+//        //允许 Dropzone 一次提交多个文件
+////        uploadMultiple:true,
+//        init: function() {
+//            var submitButton = document.querySelector("#submit-all");
+//            myDropzone = this; // closure
+//
+//            submitButton.addEventListener("click", function() {
+//                myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+//            });
+//
+//            // You might want to show the submit button only when
+//            // files are dropped here:
+//            this.on("addedfile", function() {
+//                // Show submit button here and/or inform user to click it.
+//            });
+//            this.on("success", function(file,status) {
+////                console.log("File " + file.name + "uploaded");
+//            });
+//            this.on("sending", function(file, xhr, formData) {
+//                // Will send the filesize along with the file as POST data.
+//                formData.append('floderId',1);
+//                formData.append('_public',1);
+//            });
+//
+//        },
+//
+//        dictDefaultMessage: "将文件拖拽至此（或点击）",
+//
+//        addRemoveLinks: true,
+//
+////        dictRemoveFile: "删除"
+//    });
+//
+//    //Dropzone.options.myDropzone = ;
+//
+//    $("#example-advanced").treetable({
+//        expandable: true
+//    });
+//
+//    $('.entypo-share').popover({
+//        template: '<div class="popover" role="tooltip">'+
+//                    '<h3 class="popover-title"></h3>'+
+//                    '<div class="popover-content"></div>'+
+//                  '</div>',
+//        html: true,
+//        content: '<img src="" style="height:150px;width:150px;">',
+//        placement: "left",
+//        trigger: 'hover'
+//    });
+//
+//
+//});
+
+
+</script>

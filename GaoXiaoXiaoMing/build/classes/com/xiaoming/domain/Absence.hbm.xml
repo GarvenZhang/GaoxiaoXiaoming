@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-21 11:47:26 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.Absence" table="ABSENCE">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="content" type="java.lang.String">
+            <column name="CONTENT" />
+        </property>
+        <many-to-one name="member" class="com.xiaoming.domain.Member" fetch="join">
+            <column name="MEMBER" />
+        </many-to-one>
+        <property name="absenceTime" type="java.util.Date">
+            <column name="ABSENCETIME" />
+        </property>
+        <property name="endTime" type="java.util.Date">
+        	<column name="ENDTIME" />
+        </property>
+        <property name="createTime" type="java.util.Date">
+            <column name="CREATETIME" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+        	<column name="UPDATETIME" />
+        </property>
+        <set name="absenceApply" table="ABSENCEAPPLY" cascade="all" inverse="true" lazy="true">
+            <key>
+                <column name="ABSENCE" />
+            </key>
+            <one-to-many class="com.xiaoming.domain.AbsenceApply" />
+        </set>
+    </class>
+</hibernate-mapping>

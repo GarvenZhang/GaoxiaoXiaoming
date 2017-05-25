@@ -1,0 +1,12 @@
+.nest .title-alt{
+    height: 0;
+    border: 0;
+}
+/*表格*/
+.footable > tbody > tr > td{
+    padding: 10px;
+}
+/*时间*/
+#flip-scroll .table-center{
+    font-size: 14px;
+}

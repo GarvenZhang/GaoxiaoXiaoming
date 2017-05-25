@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Absence</title>
+<script type="text/javascript" src="/xiaoming/resources/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/xiaoming/resources/js/jQuery.json.js"></script>
+</head>
+<body>
+<!-- 測試發送請假用的 -->
+<table id="save_table">
+	<tr>
+		<td>请假内容：</td>
+		<td><input type="text" id="save_content"></td>
+	</tr>
+	<tr id="save_id_row" >
+		<td>被请假者的id</td>
+		<td><input type="text" name="save_id"></td>
+	</tr>
+</table>
+<input type="button" value="添加" id="add_id_item">
+<input type="button" value="发送" id="save_btn">
+<hr>
+
+<!-- 測試請求請假列表 -->
+<div id="test_list">
+<table>
+	<tr>
+		<td><input type="button" value="發送的請假" id="list_published"></td>
+		<td><input type="button" value="收到的請假" id="list_received"></td>
+	</tr>
+</table>
+</div>
+
+<!-- 测试处理请假请求 -->
+<table>
+	<tr>
+		<td>请求的id</td>
+		<td><input type="text" id="apply_id"></td>
+		<td><input type="button" value="同意" id="agree"></td>
+		<td><input type="button" value="拒绝" id="refuse"></td>
+	</tr>
+</table>
+<script type="text/javascript">
+
+var add_item = function(){
+	document.getElementById("save_table").appendChild(document.getElementById("save_id_item"));
+}
+
+
+
+$("#save_btn").click(function(){
+	var receivers = [];
+	$("input[name='save_id']").each(function(i,o){
+			var map={
+				id:$(o).val()
+					}
+			receivers[i] = map;
+		})
+	$.ajax({
+		type:"post",
+		url:"/xiaoming/org_user/absence_save.action",
+		contentType: "application/json; charset=utf-8",
+		data:$.toJSON(
+				{
+					"content":$("#save_content").val(),
+					"receivers":receivers,
+					"absenceTime":"2016-08-09 23:41"
+				}
+			),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		})
+	});
+
+$("#list_published").click(function(){
+	$.ajax({
+		type:"post",
+		url:"/xiaoming/org_user/absence_list.action",
+		contentType: "application/json; charset=utf-8",
+		data:$.toJSON(
+				{
+					"pageSize":5,
+					"pageNum":1,
+					"type":"published"
+				}
+			),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#test_list").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		})
+	});
+
+$("#list_received").click(function(){
+	$.ajax({
+		type:"post",
+		url:"/xiaoming/org_user/absence_list.action",
+		contentType: "application/json; charset=utf-8",
+		data:$.toJSON(
+				{
+					"pageSize":5,
+					"pageNum":1,
+					"type":"received"
+				}
+			),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#test_list").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		})
+	});
+
+$("#agree").click(function(){
+	$.ajax({
+		type:"post",
+		url:"/xiaoming/org_user/absence_handle.action",
+		contentType: "application/json; charset=utf-8",
+		data:$.toJSON(
+				{
+					"id":$("#apply_id").val(),
+					"agree":true
+				}
+			),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#test_list").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		})
+	});
+
+$("#refuse").click(function(){
+	$.ajax({
+		type:"post",
+		url:"/xiaoming/org_user/absence_handle.action",
+		contentType: "application/json; charset=utf-8",
+		data:$.toJSON(
+				{
+					"id":$("#apply_id").val(),
+					"agree":false
+				}
+			),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#test_list").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		})
+	});
+</script>
+</body>
+</html>

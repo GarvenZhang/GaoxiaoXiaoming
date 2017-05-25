@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/xiaoming/resources/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/xiaoming/resources/js/jQuery.json.js"></script>
+</head>
+<body>
+<input type="button" value="机构详细信息" id="info_btn">
+
+<script type="text/javascript">
+$("#info_btn").click(function(){
+	$.ajax({
+		type:"post",
+		url:"/xiaoming/org_user/organization_info.action",
+		contentType: "application/json; charset=utf-8",
+		data:$.toJSON(
+				{}
+			),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		})
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-17 15:15:29 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.MaterialLendLogChild" table="MATERIALLENDLOGCHILD">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="revertTime" type="java.util.Date">
+            <column name="REVERTTIME" />
+        </property>
+        <property name="count" type="java.lang.Integer">
+            <column name="COUNT" />
+        </property>
+        <many-to-one name="fatherLog" class="com.xiaoming.domain.MaterialLendLog" fetch="join">
+            <column name="FATHERLOG" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

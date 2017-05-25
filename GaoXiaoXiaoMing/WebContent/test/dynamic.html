@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/xiaoming/resources/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/xiaoming/resources/js/jQuery.json.js"></script>
+</head>
+<body>
+<table>
+	<tr>
+		<td>项目id：</td>
+		<td><input type="text" id="projectId"></td>
+	</tr>
+	<tr>
+		<td><input type="button" value="项目动态" id="project"></td>
+		<td><input type="button" value="个人动态" id="current"></td>
+	</tr>
+	
+</table>
+
+<div id="result"></div>
+<script type="text/javascript">
+$("#project").click(function(){
+	$.ajax({
+		type:"post",
+		url:"/xiaoming/org_user/dynamicState_list.action",
+		contentType: "application/json; charset=utf-8",
+		data:$.toJSON(
+				{
+					"projectId":$("#projectId").val()
+				}
+			),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		})
+	});
+
+$("#current").click(function(){
+	$.ajax({
+		type:"post",
+		url:"/xiaoming/org_user/dynamicState_list.action",
+		contentType: "application/json; charset=utf-8",
+		data:$.toJSON(
+				{
+				}
+			),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		})
+	});
+</script>
+</body>
+</html>

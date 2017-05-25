@@ -1,0 +1,418 @@
+<!-- 模板组件中的css -->
+<link href="assets/js/footable/css/footable.core.css?v=2-0-1" rel="stylesheet" type="text/css">
+<link href="assets/js/footable/css/footable.standalone.css" rel="stylesheet" type="text/css">
+<link href="assets/js/footable/css/footable-demos.css" rel="stylesheet" type="text/css">
+<!-- 本页面对应的css -->
+<link rel="stylesheet" href="assets/css/myApp/admin/materials.css"/>
+
+<!-- 头条开始 -->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <i class="icon-window"></i>
+                <span>物资管理</span>
+            </h2>
+
+        </div>
+        <div class="col-lg-7">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span>
+                    欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="devider-vertical visible-lg"></div>
+        </div>
+    </div>
+</div>
+<!-- 头条结束 -->
+<!-- 物资管理开始 -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="nest" id="tabClose">
+            <div class="body-nest" id="tab">
+                <ul  class="nav nav-tabs" role="tablist">
+                    <li ng-click="materials.inpBtn_materialForm=true;materials.materialsBtn=true;materials.$submitted=false;materials.materialsLendData={};" role="presentation" class="active"><a href="/#materials-list" aria-controls="materials-list" role="tab" data-toggle="tab">物资表</a></li>
+                    <li ng-click="materials.inpBtn_materialForm=false;materials.materialsBtn=false;materials.getAllMaterials(materials.materialsList[1])" role="presentation"><a href="/#materials-lend" aria-controls="materials-lend" role="tab" data-toggle="tab">物资出借</a></li>
+                    <li ng-click="materials.inpBtn_materialForm=false;materials.materialsBtn=false;materials.$submitted=false;materials.materialsLendData={};" role="presentation"><a href="/#lend-record" aria-controls="lend-record" role="tab" data-toggle="tab">出借记录</a></li>
+                    <input ng-click="addMaterialPage=true;materials.newMaterialsForm={name:false,totalCount:false,storageLocation:false};materials.newMaterials={materials:[{}]};" ng-show="materials.materialsBtn&&materials.inpBtn_materialForm" type="button" class="btn btn-info" value="添加物资" style="float: right;margin-left: 20px;">
+                    <input ng-click="materials.moreAdd()" ng-show="addMaterialPage&&materials.inpBtn_materialForm" type="button" class="btn btn-info" value="批量添加" style="float: right;margin-left: 20px;">
+                    <input ng-click="materials.corMaterials(materials.materialsList[0])" ng-show="(!materials.corSuccess&&!addMaterialPage&&(materials.material_name||materials.material_totalCount||materials.material_storageLocation))&&materials.inpBtn_materialForm
+                            ||(materials.material_name||materials.material_totalCount||materials.material_storageLocation)&&materials.inpBtn_materialForm?true:null"
+                           type="button" class="btn btn-default" value="修改物资" style="float: right;margin-left: 20px;">
+                    <input ng-click="materials.checkForm(materials.newMaterials.materials)?materials.addMaterials(materials.newMaterials.materials):null" ng-show="addMaterialPage&&materials.inpBtn_materialForm" type="button" class="btn btn-default" value="确认添加" style="float: right;margin-left: 20px;">
+                    <input ng-click="addMaterialPage=false;" ng-show="addMaterialPage&&materials.inpBtn_materialForm" type="button" class="btn btn-primary" value="返回物资表" style="float: right; background-color:#ccddec;">
+                </ul>
+                <div class="tab-content">
+                    <!-- 物资表开始 -->
+                    <div role="tabpanel" class="tab-pane active" id="materials-list">
+                        <!-- 物资展示&&修改物资开始 -->
+                        <table ng-show="!addMaterialPage" class="table-striped footable-res footable metro-blue" data-page-size="10">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        名称
+                                    </th>
+                                    <th>
+                                        数量
+                                    </th>
+                                    <th>
+                                        存放地点
+                                    </th>
+                                    <th>
+                                        状态
+                                    </th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody >
+                                <tr  ng-repeat="material in materials.materialsList[0]">
+                                    <td >
+                                        <input ng-change="materials.material_name=true;" style="color: #888;border: none; background-color: transparent;" ng-model="material.name" type="text">
+                                    </td>
+                                    <td >
+                                        <input ng-change="materials.material_totalCount=true" style="color: #888;border: none; background-color: transparent;" type="text" ng-model="material.totalCount">
+                                    </td>
+                                    <td >
+                                        <input ng-change="materials.material_storageLocation=true" style="color: #888;border: none; background-color: transparent;" type="text" ng-model="material.storageLocation">
+
+                                    </td>
+                                    <td>
+                                        <form class="form-horizontal" role="form" >
+                                            <div class="form-group" style="margin-bottom: 0;">
+                                                <div class="col-sm-4 ui-select ">
+                                                    <select disabled style="cursor:default"  ng-model="material.state" id="user_time_zone" class="form-control  situ">
+                                                        <option value="1">有出借</option>
+                                                        <option value="0" selected="selected">没有出借</option>
+                                                        <option value="3">预期未归还</option>
+                                                    </select>
+                                                </div>
+                                                <div ng-click="materials.delMaterial(material.id)" class="delCross" >
+                                                    <span class="icon icon-cross" ></span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <set-page conf="materials.pageConfig"></set-page>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <p ng-show="materials.corSuccess&&!(materials.material_name||materials.material_totalCount||materials.material_storageLocation)" id="successTip_corMaterialForm"  style="text-align:right;margin-top: 20px;">
+                            <span class="fontawesome-ok"></span> <strong>修改成功</strong>
+                        </p>
+                        <p ng-show="materials.corFail&&!(materials.material_name||materials.material_totalCount||materials.material_storageLocation)" id="failTip_corMaterialForm"  style="text-align:right;margin-top: 20px;">
+                            <span class="fontawesome-warning-sign"></span> <span>网络繁忙，请重新点击 <strong>修改物资</strong> 按钮</span>
+                        </p>
+                        <!-- 物资展示&&修改物资结束 -->
+                        <!-- 添加物资开始 -->
+                        <table ng-show="addMaterialPage" class="table-striped footable-res footable metro-blue" data-page-size="10">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        名称 <span ng-show="materials.newMaterialsForm.name" style="color: red;">(含有未填的表格项)</span>
+                                    </th>
+                                    <th>
+                                        数量 <span ng-show="materials.newMaterialsForm.totalCount" style="color: red;">(含有未填的表格项)</span>
+                                    </th>
+                                    <th>
+                                        存放地点 <span ng-show="materials.newMaterialsForm.storageLocation" style="color: red;">(含有未填的表格项)</span>
+                                    </th>
+                                    <th>
+                                        操作
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="material in materials.newMaterials.materials">
+                                    <td >
+                                        <input  style="color: #888;border: none; background-color: transparent;" ng-model="material.name" type="text">
+                                    </td>
+                                    <td >
+                                        <input style="color: #888;border: none; background-color: transparent;" type="text" ng-model="material.totalCount">
+                                        <!--<div class="inpNum_cloud"></div>-->
+                                    </td>
+                                    <td >
+                                        <input style="color: #888;border: none; background-color: transparent;" type="text" ng-model="material.storageLocation">
+                                    </td>
+                                    <td>
+                                        <button ng-click="materials.delMaterial_add($index)" class="btn" type="button">删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot></tfoot>
+                        </table>
+                        <p id="successTip_addMaterialForm"  style="display: none;text-align:right;margin-top: 20px;">
+                            <span class="fontawesome-ok"></span> 添加成功，请选择 <strong>继续添加物资</strong> 或者 <strong>返回到物资表</strong>
+                        </p>
+                        <p id="failTip_addMaterialForm"  style="display: none;text-align:right;margin-top: 20px;">
+                            <span class="fontawesome-warning-sign"></span> <span>网络繁忙，请重新点击 <strong>确认添加</strong> 按钮</span>
+                        </p>
+                        <!-- 添加物资结束 -->
+                    </div>
+                    <!-- 物资表结束 -->
+                    <!-- 物资出借开始 -->
+                    <div role="tabpanel" class="tab-pane" id="materials-lend">
+                        <div class="form_center">
+                            <form ng-submit="materials.signupForm()"  class="form-horizontal" name="materialsLendForm" role="form">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">选择物资</label>
+                                    <div class="col-sm-6 controls">
+                                        <div class="ui-select">
+                                            <select name="materialsSelect" ng-required="true" ng-model="materials.materialsLendData.id" ng-change="materials.lendMaxCount(materials.materialsLendData.id,materials.materialsSelectData)" ng-options="x.id as x.name for x in materials.materialsSelectData" class="form-control">
+                                            </select>
+                                            <div ng-show="materialsLendForm.materialsSelect.$error.required&&materials.$submitted" class="help-block alert alert-danger">
+                                                请选择物资！
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">出借数量</label>
+                                    <div  class="col-sm-6 controls">
+                                        <input name="materialsNum" ng-required="true" ng-model="materials.materialsLendData.lentCount" class="form-control" placeholder="0" type="number">
+                                        <div ng-show="materialsLendForm.materialsNum.$error.required&&materials.$submitted" class="help-block alert alert-danger">
+                                            请填写物资！
+                                        </div>
+                                        <div ng-show="materials.$submitted&&materials.materialsLendData.lentCount>materials.maxCount" class="help-block alert alert-danger">
+                                            出借数量不能超过 <strong ng-bind="materials.maxCount"></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">借&nbsp;&nbsp;用&nbsp;&nbsp;人</label>
+                                    <div class="col-sm-6 controls">
+                                        <input name="materialsName" ng-required="true" ng-model="materials.materialsLendData.name" class="form-control" placeholder="姓名" type="text">
+                                        <div ng-show="materialsLendForm.materialsName.$error.required&&materials.$submitted" class="help-block alert alert-danger">
+                                            请填写借用人姓名！
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">联系方式</label>
+                                    <div class="col-sm-6 controls">
+                                        <input name="materialsPhone" ng-required="true" ng-model="materials.materialsLendData.phone" ng-pattern="/^1(3|5|7|8)\d{9}$/" class="form-control" placeholder="11位手机号码" type="text">
+                                        <div ng-show="(materialsLendForm.materialsPhone.$error.required||materialsLendForm.materialsPhone.$error.pattern)&&materials.$submitted"  class="help-block alert alert-danger">
+                                            请正确填写11位的手机号码！
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">出借日期</label>
+                                    <div class="col-sm-6 controls">
+                                        <input name="materialsBorrowDate" id="materialsBorrowDate" ng-required="true" ng-focus="borrowData=true;" ng-model="materials.borrowDate_temp" class="form-control" placeholder="2016-02-02 12:0:0" type="datetime-local">
+                                        <div ng-show="(borrowData?materials.datetime_local('borrowData','materialsBorrowDate'):false||materialsLendForm.materialsBorrowDate.$error.required)&&materials.$submitted" class="help-block alert alert-danger">
+                                            请正确选择出借日期！
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">归还日期</label>
+                                    <div class="col-sm-6 controls">
+                                        <input name="materialsRevertDate" id="materialsRevertDate"  ng-required="true" ng-focus="revertData=true;" ng-model="materials.revertDate_temp" class="form-control" placeholder="2016-02-02 12:0:0" type="datetime-local">
+                                        <div ng-show="(revertData?materials.datetime_local('revertData','materialsRevertDate'):false||materialsLendForm.materialsBorrowDate.$error.required)&&materials.$submitted" class="help-block alert alert-danger">
+                                            请正确选择日期！
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label"></label>
+                                    <div class="col-sm-6">
+                                        <input class="btn btn-primary"  ng-click="(materialsLendForm.$error.required||materialsLendForm.$error.pattern||materials.materialsLendData.lentCount>materials.maxCount)?null||
+                                        borrowData?materials.datetime_local('borrowData','materialsBorrowDate'):false||revertData?materials.datetime_local('revertData','materialsRevertDate'):false:
+                                        materials.materialsLend(materials.materialsLendData);materials.$submitted=true;" value="确认出借" type="button">
+                                        <input class="btn btn-default" ng-click="materials.$submitted=false;materials.materialsLendData={};" value="重置" type="reset">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- 物资出借结束 -->
+                    <!-- 出借记录开始 -->
+                    <div role="tabpanel" class="tab-pane" id="lend-record">
+                        <div ng-show="materials.recordDetailShow" id="staffLend_rec_box">
+                            <div id="staffLend_rec_box_cont" class="body-nest staffLend_rec" >
+                                <table class="table-striped footable-res footable metro-blue" data-page-size="10">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            借用人
+                                        </th>
+                                        <th>
+                                            出借物资
+                                        </th>
+                                        <th>
+                                            借用数量
+                                        </th>
+                                        <th>
+                                            出借日期
+                                        </th>
+                                        <th>
+                                            归还日期
+                                        </th>
+                                        <th>
+                                            操作
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="return_tbody">
+                                        <tr ng-click="materials.stopBubble?materials.goDetailPage(material.id):null;materials.stopBubble?materials.recordDetailShow=false:null;" ng-repeat="material in  materials.lendRecordData">
+                                            <td ng-bind="material.borrower"></td>
+                                            <td ng-bind="material.materialName"></td>
+                                            <td><span class="num_lend" ng-bind="material.count"></span>支</td>
+                                            <td  ng-bind="materials.datetimeHandle(material.borrowDate)"></td>
+                                            <td ng-bind="materials.datetimeHandle(material.revertDate)"></td>
+                                            <td >
+                                                <a href="" ng-click="materials.stopBubble=false;materials.returnWindow(material.id,material.count,material.revertCount);" data-toggle="modal" data-target=".return-modal" class="status-metro status-active returnBtn" title="归还">归还</a>
+                                                <a href="" class="status-metro status-disabled deleteLink" title="删除">删除</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td class="staffLend_rec_td" colspan="6">
+                                            <set-page conf="materials.pageConfig_record"></set-page>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- 出借详情记录页开始 -->
+
+                        <div ng-show="!materials.recordDetailShow" id="staffLend_box">
+                            <div class="body-nest staffLend" >
+                                <div class="clearfix" style="margin-bottom: 10px">
+                                    <input style="float: right;" ng-click="materials.recordDetailShow=true;" class="btn btn-default" id="backtoRec" value="返回" type="button">
+                                </div>
+                                <table class="table table-hover table-striped table-condensed">
+                                    <tbody>
+                                        <tr>
+                                            <th>归还数量</th>
+                                            <th>归还时间</th>
+                                        </tr>
+                                        <tr ng-repeat="subrec in materials.subRecord">
+                                            <td ng-bind="subrec.count"></td>
+                                            <td ng-bind="subrec.time"></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <div style="text-align: center;" ng-show="materials.subRecord.length==0">
+                                    <p>尚未有出借记录!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 出借详情记录页结束 -->
+                    </div>
+                    <!-- 出借记录结束 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 归还物资弹窗开始 -->
+<div class="modal fade return-modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">归还数量</h4>
+            </div>
+            <div class="modal-body">
+                <div class="body-nest">
+                    <form role="form" class="returnLink" action="">
+                        <input ng-model="materials.returnNum.num" type="number" class="form-control" placeholder="10"/>
+                        <p style="color:red" ng-show="materials.returnError">能归还的数量不能超过 <strong ng-bind="materials.returnNum.ableToReturnNum"></strong></p>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="return_closeBtn" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button ng-click="materials.returnNum.ableToReturnNum>=materials.returnNum.num?materials.returnMaterial(materials.returnNum):materials.returnError=true" type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 归还物资弹窗结束 -->
+
+<!-- 物资管理结束 -->
+<!-- 模板组件中的js -->
+<script type="text/javascript" src="assets/js/toggle_close.js"></script>
+<script src="assets/js/footable/js/footable.js?v=2-0-1" type="text/javascript"></script>
+<!--<script src="assets/js/footable/js/footable.sort.js?v=2-0-1" type="text/javascript"></script>-->
+<script src="assets/js/footable/js/footable.filter.js?v=2-0-1" type="text/javascript"></script>
+<script src="assets/js/footable/js/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+
+<!-- 归还操作，删除操作,跳转操作开始 -->
+<script>
+    
+    $(function() {
+        $('.footable-res').footable();
+    });
+    /*//获取
+    var oReturn_tbody=document.getElementById('return_tbody');
+    var aReturn_tbody_tr=oReturn_tbody.getElementsByTagName('tr');
+    var oReturnWrap=document.getElementById('returnWrap');
+    var oReturnSure_btn=document.getElementById('returnSure_btn');
+    var oNotReturnNum=document.getElementById('notReturnNum');
+    var aDeleteLink=oReturn_tbody.getElementsByClassName('deleteLink');
+    var oStaffLend_rec_box_cont=document.getElementById('staffLend_rec_box_cont');
+    var oStaffLend_box=document.getElementById('staffLend_box');
+    var oBacktoRec=document.getElementById('backtoRec');
+    //给每一个tr中的“归还”按钮加事件
+     for(var i = 0,len=aReturn_tbody_tr.length;i<len;i++){
+         var aReturn_btn=aReturn_tbody_tr[i].getElementsByClassName('returnBtn');
+         aReturn_btn[0].onclick= function (ev) {
+             //阻止冒泡
+             ev=ev||event;
+             ev.cancelBubble=true;
+             ev.stopPropagation();
+             if(this.innerHTML!=='已归还'){
+                 oReturnWrap.style.display='block';
+             }
+             //将aReturn_btn[0]存起来；
+             var o=this;
+             oReturnSure_btn.onclick= function () {
+                 //变为“已归还”的情况：输入值与打开时num框中默认值相等时
+                 if(oNotReturnNum.value==oNotReturnNum.placeholder){
+                     o.innerHTML='已归还';
+                     o.style.cursor='default';
+                 }
+                 //恢复原样
+                 oReturnWrap.style.display='none';
+             }
+         };
+         //进入到每一行对应出借记录详情
+         aReturn_tbody_tr[i].onclick= function () {
+             oStaffLend_rec_box_cont.style.display='none';
+             oStaffLend_box.style.display='block';
+             oBacktoRec.onclick= function () {
+                 oStaffLend_rec_box_cont.style.display='block';
+                 oStaffLend_box.style.display='none';
+             }
+         };
+         //给每一行加删除操作
+         aDeleteLink[i].onclick= function (ev) {
+             //阻止冒泡
+             ev=ev||event;
+             ev.canccelBubble=true;
+             ev.stopPropagation();
+             oReturn_tbody.removeChild(this.parentNode.parentNode);
+         };
+     }*/
+
+</script>
+<!-- 归还操作，删除操作，跳转操作结束 -->

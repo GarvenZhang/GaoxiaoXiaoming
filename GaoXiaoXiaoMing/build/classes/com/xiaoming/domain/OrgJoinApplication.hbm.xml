@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.OrgJoinApplication" table="ORGJOINAPPLICATION">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="user" class="com.xiaoming.domain.User" fetch="join">
+            <column name="USER" />
+        </many-to-one>
+        <many-to-one name="organization" class="com.xiaoming.domain.Organization" fetch="join">
+            <column name="ORGANIZATION" />
+        </many-to-one>
+        <property name="applyTime" type="java.util.Date">
+            <column name="APPLYTIME" />
+        </property>
+        <property name="isPassed" type="java.lang.Boolean">
+            <column name="ISPASSED" />
+        </property>
+        <property name="isHandled" type="java.lang.Boolean" >
+        	<column name="ISHANDLED" />
+        </property>
+        <property name="reason" type="java.lang.String">
+            <column name="REASON" />
+        </property>
+        <property name="handleTime" type="java.util.Date">
+            <column name="HANDLETIME" />
+        </property>
+        <property name="position" type="java.lang.String">
+        	<column name="POSITION" />
+        </property>
+        <many-to-one name="department" class="com.xiaoming.domain.Department">
+        	<column name="DEPARTMENT"></column>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

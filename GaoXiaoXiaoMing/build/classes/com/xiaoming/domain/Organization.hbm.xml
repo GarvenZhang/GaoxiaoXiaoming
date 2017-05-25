@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.Organization" table="ORGANIZATION">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="contactName" type="java.lang.String">
+            <column name="CONTACTNAME" />
+        </property>
+        <property name="contactPhoneNumber" type="java.lang.String">
+            <column name="CONTACTPHONENUMBER" />
+        </property>
+        <property name="officeAddress" type="java.lang.String">
+            <column name="OFFICEADDRESS" />
+        </property>
+        <property name="currentEdition" type="java.lang.String">
+        	<column name="CURRENTEDITION" />
+        </property>
+        <many-to-one name="logo" class="com.xiaoming.domain.Image">
+            <column name="LOGO" />
+        </many-to-one>
+        <property name="orgDescription" type="java.lang.String">
+            <column name="ORGDESCRIPTION" />
+        </property>
+        <property name="isPublic" type="java.lang.Boolean">
+            <column name="ISPUBLIC" default="false"/>
+        </property>
+        <many-to-one name="campus" class="com.xiaoming.domain.Campus" fetch="join">
+            <column name="CAMPUS" />
+        </many-to-one>
+        <set name="departments" table="DEPARTMENT" inverse="false" lazy="true">
+            <key>
+                <column name="ORGANIZATION" />
+            </key>
+            <one-to-many class="com.xiaoming.domain.Department" />
+        </set>
+        <set name="projects" table="PROJECT" inverse="true" lazy="true">
+            <key>
+                <column name="ORGANIZATION" />
+            </key>
+            <one-to-many class="com.xiaoming.domain.Project" />
+        </set>
+        <set name="materials" table="MATERIAL" inverse="false" lazy="true">
+            <key>
+                <column name="ORGANIZATION" />
+            </key>
+            <one-to-many class="com.xiaoming.domain.Material" />
+        </set>
+        <set name="documents" table="DOCUMENT" inverse="false" lazy="true">
+        	<key>
+        		<column name="ORGANIZATION" />
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.Document"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,68 @@
+<link rel="stylesheet" href="assets/css/profile.css">
+
+<div style="overflow:hidden">
+    
+    <div class="col-sm-12 profile-name">
+                                    <h3><span ng-bind="detail.projectData[1]"></span>
+                                        <!--<span><h5>2016-07-01 ~ 2016-07-10</h5></span>-->
+                                        <span class="pull-right social-profile">
+                                           <a class="btn btn-primary fontawesome-arrow-left" ng-click="detail.backToMyWork()"> <!--data-ng-href="#/main/work"-->&nbsp;&nbsp;返&nbsp;回</a>
+                                        </span>
+
+                                    </h3>
+                                    <hr>
+                                    <h5>
+                                        <span class="entypo-arrows-ccw"></span>&nbsp;&nbsp;我的工作</h5>        
+                                    <dl class="dl-horizontal-profile">
+                                        <dt>工作内容</dt>
+                                        <dd ng-bind="detail.projectData[2]"></dd>
+
+                                        <dt>日期</dt>
+                                        <dd><span ng-bind="detail.projectData[3]"></span>&nbsp;~&nbsp;<span ng-bind="detail.projectData[4]"></span></dd>
+
+                                        <dt>工作来自</dt>
+                                        <dd ng-bind="detail.projectData[5]"></dd>
+
+                                        <dt>安排人员</dt>
+                                        <dd ng-bind="detail.projectData[6]"></dd>
+                                    </dl>
+
+
+                                    <hr>
+
+                                    <h5  ><span style="cursor: pointer" ng-click="detail.projectDynamic(detail.projectData[0])" class="entypo-arrows-ccw"></span>&nbsp;&nbsp;项目动态</h5>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped table-condensed">
+
+                                            <tbody>
+                                                <tr>
+                                                    <th>操作者</th>
+                                                    <th>详细描述</th>
+                                                    <th>日期</th>
+                                                    <!--<th>状态</th>-->
+                                                </tr>
+                                                <tr ng-repeat="dynamic in detail.dynamicData">
+                                                    <td><!--<i class="pull-right fa fa-edit"></i>--> <span ng-bind="dynamic.operator"></span></td>
+                                                    <td> <span ng-bind="dynamic.description"></span></td>
+                                                    <td> <span ng-bind="dynamic.time"></span></td>
+                                                    <!--<td> <span>true</span></td>-->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+    
+
+
+
+
+
+
+
+    
+

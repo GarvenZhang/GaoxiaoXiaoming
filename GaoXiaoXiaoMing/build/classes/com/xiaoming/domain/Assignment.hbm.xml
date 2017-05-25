@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+	<class name="com.xiaoming.domain.Assignment" table="ASSIGNMENT">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="content" type="java.lang.String">
+			<column name="CONTENT" />
+		</property>
+		<property name="publishDate" type="java.util.Date">
+			<column name="PUBLISHDATE" />
+		</property>
+		<property name="deadline" type="java.util.Date">
+			<column name="DEADLINE" />
+		</property>
+		<property name="isValid" type="java.lang.Boolean">
+			<column name="ISVALID" />
+		</property>
+		<property name="updateTime" type="java.util.Date">
+			<column name="UPDATETIME" />
+		</property>
+		<many-to-one name="publisher" class="com.xiaoming.domain.Member"
+			fetch="join">
+			<column name="PUBLISHER" />
+		</many-to-one>
+		<many-to-one name="projectBelongTo" class="com.xiaoming.domain.Project"
+			cascade="save-update" fetch="join">
+			<column name="PROJECT_ID" />
+		</many-to-one>
+		<!-- Assignment 到 AssginmentMember 的映射 -->
+		<set name="members" table="ASSIGNMENTMEMBER" cascade="save-update"
+			inverse="true" lazy="true">
+			<key>
+				<column name="ASSIGNMENT" />
+			</key>
+			<one-to-many class="com.xiaoming.domain.AssignmentMember" />
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-21 11:47:26 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.AbsenceApply" table="ABSENCEAPPLY">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="receiver" class="com.xiaoming.domain.Member" fetch="join">
+            <column name="RECEIVER" />
+        </many-to-one>
+        <property name="isAgree" type="java.lang.Boolean">
+            <column name="ISAGREE" />
+        </property>
+        <property name="isHandled" type="java.lang.Boolean">
+        	<column name="ISHANDLED" default="false" />
+        </property>
+        <property name="handleTime" type="java.util.Date">
+            <column name="HANDLETIME" />
+        </property>
+        <many-to-one name="absence" class="com.xiaoming.domain.Absence" fetch="join">
+            <column name="ABSENCE" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

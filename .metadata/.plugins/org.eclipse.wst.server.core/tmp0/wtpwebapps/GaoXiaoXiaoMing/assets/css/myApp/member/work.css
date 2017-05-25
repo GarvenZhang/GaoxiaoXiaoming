@@ -1,0 +1,95 @@
+.tab-pane {
+    padding: 20px;
+}
+.blog-list-nest {
+    border: 1px solid #eee;
+    border-radius: 3px; 
+    background: #f9f9f9;
+}
+.blockquote {
+    
+}
+.vendor {
+    margin: 0;
+}
+.vendor blockquote{
+    margin: 10px 0;
+}
+.blog-list-content {
+    padding-top: 0;
+    padding-bottom: 10px; 
+}
+.list-inline {
+    margin: 0 0 12px 0 !important;
+    background: lavender;
+}
+.work-description {
+    margin-bottom: 5px !important;
+}
+.work-content {
+    font-size: 15px;
+}
+hr {
+    margin: 15px 0;
+}
+.work-list form {
+    overflow: hidden;
+}
+#workArrange form {
+    margin-top: 20px;
+}
+#workArrange form .row .col-sm-1 {
+    line-height: 30px;
+}
+textarea.form-control{
+    height: 100px!important;
+    /* reset */
+    resize: none;
+}
+.work-list select {
+    width: 20%;
+    min-width: 130px;
+    float: right;
+}
+.work-date {
+    margin-bottom: 12px;
+}
+.work-item {
+    margin-bottom: 12px;
+}
+.work-to {
+    margin-bottom: 12px;
+}
+.work-rate {
+    position: relative;
+    margin-bottom: 5px;
+}
+.progress {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    left: 70px;
+}
+.btn {
+    margin-left: 4px;
+}
+.well label.pull-left {
+    min-width: 70px;
+}
+.btn-wigdet {
+    margin: 0 !important;
+}
+/* 切换页面 */
+.showPage{
+    display: block!important;
+}
+.hidePage{
+    display: none!important;
+}
+/* doneWork */
+.doneWork,.doneWork:hover,.doneWork:active,.doneWork:link,.doneWork:visited{
+    color: #9EA7B3!important;
+    border-color: #F9F9F9 !important;
+    background-color: #F9F9F9!important;
+    cursor: default!important;
+}
