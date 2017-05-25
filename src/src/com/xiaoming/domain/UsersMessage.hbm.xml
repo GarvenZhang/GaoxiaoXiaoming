@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.UsersMessage" table="USERSMESSAGE">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="receiver" class="com.xiaoming.domain.Member" fetch="join" lazy="false">
+            <column name="RECEIVER" />
+        </many-to-one>
+        <property name="isRead" type="java.lang.Boolean">
+            <column name="ISREAD" />
+        </property>
+        <!-- 映射 -->
+        <many-to-one name="message" class="com.xiaoming.domain.Message" fetch="join">
+        	<column name="MESSAGE" />
+        </many-to-one>
+
+    </class>
+</hibernate-mapping>

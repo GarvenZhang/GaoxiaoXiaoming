@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-14 13:58:27 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.Unread" table="UNREAD">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="foreign">
+            	<param name="property">member</param>
+            </generator>
+        </id>
+        <property name="absence" type="java.lang.Integer">
+            <column name="ABSENCE" />
+        </property>
+        <property name="activity" type="java.lang.Integer">
+            <column name="ACTIVITY" />
+        </property>
+        <property name="assignment" type="java.lang.Integer">
+            <column name="ASSIGNMENT" />
+        </property>
+        <property name="message" type="java.lang.Integer">
+            <column name="MESSAGE" />
+        </property>
+        <one-to-one name="member" class="com.xiaoming.domain.Member" />
+    </class>
+</hibernate-mapping>

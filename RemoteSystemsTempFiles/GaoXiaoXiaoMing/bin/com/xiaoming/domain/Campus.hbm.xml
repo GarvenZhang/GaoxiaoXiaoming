@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.Campus" table="CAMPUS">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <many-to-one name="university" class="com.xiaoming.domain.University" fetch="join">
+            <column name="UNIVERSITY_ID" />
+        </many-to-one>
+        <set name="schools" table="SCHOOL" inverse="false" lazy="true">
+            <key>
+                <column name="CAMPUS" />
+            </key>
+            <one-to-many class="com.xiaoming.domain.School" />
+        </set>
+    </class>
+</hibernate-mapping>

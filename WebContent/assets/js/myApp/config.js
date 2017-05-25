@@ -1,0 +1,1 @@
+angular.module('xiaoMing', ['ui.router','oc.lazyLoad','myPagination']);

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<include file="struts-liu.xml" />
+
+	<constant name="struts.json.dateformat" value="yyyy-MM-dd" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<!--开发者模式 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 把后缀名改为action -->
+	<constant name="struts.action.extension" value="action" />
+	<!--主题设置为simple -->
+	<constant name="struts.ui.theme" value="simple" />
+	<!-- 指定允许上传的文件最大字节数。默认值是2097152(2M) -->
+	<constant name="struts.multipart.maxSize" value="209715200" />
+	<!-- 上传文件临时路径 -->
+	<constant name="struts.multipart.saveDir" value="/upload/tmp" />
+
+
+	<package name="default" namespace="/" extends="json-default">
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="ui">/index.jsp</result>
+		</action>
+		<action name="captcha" class="captchaAction">
+			<result name="success" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">imageStream</param>
+				<param name="bufferSize">2048</param>
+			</result>
+		</action>
+
+		<action name="image_*" class="imageAction" method="{1}">
+			<param name="savePath">\upload\image</param>
+			<result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+
+		<action name="university_*" class="universityAction" method="{1}">
+			<result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+
+		<action name="error_*" class="errorAction" method="{1}">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		
+		<action name="department_*" class="departmentAction" method="{1}">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+
+	</package>
+
+	<!-- 只需要登陆的操作，不需拥有组织 -->
+	<package name="justLogin" namespace="/" extends="json-default">
+		<action name="joinApply_apply" class="joinApplyAction" method="apply">
+			<result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+	</package>
+
+	<!-- 需要登录，并且拥有组织的操作 -->
+	<package name="user" namespace="/" extends="json-default">
+
+		<interceptors>
+			<!-- 权限拦截器 -->
+			<interceptor name="authorityInterceptor" class="authorityInterceptor" />
+
+			<interceptor-stack name="interceptor">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="authorityInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="interceptor" />
+
+
+		<global-results>
+			<result name="noLogin" type="redirect">/error_noLogin.action</result>
+			<result name="noPermission" type="redirect">/error_noPermission.action
+			</result>
+			<result name="noOrg" type="redirect">/error_noOrg.action</result>
+		</global-results>
+
+		<action name="member_*" class="memberAction" method="{1}">
+			<param name="savePath">\upload\excel</param>
+			<result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="excel" type="stream">
+				<param name="contentType">
+					application/vnd.ms-excel
+				</param>
+				<param name="inputName">stream</param>
+				<param name="contentDisposition">
+					filename=${fileName}
+				</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+
+		<action name="userInfo_*" class="userInfoAction" method="{1}">
+			<param name="savePath">\upload\image</param>
+			<result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+
+		<action name="*_*" class="{1}Action" method="{2}">
+			<!-- 配置fileUpload的拦截器 -->
+			<!-- 配置允许上传的文件类型 -->
+			<!-- <interceptor-ref name="fileUpload"> <param name="allowedTypes"> doc/docx/xls/xlsx/ppt/txt/pptx/pps/tmp 
+				</param> </interceptor-ref> -->
+			<param name="savePath">/file</param>
+			<result name="success" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="excel" type="stream">
+				<param name="contentType">
+					application/vnd.ms-excel
+				</param>
+				<param name="inputName">stream</param>
+				<param name="contentDisposition">
+					filename=${fileName}
+				</param>
+				<param name="bufferSize">1024</param>
+			</result>
+
+			<result name="word" type="stream">
+				<param name="contentType">
+					application/msword
+				</param>
+				<param name="inputName">stream</param>
+				<param name="contentDisposition">
+					filename=${fileName}
+				</param>
+				<param name="bufferSize">1024</param>
+			</result>
+
+			<result name="ppt" type="stream">
+				<param name="contentType">
+					application/vnd.ms-powerpoint
+				</param>
+				<param name="inputName">stream</param>
+				<param name="contentDisposition">
+					filename=${fileName}
+				</param>
+				<param name="bufferSize">1024</param>
+			</result>
+
+			<result name="txt" type="stream">
+				<param name="contentType">
+					text/plain
+				</param>
+				<param name="inputName">stream</param>
+				<param name="contentDisposition">
+					filename=${fileName}
+				</param>
+				<param name="bufferSize">1024</param>
+			</result>
+
+		</action>
+
+	</package>
+
+</struts>

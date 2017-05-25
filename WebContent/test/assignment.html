@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Assignment</title>
+<script type="text/javascript" src="/xiaoming/resources/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/xiaoming/resources/js/jQuery.json.js"></script>
+</head>
+<body>
+	<input type="button" value="显示列表" id="list"/>
+	<hr>
+	<div>
+		<input type="button" value="添加" id="save">
+		<input type="button" value="完成任务" id="finish">
+	</div>
+	<hr>
+	<table>
+		<tr>
+			<td>删除任务：</td>
+			<td><input type="text" id="delete_id" ></td>
+			<td><input type="button" value="删除" id="delete_btn"></td>
+		</tr>
+	</table>
+	<div id="result">
+	<h1>结果</h1>
+	</div>
+	
+	<script type="text/javascript">
+		var params = {
+					"pageSize":3,
+					"pageNum":1,
+					"type":"published",
+					"projectId":9
+				};
+		
+		$("#list").click(function(){
+			$.ajax({
+				type:"post",
+				url:"/xiaoming/org_user/assignment_list.action",
+				contentType: "application/json; charset=utf-8",
+				data:$.toJSON(params),
+				dataType:"json",
+				success:function(returnData,status){
+					if("success" == status){
+							$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+						}
+					}
+				})
+			});
+
+		var save_params = {
+					"project":{
+							"name":"开发",
+							"isNew":true
+						},
+					"exercisers":[{
+							"id":1
+						},
+						{
+							"id":4
+						}],
+					"deadline":"2016-08-09 23:41",
+					"content":"这个工作被修改了"
+				};
+
+		$("#save").click(function(){
+			$.ajax({
+				type:"post",
+				url:"/xiaoming/org_user/assignment_save.action",
+				contentType: "application/json; charset=utf-8",
+				data:$.toJSON(save_params),
+				dataType:"json",
+				success:function(returnData,status){
+					if("success" == status){
+							$("#result").append("<p>"+JSON.stringify(returnData)+"</p>");
+						}
+					}
+				})
+			});
+
+		var finish ={
+				"id":13,
+				"isFinished":true	
+			};
+		$("#finish").click(function(){
+			$.ajax({
+				type:"post",
+				url:"/xiaoming/org_user/assignment_finish.action",
+				contentType: "application/json; charset=utf-8",
+				data:$.toJSON(finish),
+				dataType:"json",
+				success:function(returnData,status){
+					if("success" == status){
+							$("#result").append("<p>"+JSON.stringify(returnData)+"</p>");
+						}
+					}
+				})
+			});
+
+		var delete_json ={
+				"id":"",
+				}
+
+		$("#delete_btn").click(function(){
+			delete_json.id = $("#delete_id").val();
+			$.ajax({
+				type:"post",
+				url:"/xiaoming/org_user/assignment_delete.action",
+				contentType: "application/json; charset=utf-8",
+				data:$.toJSON(delete_json),
+				dataType:"json",
+				success:function(returnData,status){
+					if("success" == status){
+							$("#result").append("<p>"+JSON.stringify(returnData)+"</p>");
+						}
+					}
+				})
+			});
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.Image" table="IMAGE">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="url" type="java.lang.String">
+            <column name="URL" />
+        </property>
+        <property name="imageName" type="java.lang.String">
+            <column name="IMAGENAME" />
+        </property>
+        <property name="uploadTime" type="java.util.Date">
+            <column name="UPLOADTIME" />
+        </property>
+        <many-to-one name="uploader" class="com.xiaoming.domain.User" fetch="join">
+            <column name="UPLOADER" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

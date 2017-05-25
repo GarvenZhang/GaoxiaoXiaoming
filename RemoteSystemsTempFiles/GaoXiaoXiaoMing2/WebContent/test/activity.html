@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Activity</title>
+<script type="text/javascript" src="/xiaoming/resources/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/xiaoming/resources/js/jQuery.json.js"></script>
+</head>
+<body>
+<table>
+	<tr>
+		<td>标题：</td>
+		<td><input type="text" id="title" /></td>
+	</tr>
+	<tr>
+		<td>内容：</td>
+		<td><input type="text" id="content"></td>
+	</tr>
+</table>
+<input type="button" value="添加" id="save" />
+<hr>
+<button onclick="list(0)">查询发送的</button>
+<button onclick="list(1)">查询收到的</button>
+<hr>
+<table>
+	<tr>
+		<td>id：</td>
+		<td><input type="text" id="id" /></td>
+	</tr>
+	<tr>
+		<td><button onclick="detial()">查询详情</button></td>
+	</tr>
+</table>
+
+<hr>
+<div id="result"></div>
+
+
+<script type="text/javascript">
+$("#save").click(function(){
+	$.ajax({
+		type:"post",
+		url:"/xiaoming/org_user/activity_save.action",
+		contentType: "json/application; charset=utf-8",
+		data:$.toJSON(
+				{
+					"title":$("#title").val(),
+					"content":$("#content").val(),
+					"createTime":"2016-08-09 23:41",
+					"members":[{
+						"id":1,
+						},
+						{
+						"id":4
+						}],
+					"info":{
+						"birth":"1998",
+						"size":"xx"
+						}
+				}
+			),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		})
+	});
+
+function list(i){
+	$.ajax({
+		type:"post",
+		url:"/xiaoming/org_user/activity_list.action",
+		contentType: "json/application; charset=utf-8",
+		data:$.toJSON(
+				{
+					"type":i
+				}
+			),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		})
+	};
+
+	function detial(){
+		$.ajax({
+			type:"post",
+			url:"/xiaoming/org_user/activity_detial.action",
+			contentType: "json/application; charset=utf-8",
+			data:$.toJSON(
+					{
+						"id":$("#id").val()
+					}
+				),
+			dataType:"json",
+			success:function(returnData,status){
+				if("success" == status){
+						$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+					}
+				}
+			})
+		};
+</script>
+</body>
+</html>

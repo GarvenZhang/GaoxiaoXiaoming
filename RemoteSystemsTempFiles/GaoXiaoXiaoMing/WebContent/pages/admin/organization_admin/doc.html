@@ -1,0 +1,571 @@
+<link rel="stylesheet" href="assets/js/tree/treetable/stylesheets/jquery.treetable.css">
+<link rel="stylesheet" href="assets/js/tree/treetable/stylesheets/jquery.treetable.theme.default.css">
+<link rel="stylesheet" href="assets/js/dropZone/downloads/css/dropzone.css">
+
+<!-- 树形文件夹插件 -->
+<link rel="stylesheet" href="assets/js/tree/jquery.treeview.css">
+<!--<link rel="stylesheet" href="../red-treeview.css">-->
+<link href="assets/js/tree/tabelizer/tabelizer.min.css" media="all" rel="stylesheet" type="text/css">
+
+<!--TITLE -->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="fontawesome-folder-open"></span>
+                <span id="move">文档管理</span>
+            </h2>
+        </div>
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ TITLE -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="nest">
+            <div class="body-nest" id="tabletree">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="/#private-doc" aria-controls="private-doc" role="tab" data-toggle="tab">内部共享文档</a></li>
+                    <li role="presentation"><a href="/#public-doc" aria-controls="public-doc" role="tab" data-toggle="tab">内部非公开文档</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="private-doc" >
+                        <!--<table id="private-table" class="table-striped">
+
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>类型</th>
+                                    <th>大小</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-tt-id='1'>
+
+                                    <td>
+                                        <span class='file'>Acknowledgements.rtf</span>
+                                    </td>
+                                    <td>File</td>
+                                    <td>480.95 KB</td>
+                                    <td>
+                                        <a href="" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="" class="entypo-share" title="分享到微信"></a>
+
+                                    </td>
+                                </tr>
+
+                                <tr data-tt-id='1'>
+
+                                    <td>
+                                        <span class='file'>Acknowledgements.rtf</span>
+                                    </td>
+                                    <td>File</td>
+                                    <td>480.95 KB</td>
+                                    <td>
+                                        <a href="" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="" class="entypo-share" title="分享到微信"></a>
+                                    </td>
+                                </tr>
+
+                                <tr data-tt-id='1'>
+
+                                    <td>
+                                        <span class='file'>Acknowledgements.rtf</span>
+                                    </td>
+                                    <td>File</td>
+                                    <td>480.95 KB</td>
+                                    <td>
+                                        <a href="" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="" class="entypo-share" title="分享到微信"></a>
+                                    </td>
+                                </tr>
+
+                                <tr data-tt-id='1'>
+
+                                    <td>
+                                        <span class='file'>Acknowledgements.rtf</span>
+                                    </td>
+                                    <td>File</td>
+                                    <td>480.95 KB</td>
+                                    <td>
+                                        <a href="" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="" class="entypo-share" title="分享到微信" sadasdata-toggle="popover"></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>-->
+                        <table id="public-example" class="table-striped footable-res footable metro-blue">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>类型</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                <tr ng-show="!doc.allDocs.length">
+                                    <td colspan="3" style="text-align: center">暂无数据</td>
+                                </tr>
+                                <tr ng-repeat="allDocs in doc.allDocs">
+                                    <td>
+                                        <span  class='file' ng-bind="allDocs.name"></span>
+                                    </td>
+                                    <td ng-bind="allDocs.fileType"></td>
+                                    <td>
+                                        <a href="GaoXiaoXiaoMing/document_download.action?id={{allDocs.id}}" target="_blank" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a target="_blank" class="entypo-trash deleteBtn" title="删除" ng-click="doc.deleteDoc(allDocs.id,1)"></a>&nbsp;&nbsp;&nbsp;
+                                        <a class="entypo-tag" title="修改" data-toggle="modal" ng-click="doc.showModal(allDocs.id)"></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    </table>
+                        <!-- 拖拽上传开始 -->
+                      <div class="body-nest" class="DropZone">
+                            <form action="" class="dropzone" id="public-dropzone"></form>
+                          <button class="btn btn-info" id="public-submit">上传所有文件</button>
+                          <span style="font-size: 16px;color: red;display: inline-block;padding-top: 20px;">(文件类型只能是word,excel,txt,ppt，文件大小不能超过20M)</span>
+                        </div>
+                        <!-- 拖拽上传结束 -->
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="public-doc">
+                        <!--<a style="margin:0 0 10px; 0" href="#" class="pull-right btn btn-info" onClick="jQuery('#example-advancedB').treetable('expandAll'); return false;">张开所有支链</a>-->
+                        <!--<a style="margin:0 10px 10px; 0;" href="#" class="pull-right btn btn-info" onClick="jQuery('#example-advancedB').treetable('collapseAll'); return false;">折叠所有支链</a>-->
+                        <table id="example-advanced" class="table-striped">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>类型</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody2">
+                                <tr ng-show="!doc.allPriDocs.length">
+                                    <td colspan="3" style="text-align: center">暂无数据</td>
+                                </tr>
+                                <tr ng-repeat="allPriDocs in doc.allPriDocs">
+                                    <td>
+                                        <span class='file' ng-bind="allPriDocs.name"></span>
+                                    </td>
+                                    <td ng-bind="allPriDocs.fileType"></td>
+                                    <td>
+                                        <a href="GaoXiaoXiaoMing/document_download.action?id={{allPriDocs.id}}" target="_blank" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a target="_blank" class="entypo-trash deleteBtn" title="删除" ng-click="doc.deleteDoc(allPriDocs.id,0)"></a>&nbsp;&nbsp;&nbsp;
+                                        <a href="" class="entypo-tag" title="修改" data-toggle="modal" ng-click="doc.showPriModal(allPriDocs.id)"></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- 拖拽上传开始 -->
+                        <div class="body-nest" class="DropZone">
+                            <form action="" class="dropzone" id="private-dropzone"></form>
+                            <div style="clear: both;">
+                                <button class="btn btn-info" id="private-submit">上传所有文件</button>
+                                <span style="font-size: 16px;color: red;display: inline-block;padding-top: 20px;">(文件类型只能是word,excel,txt,ppt，文件大小不能超过20M)</span>
+                            </div>
+                        </div>
+                        <!-- 拖拽上传结束 -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!--公开文件修改信息 开始-->
+<div class="modal fade modification" id="modification">
+    <div class="modal-dialog modal-sm" style="width: 50%;margin-top: 10%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="close" aria-label="Close"><span aria-hidden="true" ng-click="doc.documents={}">&times;</span></button>
+                <h4 class="modal-title entypo-users">修改</h4>
+            </div>
+            <div class="modal-body">
+                <div class="staff-list-wrap">
+                    <div class="skin skin-flat">
+                        <form id="moDocForm"  name="moDocForm" class="form-horizontal bucket-form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="">文件名：</label>
+                                <div class="col-sm-6">
+                                    <input name="docName" ng-model="doc.documents.docName" id="docNames" class="form-control" type="text" required>
+                                    <div class="alert help-block alert-info">
+                                        提示：请填写需要修改的文件名
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-hide="true">
+                                <label class="col-sm-3 control-label" for="">id：</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="allId" type="text">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-primary"  ng-click="doc.makeSureModificaiton();doc.documents={};doc.makeModalDispear('docNames','helpBtn')">确定</button>
+                <button id="delBtn" class="btn btn-primary"  data-dismiss="modal" type="button" ng-click="doc.documents={}">取消</button>
+                <button ng-hide="true" id="helpBtn" class="btn btn-primary"  data-dismiss="modal" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--公开文件修改信息 结束-->
+
+<!--非公开文件修改信息 开始-->
+<div class="modal fade modification" id="modificationPri">
+    <div class="modal-dialog modal-sm" style="width: 50%;margin-top: 10%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="closed" aria-label="Close"><span aria-hidden="true" ng-click="doc.priDocuments={}">&times;</span></button>
+                <h4 class="modal-title entypo-users">修改</h4>
+            </div>
+            <div class="modal-body">
+                <div class="staff-list-wrap">
+                    <div class="skin skin-flat">
+                        <form id="moDocPriForm"  name="moDocForm" class="form-horizontal bucket-form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="">文件名：</label>
+                                <div class="col-sm-6">
+                                    <input name="docPriName" ng-model="doc.priDocuments.docName" id="docPriName" class="form-control" type="text" required>
+                                    <div class="alert help-block alert-info">
+                                        提示：请填写需要修改的文件名
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-hide="true">
+                                <label class="col-sm-3 control-label" for="">id：</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="allPriId" type="text">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-primary"  ng-click="doc.makeSurePriModificaiton();doc.priDocuments={};doc.makeModalDispear('docPriName','helpPriBtn')">确定</button>
+                <button id="delPriBtn" class="btn btn-primary"  data-dismiss="modal" type="button" ng-click="doc.priDocuments={}">取消</button>
+                <button ng-hide="true" id="helpPriBtn" class="btn btn-primary"  data-dismiss="modal" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--非公开文件修改信息 结束-->
+<script type="text/javascript" src="assets/js/toggle_close.js"></script>
+<script src="assets/js/dropZone/lib/dropzone.js"></script>
+<!-- 文件夹插件 -->
+<script id="jquery_ui" src="assets/js/tree/treetable/vendor/jquery-ui.js"></script>
+<script id="jquery_treetable" src="assets/js/tree/treetable/javascripts/src/jquery.treetable.js"></script>
+<script id="Cookie" src="assets/js/tree/lib/jquery.cookie.js" type="text/javascript"></script>
+<script id="treeview" src="assets/js/tree/jquery.treeview.js" type="text/javascript"></script>
+<script id="custom_min" src="assets/js/tree/tabelizer/jquery-ui-1.10.4.custom.min.js"></script>
+<script id="tabelizer" src="assets/js/tree/tabelizer/jquery.tabelizer.js"></script>
+
+<!-- 文件夹插件 -->
+<!--<script>-->
+    <!--function a() {-->
+        <!--$("#example-basic").treetable({-->
+            <!--expandable: true-->
+        <!--});-->
+
+        <!--$("#example-basic-static").treetable();-->
+
+        <!--$("#example-basic-expandable").treetable({-->
+            <!--expandable: true-->
+        <!--});-->
+
+        <!--$("#example-advanced").treetable({-->
+            <!--expandable: true-->
+        <!--});-->
+        <!--$("#example-advancedB").treetable({-->
+            <!--expandable: true-->
+        <!--});-->
+
+        <!--//当鼠标按下时所对应的tr变得高亮-->
+        <!--$("#example-advanced tbody").on("mousedown", "tr", function() {-->
+            <!--$(".selected").not(this).removeClass("selected");-->
+            <!--$(this).toggleClass("selected");-->
+        <!--});-->
+        <!--$("#example-advancedB tbody").on("mousedown", "tr", function() {-->
+            <!--$(".selected").not(this).removeClass("selected");-->
+            <!--$(this).toggleClass("selected");-->
+        <!--});-->
+
+        <!--// Drag & Drop Example Code-->
+        <!--$("#example-advanced .file, #example-advanced .folder").draggable({-->
+            <!--helper: "clone",-->
+            <!--opacity: .75,-->
+            <!--refreshPositions: true, // Performance?-->
+            <!--revert: "invalid",-->
+            <!--revertDuration: 300,-->
+            <!--expandable: true,-->
+            <!--scroll: true-->
+        <!--});-->
+        <!--$("#example-advancedB .file, #example-advancedB .folder").draggable({-->
+            <!--helper: "clone",-->
+            <!--opacity: .75,-->
+            <!--refreshPositions: true, // Performance?-->
+            <!--revert: "invalid",-->
+            <!--revertDuration: 300,-->
+            <!--expandable: true,-->
+            <!--scroll: true-->
+        <!--});-->
+
+        <!--$("#example-advanced .folder").each(function() {-->
+            <!--$(this).parents("#example-advanced tr").droppable({-->
+                <!--accept: ".file, .folder",-->
+                <!--drop: function(e, ui) {-->
+                    <!--var droppedEl = ui.draggable.parents("tr");-->
+                    <!--$("#example-advanced").treetable("move", droppedEl.data("ttId"), $(this).data("ttId"));-->
+                <!--},-->
+                <!--hoverClass: "accept",-->
+                <!--over: function(e, ui) {-->
+                    <!--var droppedEl = ui.draggable.parents("tr");-->
+                    <!--if (this != droppedEl[0] && !$(this).is(".expanded")) {-->
+                        <!--$("#example-advanced").treetable("expandNode", $(this).data("ttId"));-->
+                    <!--}-->
+                <!--}-->
+            <!--});-->
+        <!--});-->
+        <!--$("#example-advancedB .folder").each(function() {-->
+            <!--$(this).parents("#example-advancedB tr").droppable({-->
+                <!--accept: ".file, .folder",-->
+                <!--drop: function(e, ui) {-->
+                    <!--var droppedEl = ui.draggable.parents("tr");-->
+                    <!--$("#example-advancedB").treetable("move", droppedEl.data("ttId"), $(this).data("ttId"));-->
+                <!--},-->
+                <!--hoverClass: "accept",-->
+                <!--over: function(e, ui) {-->
+                    <!--var droppedEl = ui.draggable.parents("tr");-->
+                    <!--if (this != droppedEl[0] && !$(this).is(".expanded")) {-->
+                        <!--$("#example-advancedB").treetable("expandNode", $(this).data("ttId"));-->
+                    <!--}-->
+                <!--}-->
+            <!--});-->
+        <!--});-->
+
+        <!--$("form#reveal").submit(function() {-->
+            <!--var nodeId = $("#revealNodeId").val();-->
+
+            <!--try {-->
+                <!--$("#example-advanced").treetable("reveal", nodeId);-->
+            <!--} catch (error) {-->
+                <!--alert(error.message);-->
+            <!--}-->
+            <!--try {-->
+                <!--$("#example-advancedB").treetable("reveal", nodeId);-->
+            <!--} catch (error) {-->
+                <!--alert(error.message);-->
+            <!--}-->
+
+            <!--return false;-->
+        <!--});-->
+
+        <!--$(document).ready(function() {-->
+            <!--var table1 = $('#table1').tabelize({-->
+                <!--/*onRowClick : function(){-->
+                 <!--alert('test');-->
+                 <!--}*/-->
+                <!--fullRowClickable: true,-->
+                <!--onReady: function() {-->
+                    <!--console.log('ready');-->
+                <!--},-->
+                <!--onBeforeRowClick: function() {-->
+                    <!--console.log('onBeforeRowClick');-->
+                <!--},-->
+                <!--onAfterRowClick: function() {-->
+                    <!--console.log('onAfterRowClick');-->
+                <!--}-->
+            <!--});-->
+        <!--});-->
+    <!--}-->
+    <!--a();-->
+    <!--document.getElementById('move').addEventListener('click',function () {-->
+        <!--var b='<tr data-tt-id="2-4-1" data-tt-parent-id="2-4" class="leaf collapsed selected" style="display: table-row;"><td><span class="indenter" style="padding-left: 38px;"></span><span class="file ui-draggable">SharkUserGuide.pdf</span></td><td>File</td><td>12902.51 KB</td></tr>';-->
+        <!--$('#tbody').append(b);-->
+        <!--reloadRelatedJs();-->
+        <!--a();-->
+        <!--console.log(222);-->
+    <!--});-->
+    <!--function reloadRelatedJs() {-->
+        <!--/*reloadAbleJSFn(jquery_ui,'assets/js/tree/treetable/vendor/jquery-ui.js');-->
+        <!--reloadAbleJSFn(Cookie,'assets/js/tree/lib/jquery.cookie.js');-->
+        <!--reloadAbleJSFn(treeview,'assets/js/tree/jquery.treeview.js');-->
+        <!--reloadAbleJSFn(custom_min,'assets/js/tree/tabelizer/jquery-ui-1.10.4.custom.min.js');-->
+        <!--reloadAbleJSFn(tabelizer,'assets/js/tree/tabelizer/jquery.tabelizer.js');-->
+        <!--reloadAbleJSFn(jquery_treetable,'assets/js/tree/treetable/javascripts/src/jquery.treetable.js');*/-->
+
+        <!--loadJs('assets/js/tree/treetable/vendor/jquery-ui.js');-->
+        <!--loadJs('assets/js/tree/lib/jquery.cookie.js');-->
+        <!--loadJs('assets/js/tree/jquery.treeview.js');-->
+        <!--loadJs('assets/js/tree/tabelizer/jquery-ui-1.10.4.custom.min.js');-->
+        <!--loadJs('assets/js/tree/tabelizer/jquery.tabelizer.js');-->
+        <!--loadJs('assets/js/tree/treetable/javascripts/src/jquery.treetable.js');-->
+    <!--}-->
+    <!--function reloadAbleJSFn(id,newJS)-->
+    <!--{-->
+        <!--var oldjs = document.getElementById(id);-->
+        <!--if(oldjs) oldjs.parentNode.removeChild(oldjs);-->
+        <!--var scriptObj = document.createElement("script");-->
+        <!--scriptObj.src = newJS;-->
+        <!--scriptObj.type = "text/javascript";-->
+        <!--scriptObj.id   = id;-->
+        <!--$('head').first().append(scriptObj);-->
+    <!--}-->
+    <!--function loadJs(file) {-->
+        <!--var head = $("head").remove("script[role='reload']");-->
+        <!--$("<scri" + "pt>" + "</scr" + "ipt>").attr({ role: 'reload', src: file, type: 'text/javascript' }).appendTo(head);-->
+    <!--}-->
+<!--</script>-->
+<!-- 拖拽上传开始 -->
+<!--<script type="text/javascript">
+    $(function() {
+        $("#browser, #browser2").treeview({
+            animated: "fast",
+            collapsed: false,
+            unique: true,
+            persist: "cookie",
+            toggle: function() {
+                window.console && console.log("%o was toggled", this);
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+
+    var publicDropzone = new Dropzone("#public-dropzone", {
+
+        method: "post",
+
+        // Prevents Dropzone from uploading dropped files immediately
+        autoProcessQueue: false,
+
+        init: function() {
+            var submitButton = document.querySelector("#public-submit")
+            myDropzone = this; // closure
+
+            submitButton.addEventListener("click", function() {
+                myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+            });
+
+            // You might want to show the submit button only when
+            // files are dropped here:
+            this.on("addedfile", function() {
+                // Show submit button here and/or inform user to click it.
+            });
+
+        },
+
+        dictDefaultMessage: "将文件拖拽至此（或点击）",
+
+        addRemoveLinks: true,
+
+        dictRemoveFile: "删除"
+    });
+
+    var privateDropzone = new Dropzone("#private-dropzone", {
+
+        method: "post",
+
+        // Prevents Dropzone from uploading dropped files immediately
+        autoProcessQueue: false,
+
+        init: function() {
+            var submitButton = document.querySelector("#private-submit");
+            myDropzone = this; // closure
+
+            submitButton.addEventListener("click", function() {
+                myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+            });
+
+            // You might want to show the submit button only when
+            // files are dropped here:
+            this.on("addedfile", function() {
+                // Show submit button here and/or inform user to click it.
+            });
+
+        },
+
+        dictDefaultMessage: "将文件拖拽至此（或点击）",
+
+        addRemoveLinks: true,
+
+        dictRemoveFile: "删除"
+    });
+
+    $("#private-table").treetable({
+        expandable: true
+    });
+
+    // Highlight selected row
+    $("#private-table tbody").on("mousedown", "tr", function() {
+        $(".selected").not(this).removeClass("selected");
+        $(this).toggleClass("selected");
+    });
+
+    // Drag & Drop Example Code
+    $("#private-table .file, #private-table .folder").draggable({
+        helper: "clone",
+        opacity: .1,
+        refreshPositions: true, // Performance?
+        revert: "invalid",
+        revertDuration: 300,
+        expandable: true,
+        scroll: true
+    });
+
+    $("#private-table .folder").each(function() {
+        $(this).parents("#private-table tr").droppable({
+            accept: ".file, .folder",
+            drop: function(e, ui) {
+                var droppedEl = ui.draggable.parents("tr");
+                $("#private-table").treetable("move", droppedEl.data("ttId"), $(this).data("ttId"));
+            },
+            hoverClass: "accept",
+            over: function(e, ui) {
+                var droppedEl = ui.draggable.parents("tr");
+                if (this != droppedEl[0] && !$(this).is(".expanded")) {
+                    $("#private-table").treetable("expandNode", $(this).data("ttId"));
+                }
+            }
+        });
+    });
+
+    $("#public-table").treetable({
+        expandable: true
+    });
+
+    $('.entypo-share').popover({
+        template: '<div class="popover" role="tooltip">'+
+                    '<h3 class="popover-title"></h3>'+
+                    '<div class="popover-content"></div>'+
+                  '</div>',
+        html: true,
+        content: '<img src="" style="height:150px;width:150px;">',
+        placement: "left",
+        trigger: 'hover'
+    });
+
+
+});
+</script>-->
+<!-- 拖拽上传结束 -->

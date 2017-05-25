@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.Member" table="MEMBER">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="position" type="java.lang.String">
+            <column name="POSITION" />
+        </property>
+        <property name="edition" type="java.lang.String">
+            <column name="EDITION" />
+        </property>
+        <property name="state" type="java.lang.Byte">
+        	<column name="STATE" />
+        </property>
+        <many-to-one name="user" class="com.xiaoming.domain.User" access="field" fetch="join">
+            <column name="USER" />
+        </many-to-one>
+        <many-to-one name="department" class="com.xiaoming.domain.Department" fetch="join">
+            <column name="DEPARTMENT" />
+        </many-to-one>
+        <!-- 成员到他发送的请求的映射 -->
+        <set name="publishedAbsences" table="ABSENCE" inverse="false" lazy="true">
+        	<key>
+        		<column name="MEMBER" />
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.Absence" />
+        </set>
+        <!-- 成员到他接收到的请求的映射 -->
+        <set name="receivedAbsences" table="ABSENCEAPPLY" inverse="false" lazy="true">
+        	<key>
+        		<column name="RECEIVER" />
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.AbsenceApply"/>
+        </set>
+        <set name="publishedAssignment" table="ASSIGNMENT" inverse="true" lazy="true">
+        	<key>
+        		<column name="PUBLISHER"></column>
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.Assignment" />
+        </set>
+        <set name="receivedAssignment" table="ASSIGNMENTMEMBER" inverse="true" lazy="true">
+        	<key>
+        		<column name="EXERCISER" />
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.AssignmentMember" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="/xiaoming/resources/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript"
+	src="/xiaoming/resources/js/jQuery.json.js"></script>
+</head>
+<body>
+	<table id="table-1">
+		<thead>
+			<tr>
+				<th>姓名：</th>
+				<th><input type="text" id="name"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>考场号：</td>
+				<td><input type="text" id="room"></td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>座位号：</th>
+				<th><input type="text" id="desk"></th>
+			</tr>
+		</tfoot>
+	</table>
+	<button onclick="query(0,0)">查询</button>
+
+	<script type="text/javascript">
+		function query(i,j){
+				var num = "4403811612";
+				var room = $("#room").val();
+				var desk = $("#desk").val();
+
+				if(room == ""){
+						room = parseInt(room)+i;
+					}
+			}
+		
+		function find(zkzh) {
+			var post_data = 'name=' + $("name").val() + '&zkzh=' + zkzh;
+	     	   $.post('/query/1', post_data, function(res) {
+	        	   if (res.status == 200) {
+						vm.$data.status = 1;
+	                	vm.$data.message = '';
+	                	vm.$data.result = res.result;
+	                	vm.$data.score = res.score;
+	            	} else {
+	                	vm.$data.status = 0;
+	                	vm.$data.message = res.message;
+	            	}
+	        	});
+	    	}
+	    
+	</script>
+</body>
+</html>

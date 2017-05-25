@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.User" table="USER">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="loginName" type="java.lang.String" access="field">
+            <column name="LOGINNAME" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+        <property name="registerDate" type="java.util.Date">
+            <column name="REGISTERDATE" />
+        </property>
+        <property name="lastLoginTime" type="java.util.Date">
+            <column name="LASTLOGINTIME" />
+        </property>
+        <property name="lastLoginIP" type="java.lang.String">
+            <column name="LASTLOGINIP" />
+        </property>
+        <property name="role">
+            <column name="ROLE" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="type">12</param>
+                <param name="enumClass">com.xiaoming.base.Role</param>
+            </type>
+        </property>
+        <property name="realName" type="java.lang.String">
+        	<column name="REALNAME" />
+        </property>
+        <property name="phoneNumber" type="java.lang.String">
+        	<column name="PHONENUMBER" />
+        </property>
+        <!-- 性别，枚举类 -->
+        <property name="gender">
+        	<column name="GENDER" />
+        	<type name="org.hibernate.type.EnumType">
+        		<param name="type">12</param>
+        		<param name="enumClass">com.xiaoming.base.Gender</param>
+        	</type>
+        </property>
+        <!-- 头像 -->
+        <many-to-one name="logo" class="com.xiaoming.domain.Image" fetch="join">
+        	<column name="LOGO" />
+        </many-to-one>
+        <many-to-one name="campus" class="com.xiaoming.domain.Campus">
+        	<column name="CAMPUS" />
+        </many-to-one>
+        <many-to-one name="major" class="com.xiaoming.domain.Major">
+        	<column name="MAJOR" />
+        </many-to-one>
+        <many-to-one name="grade" class="com.xiaoming.domain.Grade">
+        	<column name="GRADE" />
+        </many-to-one>
+        <many-to-one name="defaultMember" class="com.xiaoming.domain.Member">
+        	<column name="defaultMember" />
+        </many-to-one>
+        <property name="state" type="java.lang.Byte">
+            <column name="STATE" />
+        </property>
+        <!-- 仅组织管理员填写此字段 -->
+        <many-to-one name="organization" class="com.xiaoming.domain.Organization" fetch="join">
+            <column name="ORGANIZATION" />
+        </many-to-one>
+        <!-- 用户 到 反馈 的 一对多映射 -->
+        <set name="feedbacks" table="FEEDBACK" inverse="false" lazy="true" access="field">
+        	<key>
+        		<column name="USER" />
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.FeedBack" />
+        </set>
+        <!-- 用户 到 成员 的 一对多映射 -->
+        <set name="members" table="MEMBER" inverse="false" lazy="true">
+        	<key>
+        		<column name="USER" />
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.Member" />
+        </set>
+    </class>
+</hibernate-mapping>

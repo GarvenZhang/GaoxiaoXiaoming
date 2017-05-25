@@ -1,0 +1,317 @@
+<link rel="stylesheet" href="assets/css/media.css">
+<link rel="stylesheet" href="assets/css/myApp/member/work.css">
+<!-- 模块弹窗 -->
+<link href="assets/js/iCheck/flat/all.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/myApp/member/leave.css">
+
+<!--Title Start-->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-sm-3">
+            <h2 class="tittle-content-header">
+                <span class="fontawesome-edit"></span>
+                <span>工作安排</span>
+            </h2>
+        </div>
+        <div class="col-sm-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                    <!--<strong id="host">李文滨</strong>&nbsp;&nbsp;<span>学生创业俱乐部</span>, 当前时间<span>2016-06-08</span>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Title End-->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="nest" id="tabClose">
+            <div class="body-nest" id="tab">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" ng-click="work.submitted=false;work.resetAssignList()" class="active"><a href="/#myWork"  aria-controls="my-work" role="tab" data-toggle="tab">我的工作</a></li>
+                    <li role="presentation"><a href="/#workArrange" aria-controls="work-arrange" role="tab" data-toggle="tab">工作安排</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="myWork">
+                        <!-- 我的工作开始 -->
+                        <div id="myWorkWrap"  ui-view>
+                            <div class="work-list">
+                                <form class="form-group">
+                                     <select ng-init="type='all'"  ng-change="work.changeType(type)" ng-model="type" name="" id="changeType" class="form-control">
+                                        <option ng-selected="type==='all'" value="all">全部工作</option>
+                                        <option value="published">被安排的工作</option>
+                                        <option value="received">我安排的工作</option>
+                                    </select>
+                                </form>
+                                <div  class="blog-list-nest" ng-repeat="assig in work.workData">
+                                    <div class="vendor">
+                                        <blockquote>
+                                            <p>
+                                                <a ng-click="work.delWork(assig.id)" class="close pull-right"><span class="badge">×</span></a>
+                                                <a style="cursor: pointer" ng-click="work.toProjectDetail(assig.project.id,assig.project.name,assig.content,assig.publishDate,assig.deadline,assig.publisher,work.nameHandle(assig.exercisers))" ng-bind="assig.content" class="work-content" ></a>
+                                            </p>
+                                        </blockquote>
+                                    </div>
+
+                                    <div class="blog-list-content">
+                                        <hr>
+                                        <div class="work-date"><span class="label label-default"><span class="entypo-calendar">&nbsp;&nbsp;截&nbsp;&nbsp;止&nbsp;&nbsp;日&nbsp;期&nbsp;</span></span> &nbsp;&nbsp;<span ng-bind="assig.publishDate"></span>&nbsp;~&nbsp;<span ng-bind="assig.deadline"></span></div>
+                                        <div class="work-item"><span class="label label-default">所在项目</span>&nbsp;&nbsp;<span ng-bind="assig.project.name"></span></div>
+                                        <div ng-if="!(assig.publisher=work.realName)" class="work-to"><span class="label label-default">安排人员</span>&nbsp;&nbsp;<span ng-bind="work.nameHandle(assig.exercisers)"></span></div>
+                                        <div ng-if="assig.publisher=work.realName" class="work-to"><span class="label label-default">工作来自</span>&nbsp;&nbsp;<span ng-bind="assig.publisher"></span></div>
+                                        <div class="work-rate">
+                                            <span class="label label-default">工作进度</span>
+                                            <div class="progress">
+                                                <div id="progressbar" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{work.finishedPpl(assig.exercisers)}}" ng-style="work.progressHandle(work.finishedPpl(assig.exercisers),assig.exercisers.length)" aria-valuemin="0" aria-valuemax="{{assig.exercisers.length}}" ><span ng-bind="work.finishedPpl(assig.exercisers)"></span>/<span ng-bind="assig.exercisers.length"></span></div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <p class="pull-left">
+                                            <span ng-bind="work.workSitu(assig.exercisers,work.finishedPpl(assig.exercisers),assig.exercisers.length,assig.deadline)" class="entypo-clock"></span>
+                                        </p>
+                                        <button ng-disabled="(work.finishedPpl(assig.exercisers)==assig.exercisers.length)||work.selfDoneWork(assig.exercisers)" ng-class="{'doneWork':(work.finishedPpl(assig.exercisers)==assig.exercisers.length)||work.selfDoneWork(assig.exercisers)}"  ng-bind="work.selfDoneWork(assig.exercisers)?'已完成':'完成工作'" ng-click="work.selfDoneWork(assig.exercisers)?null:work.doneWork(assig.id)" class="btn btn-info pull-right"></button>
+                                        <button  ng-if="work.finishedPpl(assig.exercisers)==assig.exercisers.length?false:true||!(assig.publisher=work.realName)" ng-click="work.toCorrectPage('myWorkWrap');work.correct(assig.project.name,work.nameHandle(assig.exercisers,'true'),assig.content,assig.deadline)" class="btn btn-default pull-right">编辑</button>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <set-page conf="work.pageConfig"></set-page>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 我的工作结束 -->
+                        <!-- 工作修改表单开始 -->
+                        <div id="correctWorkWrap"  style="overflow:hidden; display: none;">
+                            <form action="" role="form" name="correctWorkForm" class="form-horizontal" style="margin-top: 20px;">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="">项目名</label>
+                                    <div class="col-sm-8">
+                                        <div class="row">
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" required name="projectName" ng-model="work.assigData.projectName"/>
+                                                <div class="alert alert-danger help-block" ng-show="correctWorkForm.projectName.$error.required&&work.submittedCor">
+                                                    不能为空！
+                                                </div>
+                                                <!-- 如果是注释掉的这些在页面上进行转换的做法，那么当先选了ng-select中的值的时候，id就gg了，改不过来 -->
+                                                <!--<input type="text" class="form-control"  ng-model="work.assignList.project.id"/>-->
+                                                <!--<input type="text" class="form-control"  ng-model="work.temp.project.id"/>work.temp.project.name:{{work.temp.project.name}}-->
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="btn-group btn-wigdet">
+                                                    <div class="btn">选择已建立项目</div>
+                                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li ng-click="work.assignList.project.name=proj.name;"  ng-repeat="proj in work.project" style="cursor: pointer;">
+                                                            <a ng-bind="proj.name"></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-repeat="assign in work.assigData" class="form_center">
+                                    <hr>
+                                    <!-- work.temp.project.name实质上为中间变量，因为proj和assign在两个不同的作用域中 btn为转换的开关-->
+                                    <!--<button id="proNameChangeBtn" ng-click="assign.project.name=work.temp.project.name;assign.project.id=work.temp.project.id;"></button>
+                                    <input type="text" ng-model="assign.project.name">
+                                    <input type="text" ng-model="assign.project.id" >-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="">安排人员</label>
+                                        <div class="col-sm-9 controls">
+                                            <!-- 用作在ctrl的model中找$index的储存标签 -->
+                                            <span ng-hide="true">{{$index}}</span>
+                                            <!-- 用于触发弹窗 -->
+                                            <div style="position: relative;" class="corModal" data-toggle="modal" ng-click="work.showApplyData()">
+                                                <!-- 用于显示已选中的人员名称 -->
+                                                <p style="position: absolute;top: 5px ;left:14px ; background: #ffffff;"></p>
+                                                <!-- 用于设置model中members的空值，好给ctrl中用另一种方式处理 -->
+                                                <input  name="sendToInp"   type="text" ng-model="assign.members" ng-click="work.getTarget($event);"   class="form-control send-to"/>
+                                                <div class="alert alert-danger help-block" ng-show="assign.members.length===undefined&&work.submittedCor">
+                                                    请选择人员！
+                                                </div>
+                                            </div>
+                                            <!-- id -->
+                                            <input ng-hide="true" type="text"  class="form-control "  />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="">通知内容</label>
+                                        <div class="col-sm-9 controls">
+                                            <textarea required name="informContent"  ng-model="assign.content" cols="30" rows="10" placeholder="写点啥吧。。。" class="form-control"></textarea>
+                                            <div class="alert alert-danger help-block" ng-show="assign.content.length===undefined&&work.submittedCor">
+                                                不能为空！
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="">截止日期</label>
+                                        <div class="col-sm-9 controls">
+                                            <input type="datetime-local"  name="deadline" ng-focus="oo=true" ng-model="assign.deadline" class="form-control send-to"/>assign.deadline{{assign.deadline}}
+                                            <div class="alert alert-danger help-block" ng-show="(oo=true?work.datetime_local('true'):false)&&work.submittedCor">
+                                                不能为空！
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="form-group sureBtn">
+                                    <label class="col-sm-4 control-label"></label>
+                                    <div class="col-sm-6">
+                                        <button type="button" ng-click="correctWorkForm.$valid?work.corWork(work.assigData):work.submittedCor=true;oo=true" class="btn btn-info">确认修改</button>
+                                        <button ng-click="work.toCorrectPage('correctWorkWrap');work.submittedCor=false" type="button" class="btn btn-info">返回</button>
+                                    </div>
+                                    <!-- 错误提示重置 -->
+                                    <button id="resetBtn-cor" style="display: none;" ng-click="main.submintted=false" type="button">重置</button>
+                                </div>
+
+                            </form>
+                        </div>
+                        <!-- 工作修改表单结束 -->
+                    </div>
+                    <!-- 工作安排表单开始 -->
+                    <div role="tabpanel" class="tab-pane" id="workArrange">
+                        <div style="overflow:hidden;">
+                            <form action="" name="projectApplyForm" role="form" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="">项目名</label>
+                                    <div class="col-sm-8">
+                                        <div class="row">
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" required name="projectName" ng-model="work.assignList.project.name"/>
+                                                <div class="alert alert-danger help-block" ng-show="projectApplyForm.projectName.$error.required&&work.submitted">
+                                                    不能为空！
+                                                </div>
+                                                <!-- 如果是注释掉的这些在页面上进行转换的做法，那么当先选了ng-select中的值的时候，id就gg了，改不过来 -->
+                                                <!--<input type="text" class="form-control"  ng-model="work.assignList.project.id"/>-->
+                                                <!--<input type="text" class="form-control"  ng-model="work.temp.project.id"/>work.temp.project.name:{{work.temp.project.name}}-->
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="btn-group btn-wigdet">
+                                                    <div class="btn">选择已建立项目</div>
+                                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li ng-click="work.assignList.project.name=proj.name;"  ng-repeat="proj in work.project" style="cursor: pointer;">
+                                                            <a ng-bind="proj.name"></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-repeat="assign in work.assignList.assignList" class="form_center">
+                                    <hr>
+                                    <a ng-click="work.delAssig($index)" class="close pull-right"><span class="badge">×</span></a>
+                                    <!-- work.temp.project.name实质上为中间变量，因为proj和assign在两个不同的作用域中 btn为转换的开关-->
+                                    <!--<button id="proNameChangeBtn" ng-click="assign.project.name=work.temp.project.name;assign.project.id=work.temp.project.id;"></button>
+                                    <input type="text" ng-model="assign.project.name">
+                                    <input type="text" ng-model="assign.project.id" >-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="">安排人员</label>
+                                        <div class="col-sm-9 controls">
+                                            <!-- 用作在ctrl的model中找$index的储存标签 -->
+                                            <span ng-hide="true">{{$index}}</span>
+                                            <!-- 用于触发弹窗 -->
+                                            <div style="position: relative;" class="pubModal" data-toggle="modal" ng-click="work.showApplyData()">
+                                                <!-- 用于显示已选中的人员名称 -->
+                                                <p style="position: absolute;top: 5px ;left:14px ; background: #ffffff;"></p>
+                                                <!-- 用于设置model中members的空值，好给ctrl中用另一种方式处理 -->
+                                                <input  name="sendToInp"   type="text" ng-model="assign.members[$index]" ng-click="work.getTarget($event);"  id="chosenPpl" class="form-control "/>
+                                                <div class="alert alert-danger help-block" ng-show="work.assignList.assignList[$index].members.length==0&&work.submitted">
+                                                    请选择人员！
+                                                </div>
+                                            </div>
+                                            <!-- id -->
+                                            <input ng-hide="true" type="text"  class="form-control "  />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="">通知内容</label>
+                                        <div class="col-sm-9 controls">
+                                            <textarea required name="informContent"  ng-model="assign.content" cols="30" rows="10" placeholder="写点啥吧。。。" class="form-control"></textarea>
+                                            <div class="alert alert-danger help-block" ng-show="assign.content.length===undefined&&work.submitted">
+                                                不能为空！
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="">截止日期</label>
+                                        <div class="col-sm-9 controls">
+                                            <input type="datetime-local"  name="deadline"  ng-focus="o=true"  ng-model="assign.deadline[$index]" class="form-control deadline{{$index}} send-to"/>
+                                            <div class="alert alert-danger help-block"  ng-show="(o===true?work.datetime_local('false',[$index]):false)&&work.submitted">
+                                                日期为空或格式错误！
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="form-group sureBtn">
+                                    <label class="col-sm-4 control-label"></label>
+                                    <div class="col-sm-6">
+                                        <button type="button" ng-click="work.addNewWork();work.submitted=false;" class="btn btn-primary">添加新任务</button><span>&nbsp;&nbsp;&nbsp;</span>
+                                        <button type="button" ng-click="projectApplyForm.$valid?work.pubWork(work.assignList):work.submitted=true;o=true" class="btn btn-info">确认安排</button>
+                                </div>
+                                    <!-- 错误提示重置 -->
+                                    <button id="resetBtn" style="display: none;" ng-click="main.submintted=false" type="button">重置</button>
+                                </div>
+                            </form>
+                        </div>  
+                    </div>
+                    <!-- 工作安排表单结束 -->
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- 工作安排表单人员列表开始 -->
+<div class="modal fade  choose-staff" id="chosen_per">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title entypo-users">&nbsp;&nbsp;人员列表</h4>
+            </div>
+            <div class="modal-body">
+                <div class="staff-list-wrap">
+                    <div class="skin skin-flat">
+                        <ul class="list" ng-init="work.handlePplList()">
+                            <form id="pplListForm">
+                                <li ng-repeat="ppl in work.pplList" ng-rended="work.rended()" >
+                                    <input type="checkbox" tabindex="{{ppl.id}}" id="flat-checkbox-{{ppl.id}}" ng-value="ppl.name">
+                                    <label for="flat-checkbox-{{ppl.id}}">
+                                        <span ng-bind="ppl.name" class="staff_name"></span>
+                                        <span ng-bind="ppl.position" class="staff-position"></span>
+                                        <span ng-hide="true" class="pplId" ng-bind="ppl.id"></span>
+                                    </label>
+                                </li>
+                            </form>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 工作安排表单人员列表结束 -->
+
+<!--Main Effect-->
+<script type="text/javascript" src="assets/js/toggle_close.js"></script>
+<!-- 模块弹窗 -->
+<script type="text/javascript" src="assets/js/iCheck/jquery.icheck.js"></script>
+

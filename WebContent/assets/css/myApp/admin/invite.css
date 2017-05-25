@@ -1,0 +1,24 @@
+.dl-horizontal-profile{
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+.in_check{
+    padding: 6px !important;
+    margin-left: 20px;
+}
+.inviteNew>p{
+    margin-left: -15px;
+    font-weight: bold;
+}
+#in_table{
+    display: none;
+    margin-bottom: 20px;
+}
+.in_logo>img{
+    width: 200px;
+    height: 200px;
+    display: block;
+}
+.in_logo+p{
+    margin: 15px 0 20px 3px;
+}

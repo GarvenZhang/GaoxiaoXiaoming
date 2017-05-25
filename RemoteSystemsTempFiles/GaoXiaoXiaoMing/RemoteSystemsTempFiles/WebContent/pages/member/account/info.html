@@ -1,0 +1,176 @@
+<link href="assets/js/iCheck/flat/all.css" rel="stylesheet">
+<link href="assets/js/iCheck/line/all.css" rel="stylesheet">
+
+<link href="assets/js/colorPicker/bootstrap-colorpicker.css" rel="stylesheet">
+<link href="assets/js/switch/bootstrap-switch.css" rel="stylesheet">
+<link href="assets/js/validate/validate.css" rel="stylesheet">
+<link href="assets/js/idealform/css/jquery.idealforms.css" rel="stylesheet">
+
+
+<!--组织基础信息标题 开始-->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="fontawesome-list-alt"></span>
+                <span>个人基本信息</span>
+            </h2>
+        </div>
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong>Dave mattew!</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--组织基础信息标题 结束-->
+
+<!--组织基本信息页面开始-->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="nest" id="elementClose">
+            <!-- 主要内容开始-->
+            <div class="body-nest" id="element">
+                <div class="panel-body">
+                    <form id="userForm" name="userForm" class="form-horizontal bucket-form">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="real-name">姓名：</label>
+                            <div class="col-sm-6">
+                                <input name="username" ng-value="userInfo.userData.name"  disabled id="real-name" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="organization">所在组织：</label>
+                            <div class="col-sm-6">
+                                <input ng-value="userInfo.userData.organization"  disabled id="organization" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="account">登陆账号：</label>
+                            <div class="col-sm-6">
+                                <input ng-value="userInfo.userData.loginName" disabled id="account" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="or_name">学校与校区：</label>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-6"  >
+                                        <select  ng-model="userInfo.userData.university.id" ng-options="x.id as x.name for x in userInfo.univList"
+                                                 ng-change="userInfo.changeSchool(userInfo.userData.university.id)"
+                                                 class="form-control" id="universityId">
+                                        </select>
+                                        <div style="display: none;" id="universityId_successTip" ng-show="userInfo.correctedData()&&userInfo.correctedId()=='universityId'?main.defaultHide('universityId_successTip'):false"  class="help-block alert alert-success">
+                                            修改成功
+                                        </div>
+                                        <div style="display: none;"  id="universityId_fialTip" ng-show="userInfo.defaultShow()=='universityId'&&!(userInfo.correctedData()&&userInfo.correctedId()=='universityId')?main.defaultHide('universityId_fialTip'):false" class="help-block alert alert-danger">
+                                            修改失败,请重新修改!
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select
+                                                ng-model="userInfo.userData.campus.id" ng-options="x.id as x.name for x in userInfo.campusList"
+                                                ng-focus="userInfo.initData(userInfo.userData.campus.id)"  ng-blur="userInfo.newData('campusId',userInfo.campusList)"
+                                                  id="campusId" class="form-control " >
+                                        </select>
+                                        <div style="display: none;"  id="campusId_successTip" ng-show="userInfo.correctedData()&&userInfo.correctedId()=='campusId'?main.defaultHide('campusId_successTip'):false"  class="help-block alert alert-success">
+                                            修改成功
+                                        </div>
+                                        <div style="display: none;"  id="campusId_failTip" ng-show="userInfo.defaultShow()=='campusId'&&!(userInfo.correctedData()&&userInfo.correctedId()=='campusId')?main.defaultHide('campusId_failTip'):false" class="help-block alert alert-danger">
+                                            修改失败,请重修修改!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="or_logo">年级：</label>
+                            <div class="col-sm-6">
+                                <select
+                                        ng-model="userInfo.userData.grade.id" ng-options="x.id as x.name for x in userInfo.gradeList"
+                                        ng-focus="userInfo.initData(userInfo.userData.grade.id)"  ng-blur="userInfo.newData('gradeId',userInfo.gradeList)"
+                                        id="gradeId"  class="form-control">
+                                </select>
+                                <div style="display: none;"  id="gradeId_successTip" ng-show="userInfo.correctedData()&&userInfo.correctedId()=='gradeId'?main.defaultHide('gradeId_successTip'):false" class="help-block alert alert-success">
+                                    修改成功
+                                </div>
+                                <div style="display: none;"  id="gradeId_failTip" ng-show="userInfo.defaultShow()=='gradeId'&&!(userInfo.correctedData()&&userInfo.correctedId()=='campusId')?main.defaultHide('gradeId_failTip'):false" class="help-block alert alert-danger">
+                                    修改失败,请重修修改!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="dept">部门：</label>
+                            <div class="col-sm-6">
+                                <select
+                                        ng-model="userInfo.userData.department.id" ng-options="x.id as x.name for x in userInfo.departList"
+                                        ng-focus="userInfo.initData(userInfo.userData.department.id)"  ng-blur="userInfo.newData('departmentId',userInfo.departList)"
+                                        id="departmentId"  class="form-control">
+                                </select>
+                                <div style="display: none;"  id="departmentId_successTip"  ng-show="userInfo.correctedData()&&userInfo.correctedId()=='departmentId'?main.defaultHide('departmentId_successTip'):false" class="help-block alert alert-success">
+                                    修改成功
+                                </div>
+                                <div style="display: none;"  id="departmentId_failTip" ng-show="userInfo.defaultShow()=='departmentId'&&!(userInfo.correctedData()&&userInfo.correctedId()=='campusId')?main.defaultHide('departmentId_failTip'):false" class="help-block alert alert-danger">
+                                    修改失败,请重修修改!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="position">职位：</label>
+                            <div class="col-sm-6">
+                                <input   ng-focus="userInfo.initData(userInfo.userData.position)"  ng-blur="userInfo.checkBlankString(userInfo.getValue('position'))?userInfo.newData('position',1,userInfo.getValue('position')):postionBlank=true" ng-value="userInfo.userData.position" placeholder="小干or部长" readonly="readonly" id="position" class="form-control" type="text">
+                                <div style="display: none;"  id="position_failTip" ng-show="!userInfo.checkBlankString(userInfo.getValue('position'))&&!(userInfo.correctedData()&&userInfo.correctedId()=='position')?main.defaultHide('position_failTip'):false" class="help-block alert alert-danger">
+                                    请正确填写职位！
+                                </div>
+                                <div style="display: none;"  id="position_successTip" ng-show="userInfo.correctedData()&&userInfo.correctedId()=='position'?main.defaultHide('position_successTip'):false" class="help-block alert alert-success">
+                                    修改成功
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="contact">联系方式：</label>
+                            <div class="col-sm-6">
+                                <input  name="phoneNumber" ng-keypress="main.onlyNum($event)" ng-focus="userInfo.initData(userInfo.userData.phoneNumber)"  ng-blur="userInfo.checkPhoneNum(userInfo.getValue('contact'))?userInfo.newData('phoneNumber',1,userInfo.getValue('contact')):phoneNumStyle=true"  ng-value="userInfo.userData.phoneNumber" placeholder="Tel:0757-********" maxlength="11" readonly="readonly" id="contact" class="form-control" type="text">
+                                <!--1.不修改时成功与失败都不出现 2.成功与失败不可同时出现 3.整个页面中在修改时成功只出现一次；而对于单个表单来说，如果修改失败的，直到成功才会消失-->
+                                <div style="display: none;"  id="phoneNumber_failTip" ng-show="!userInfo.checkPhoneNum(userInfo.getValue('contact'))&&!(userInfo.correctedData()&&userInfo.correctedId()=='phoneNumber_failTip')?main.defaultHide('position_successTip'):false" class="help-block alert alert-danger">
+                                    请正确填写您的电话号码!
+                                </div>
+                                <div style="display: none;"  id="phoneNumber_successTip" ng-show="userInfo.correctedData()&&userInfo.correctedId()=='phoneNumber'?main.defaultHide('phoneNumber_successTip'):false" class="help-block alert alert-success">
+                                    修改成功
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <!-- 主要内容结束-->
+        </div> 
+    </div>
+</div>
+<!--组织基本信息页面结束-->
+<script type="text/javascript" src="assets/js/switch/bootstrap-switch.js"></script>
+
+<script>
+    $('input[readonly]').each(function () {
+        $(this).data('orInformation', $.trim($('input[readonly]').val()));
+    })
+    .focus(function(){
+        $(this).removeAttr('readonly');
+        // if($.trim($(this).val())===$(this).data('orInformation')){
+        //     $(this).val('');
+        // }      
+    })
+    .blur(function(){
+        if($.trim($(this).val())===''){
+            $(this).val($.trim($(this).data('orInformation')));
+        }
+        $(this).attr('readonly','readonly');
+    });
+</script>

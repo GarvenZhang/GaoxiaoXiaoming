@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.Material" table="MATERIAL">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="totalCount" type="java.lang.Integer">
+            <column name="TOTALCOUNT" />
+        </property>
+        <property name="lentCount" type="java.lang.Integer">
+            <column name="LENTCOUNT" />
+        </property>
+        <property name="existCount" type="java.lang.Integer">
+            <column name="EXISTCOUNT" />
+        </property>
+        <property name="storageLocation" type="java.lang.String">
+            <column name="STORAGELOCATION" />
+        </property>
+        <property name="createTime" type="java.util.Date">
+        	<column name="CREATETIME" />
+        </property>
+        <property name="isDeleted" type="java.lang.Boolean">
+        	<column name="ISDELETED" />
+        </property>
+        <many-to-one name="orgBelongTo" class="com.xiaoming.domain.Organization" fetch="join">
+            <column name="ORGANIZATION" />
+        </many-to-one>
+        <set name="lendLog" table="MATERIALLENDLOG" inverse="false" lazy="true">
+            <key>
+                <column name="MATERIAL_ID" />
+            </key>
+            <one-to-many class="com.xiaoming.domain.MaterialLendLog" />
+        </set>
+    </class>
+</hibernate-mapping>

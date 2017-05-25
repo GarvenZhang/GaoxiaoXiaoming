@@ -1,0 +1,178 @@
+﻿<!--  <link rel="stylesheet" href="assets/css/style.css"> -->
+<link rel="shortcut icon" href="assets/ico/minus.png">
+<link rel="stylesheet" href="assets/css/loader-style.css">
+<link rel="stylesheet" href="assets/css/bootstrap.css">
+<link rel="stylesheet" href="assets/css/signin.css">
+<link rel="stylesheet" href="assets/css/profile.css">
+<link href="assets/js/iCheck/flat/all.css" rel="stylesheet">
+<link href="assets/js/iCheck/line/all.css" rel="stylesheet">
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+</div>
+
+<div class="container">
+
+    <div class="" id="login-wrapper">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div id="logo-login">
+                    <h1>注册帐号
+                    </h1>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="account-box"> 
+                    <div class="form-group">
+                        <div class="btn-group regist-role" role="group" aria-label="">
+                            <button type="button" value="member" class="btn btn-default active">成员注册</button>
+                            <button type="button" value="admin" class="btn btn-default">管理员注册</button>
+                        </div>
+                    </div>
+                    <div class="regist-wrap active">
+                        <form id="regist-member">
+                            <div class="form-group">
+                                <label for="loginName">用户名</label>
+                                <input ng-model="register.user_member.loginName" type="text" id="loginName" name="loginName" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd-member">密码</label>
+                                <input ng-model="register.user_member.password" type="password" id="pwd-member" name="pwd-member" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPwd-member">确认密码</label>
+                                <input type="password" id="confirmPwd-member" name="confirmPwd-member" class="form-control">
+                            </div> 
+                            <div class="form-group">
+                                <label for="phone-member">手机号码</label>
+                                <input ng-model="register.user_member.phoneNumber" type="text" id="phone-member" name="phone-member" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="msg-code">手机验证码</label>
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <input ng-model="register.user_member.code" type="text" id="msg-code-M" name="msg-code-M" class="form-control">
+                                    </div>
+                                    <div class="send-code col-sm-5">
+                                        <get-code-btn-m get-code="register.getCode(register.user_member.phoneNumber)" phone-num="register.user_member.phoneNumber">发送验证码</get-code-btn-m>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label for="school-member">所在学校</label>
+                                <select ng-change="register.getCampus(register.schoolId)" ng-model="register.schoolId" id="school-member" name="school-member" class="form-control select-sch">
+                                    <option value="">请选择学校</option>
+                                    <option ng-repeat="school in register.schoolList" value="{{school.id}}" ng-bind="school.name"></option>
+                                </select>
+                            </div> 
+                            <div class="form-group">
+                                <label for="campus-member">校区</label>
+                                <select ng-model="register.user_member.campusId" id="campus-member" name="campus-member" class="form-control select-camp">
+                                    <option value="">请选择校区</option>
+                                    <option ng-repeat="campus in register.campusList" value="{{campus.id}}" ng-bind="campus.name"></option>
+                                </select>
+                            </div>
+                            <div class="login-ex">
+                                <a href="#/login" class="back-login">&lt;&lt;返回登陆</a>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12 row-block">
+                                        <button ng-click="register.registMember(register.user_member)" class="btn btn-primary btn-block apply-btn">注册</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <timerbutton show-timer="true" timeout="time">Hello There</timerbutton>
+                        </form>
+                    </div>
+                    <div class="regist-wrap">
+                        <form id="regist-admin">
+                            <div class="form-group">
+                                <label for="acc-admin">设置帐号</label>
+                                <input ng-model="register.user_admin.loginName" type="text" id="acc-admin" name="acc-admin" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd-admin">设置密码</label>
+                                <input ng-model="register.user_admin.password" type="password" id="pwd-admin" name="pwd-admin" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPwd-admin">确认密码</label>
+                                <input type="password" id="confirmPwd-admin" name="confirmPwd-admin" class="form-control">
+                            </div> 
+                            <div class="form-group">
+                                <label for="contact-admin">手机号码</label>
+                                <input ng-model="register.user_admin.phoneNumber" type="text" id="contact-admin" name="contact-admin" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="msg-code">手机验证码</label>
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <input ng-model="register.user_admin.code" type="text" id="msg-code-A" name="msg-code-A" class="form-control">
+                                    </div>
+                                    <div class="send-code col-sm-5">
+                                        <get-code-btn-m get-code="register.getCode(register.user_admin.phoneNumber)" phone-num="register.user_admin.phoneNumber">发送验证码</get-code-btn-m>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label for="org-name">组织全称</label>
+                                <input ng-model="register.user_admin.orgName" type="text" id="org-name" name="org-name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="school-member">所在学校</label>
+                                <select ng-change="register.getCampus(register.schoolId)" ng-model="register.schoolId" id="school-admin" name="school-admin" class="form-control select-sch">
+                                    <option value="">请选择学校</option>
+                                    <option ng-repeat="school in register.schoolList" value="{{school.id}}" ng-bind="school.name"></option>
+                                </select>
+                            </div> 
+                            <div class="form-group">
+                                <label for="campus-member">校区</label>
+                                <select ng-model="register.user_admin.campusId" id="campus-admin" name="campus-admin" class="form-control select-camp">
+                                    <option value="">请选择校区</option>
+                                    <option ng-repeat="campus in register.campusList" value="{{campus.id}}" ng-bind="campus.name"></option>
+                                </select>
+                            </div>
+                            <div class="login-ex">
+                                <a href="#/login" class="back-login">&lt;&lt;返回登陆</a>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12 row-block">
+                                        <button ng-click="register.registAdmin(register.user_admin)" class="btn btn-primary btn-block apply-btn">注册</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <div style="text-align:center;margin:0 auto;">
+        <h6 style="color:#fff;">Powered by 昌老师团队</h6>
+    </div>
+
+</div>
+
+
+
+<!--  END OF PAPER WRAP -->
+
+
+
+
+<!-- MAIN EFFECT -->
+<script type="text/javascript" src="assets/js/preloader.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="assets/js/iCheck/jquery.icheck.js"></script>
+<script type="text/javascript" src="assets/js/validate/jquery.validate.min.js"></script>
+<script type="text/javascript" src="resources/js/jQuery.md5.js"></script>
+<script type="text/javascript" src="assets/js/myApp/other/regist.js"></script>
+

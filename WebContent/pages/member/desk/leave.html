@@ -1,0 +1,247 @@
+<!-- 模板中对应的css -->
+<link href="assets/js/iCheck/flat/all.css" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/myApp/member/leave.css">
+
+<!--左边 请假表单内容开始-->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="entypo-tag"></span>
+                <span>请假</span>
+            </h2>
+        </div>
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--左边 请假表单内容结束-->
+
+<!--请假内容开始-->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="nest" id="tabClose">
+            <div class="body-nest" id="tab">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li ng-click="pplListForm.$setPristine();leave.reset();a=false;b=false;c=false;d=false;" role="presentation" class="active"><a href="/#my-leave" aria-controls="my-leave" role="tab" data-toggle="tab">我的请假</a></li>
+                    <li role="presentation"><a href="/#leaving" aria-controls="leaving" role="tab" data-toggle="tab">请假申请</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id="leaving">
+                        <div style="overflow:hidden;">
+                            <!-- 左边-表单栏开始 -->
+                            <form name="pplListForm" role="form" class="form-horizontal">
+                                <div class="form-group" >
+                                    <label class="col-sm-3 control-label" for="">发送给</label>
+                                    <div class="col-sm-6 controls">
+                                        <input name="sendToInp" ng-model="sendToInp" type="text" id="chosenPpl" class="form-control send-to" placeholder="点击选择人员" data-toggle="modal" />
+                                        <input ng-hide="true" type="text" id="chosenPplId" class="form-control send-toId" placeholder="点击选择人员Id" data-toggle="modal" data-target=".choose-staff" />
+                                        <div ng-show="leave.getValue('chosenPplId').length==0?a:false" class="help-block alert alert-danger">
+                                            请选择人员！
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="">请假时间</label>
+                                    <div class="col-sm-6 controls">
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <input name="leaveStartInp" ng-model="leaveStartInp" type="datetime-local"  class="form-control" id="leave-start" >
+                                                <div ng-show="pplListForm.leaveStartInp.$dirty&&leave.datetimeCheck(leave.getValue('leave-start'))||leave.datetimeCheck(leave.getValue('leave-start'))?b:false" class="alert alert-danger help-block">
+                                                    请按 "年/月/日 时:分" 格式正确填写时间！
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">到</div>
+                                            <div class="col-sm-5">
+                                                <input name="leaveEndInp" ng-model="leaveEndInp"  type="datetime-local" class="form-control" id="leave-end" >
+                                                <div ng-show="pplListForm.leaveEndInp.$dirty&&leave.datetimeCheck(leave.getValue('leave-end'))||leave.datetimeCheck(leave.getValue('leave-end'))?c:false" class="alert alert-danger help-block">
+                                                    请按 "年/月/日 时分" 格式正确填写时间！
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-3 control-label" for="">请假理由</label>
+                                    <div class="col-sm-6 controls">
+                                        <textarea name="absenceReasonTxtA" ng-required="true" ng-model="absenceReasonTxtA" id="absenceReasonTxtA" cols="30" rows="10" placeholder="请填写具体的请假理由" class="form-control"></textarea>
+                                        <div ng-show="pplListForm.absenceReasonTxtA.$dirty&&pplListForm.absenceReasonTxtA.$invalid" class="alert alert-danger help-block">
+                                            请假理由不能为空！
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group sureBtn">
+                                    <label class="col-sm-5 control-label"></label>
+                                    <div class="col-sm-6">
+                                        <button type="button" ng-disabled="pplListForm.absenceReasonTxtA.$dirty&&pplListForm.$invalid||pplListForm.absenceReasonTxtA.$dirty?d:true" ng-click="leave.getValue('chosenPpl').length==0?a=true:
+                                        (leave.datetimeCheck(leave.getValue('leave-start'))==true?b=true:
+                                        (leave.datetimeCheck(leave.getValue('leave-end'))==true?c=true:
+                                        leave.checkAbsenceApply()))" class="btn btn-info">请假申请</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- 左边-表单栏结束 -->
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane active" id="my-leave">
+                        <div style="overflow:auto;">
+                            <div class="col-sm-6 box-wrap" style="min-width: 308px;">
+                                <div class="col-sm-12 reportRaise">
+                                    <!-- 我收到的请假 开始 -->
+                                    <h4>我收到的请假<span ng-bind="leave.recordCount_R" class="badge" style="font-size: 17px;line-height: 18px; padding: 0 4px;"></span></h4>
+                                    <div class="reportRaise_wrap" id="reportInv_wrap_R">
+                                        <div id="allHeightATime_R">
+                                            <div ng-if="leave.absenceData_R.length==0">
+                                                暂无数据
+                                            </div>
+                                            <div ng-repeat="data in leave.absenceData_R" class="list-group">
+                                                <a class="list-group-item">
+                                                    <p ng-bind="data.content" class="list-group-item-heading"></p>
+                                                    <div class="row leave-date">
+                                                        <div class="col-sm-12">
+                                                            <span class="pull-left">请假时间:&nbsp;&nbsp;</span>
+                                                            <span ng-bind="data.absenceTime">&nbsp;</span> 到 <span ng-bind="data.endTime"> </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" ng-init="data.applys[0].handle==false?btn=true:btn=false">
+                                                        <div class="col-sm-8 pull-left">
+                                                            <span class="label pull-left">From</span>
+                                                            <span  ng-bind="leave.showApplyName(data.applys)"  class="sent-to col-sm-10" title="{{leave.showApplyName(data.applys)}}"></span>
+
+                                                        </div>
+                                                        <div ng-if="btn" class="col-sm-4 pull-right">
+                                                            <button ng-click="leave.handleAbsenceRequest($event,data.applys[0].id,true)" class="btn btn-primary pull-right">同意</button>
+                                                            <button ng-click="leave.handleAbsenceRequest($event,data.applys[0].id,false)" class="btn btn-primary pull-right">拒绝</button>
+                                                        </div>
+                                                        <div ng-if="!btn" class="col-sm-2 col-sm-offset-2">
+                                                            <p ng-bind="data.applys[0].agree==true?'同意':'拒绝'"></p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 我收到的请假 结束 -->
+                                </div>
+                            </div>
+                            <div class="col-sm-6 box-wrap" style="min-width: 308px;" id="box-wrap">
+                                <div class="col-sm-12 reportInv" id="reportInv" >
+                                    <!-- 我的请假申请 开始 -->
+                                    <h4>我的请假申请<span ng-bind="leave.recordCount_P" class="badge" style="font-size: 17px;line-height: 18px; padding: 0 4px;"></span></h4>
+                                    <div class="reportInv_wrap" id="reportInv_wrap_P">
+                                        <div id="allHeightATime_P">
+                                            <div ng-if="leave.absenceData_P==0">
+                                                暂无数据
+                                            </div>
+                                            <div  ng-repeat="data in leave.absenceData_P" class="list-group">
+                                                <a class="list-group-item">
+                                                    <p ng-bind="data.content" class="list-group-item-heading"></p>
+                                                    <div class="row leave-date">
+                                                        <div class="col-sm-12">
+                                                            <span class="pull-left">请假时间:&nbsp;&nbsp;</span>
+                                                            <span ng-bind="data.absenceTime">&nbsp;</span> 到 <span ng-bind="data.endTime"> </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <span class="label pull-left">To</span>
+                                                            <span  ng-bind="leave.showApplyName(data.applys)"  class="sent-to col-sm-10" title="{{leave.showApplyName(data.applys)}}"></span>
+                                                        </div>
+                                                        <div class="col-sm-2 pull-right">
+                                                            <p ng-bind="leave.absenceResult(data.applys)"></p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 我的请假申请 结束 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--请假内容结束-->
+
+<div class="modal fade choose-staff" id="chosen_per">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title entypo-users">&nbsp;&nbsp;人员列表</h4>
+            </div>
+            <div class="modal-body">
+                <div class="staff-list-wrap">
+                    <div class="skin skin-flat">
+                        <ul class="list" ng-init="leave.handlePplList()">
+                            <form id="pplForm_leave">
+                                <li ng-repeat="ppl in leave.pplList" ng-rended="leave.rended()" >
+                                    <input type="checkbox" tabindex="{{ppl.id}}" id="flat-checkbox-{{ppl.id}}" ng-value="ppl.name">
+                                    <label for="flat-checkbox-{{ppl.id}}">
+                                        <span ng-bind="ppl.name" class="staff-name"></span>
+                                        <span ng-bind="ppl.position" class="staff-position"></span>
+                                        <span ng-hide="true" class="pplId" ng-bind="ppl.id"></span>
+                                    </label>
+                                </li>
+                            </form>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Main Effect-->
+<script src="assets/js/wizard/lib/jquery.cookie-1.3.1.js"></script>
+<script type="text/javascript" src="assets/js/iCheck/jquery.icheck.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        //将选中的任选显示到文本框中
+        $('.choose-staff').on("hidden.bs.modal",function(){
+            var str = "",idArr=[];
+            $('div .checked').each(function(idx){
+                if(idx < $('div .checked').length-1){
+                    str += $(this).parent().find('.staff-name').html() + "、";
+
+                    idArr.push('\"'+$(this).parent().find('.pplId').html()+'\"');
+
+                    idArr.push($(this).parent().find('.pplId').html());
+
+                }else{
+                    str = str + $(this).parent().find('.staff-name').html();
+
+                    idArr.push('\"'+$(this).parent().find('.pplId').html()+'\"');
+
+                    idArr.push($(this).parent().find('.pplId').html());
+
+                }
+            });
+            $('.send-to').val(str);
+            $('.send-toId').val(idArr);
+        });
+
+        $('#chosenPpl').on('focus',function () {
+           $('#chosen_per').modal('show');
+        });
+    });
+
+</script>

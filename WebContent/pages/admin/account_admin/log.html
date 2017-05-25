@@ -1,0 +1,84 @@
+<link href="assets/js/footable/css/footable.core.css?v=2-0-1" rel="stylesheet" type="text/css">
+<link href="assets/js/footable/css/footable.standalone.css" rel="stylesheet" type="text/css">
+<link href="assets/js/footable/css/footable-demos.css" rel="stylesheet" type="text/css">
+        
+
+<!--TITLE -->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="fontawesome-tasks"></span>
+                <span>操作日志</span>
+            </h2>
+        </div>
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ TITLE -->
+        
+<div class="row">
+
+    <div class="col-sm-12">
+
+        <div class="nest" id="FootableClose">
+            <div class="body-nest" id="materials">
+
+                <table class="table-striped footable-res footable metro-blue" data-page-size="10">
+                    <thead>
+                        <tr>
+                            <th>
+                                日期
+                            </th>
+                            <th>
+                                时间
+                            </th>
+                            <th>
+                                事件
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="log in logA.logList">
+                            <td ng-bind="log.date"></td>
+                            <td ng-bind="log.time"></td>
+                            <td ng-bind="log.event"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <set-page conf="logA.pageConfig"></set-page>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+        
+        
+        
+<script type="text/javascript" src="assets/js/toggle_close.js"></script>
+<script src="assets/js/footable/js/footable.js?v=2-0-1" type="text/javascript"></script>
+<!--<script src="assets/js/footable/js/footable.sort.js?v=2-0-1" type="text/javascript"></script>-->
+<script src="assets/js/footable/js/footable.filter.js?v=2-0-1" type="text/javascript"></script>
+
+<script type="text/javascript">
+$(function() {
+    $('.footable-res').footable();
+});
+</script>

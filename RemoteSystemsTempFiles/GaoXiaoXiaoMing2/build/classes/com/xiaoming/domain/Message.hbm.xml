@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.Message" table="MESSAGE">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="content" type="java.lang.String">
+            <column name="CONTENT" />
+        </property>
+        <property name="publishTime" type="java.util.Date">
+            <column name="PUBLISHTIME" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+        	<column name="UPDATETIME" />
+        </property>
+        <property name="deleted" type="java.lang.Boolean">
+        	<column name="DELETED" />
+        </property>
+        <many-to-one name="publisher" class="com.xiaoming.domain.Member" fetch="join">
+            <column name="PUBLISHER" />
+        </many-to-one>
+        
+        <set name="usersMessage" table="USERSMESSAGE" cascade="save-update" inverse="true" lazy="true">
+        	<key>
+        		<column name="MESSAGE" />
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.UsersMessage" />
+        </set>
+    </class>
+</hibernate-mapping>

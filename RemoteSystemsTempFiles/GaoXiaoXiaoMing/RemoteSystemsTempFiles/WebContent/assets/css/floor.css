@@ -1,0 +1,9 @@
+.tb-wrap {
+    position: relative;
+}
+
+.tb-wrap .gone {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}

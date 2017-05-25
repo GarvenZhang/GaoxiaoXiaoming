@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-17 20:18:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.MaterialLendLog" table="MATERIALLENDLOG">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="count" type="java.lang.Integer">
+            <column name="COUNT" />
+        </property>
+        <property name="borrowerName" type="java.lang.String">
+            <column name="BORROWERNAME" />
+        </property>
+        <property name="borrowerPhoneNumber" type="java.lang.String">
+            <column name="BORROWERPHONENUMBER" />
+        </property>
+        <property name="borrowDate" type="java.util.Date">
+            <column name="BORROWDATE" />
+        </property>
+        <property name="revertDate" type="java.util.Date">
+            <column name="REVERTDATE" />
+        </property>
+        <property name="revertCount" type="java.lang.Integer">
+        	<column name="REVERTCOUNT"></column>
+        </property>
+        <property name="finishDate" type="java.util.Date">
+        	<column name="FINISHDATE"></column>
+        </property>
+        <property name="state" type="java.lang.Integer">
+            <column name="STATE" />
+        </property>
+        <many-to-one name="material" class="com.xiaoming.domain.Material" fetch="join">
+            <column name="MATERIAL_ID" />
+        </many-to-one>
+        <set name="childLogs" table="MATERIALLENDLOGCHILD" inverse="true">
+        	<key>
+        		<column name="FATHERLOG" />
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.MaterialLendLogChild"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,162 @@
+
+<!--TITLE -->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="entypo-bell"></span>
+                <span>系统消息</span>
+            </h2>
+
+        </div>
+
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span>
+                    欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--/ TITLE -->
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="nest" id="tabClose">
+            <div class="body-nest" id="tab">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="/#sys_message" aria-controls="sys_message" role="tab" data-toggle="tab">系统消息</a></li>
+                    <li role="presentation"><a href="/#apply_message" aria-controls="apply_message" role="tab" data-toggle="tab">申请信息</a></li>
+                </ul>
+                <div class="tab-content">
+                    <!--系统消息开始-->
+                    <div role="tabpanel" class="tab-pane active" id="sys_message">
+                        <div style="overflow:hidden;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="nest" id="FootableClose">
+                                        <div class="body-nest" id="materials">
+                                            <div class="messages-box">
+                                                <div class="alert alert-info" ng-repeat="msg in sMessage.sMessageList"  role="alert">
+                                                    <div class="entypo-calendar" style="margin-bottom: 4px;font-size:14px;" ng-bind="msg.time"></div>
+                                                    <strong ng-bind="msg.content"></strong>
+                                                </div>
+                                                <set-page conf="sMessage.pageConfig" style="text-align: center;"></set-page>
+                                                <!--<div class="alert alert-warning" role="alert">
+                                                    <div class="entypo-calendar" style="margin-bottom: 4px;font-size:14px;">&nbsp;2016-08-03&nbsp;&nbsp;20:37</div>
+                                                    <strong>李文滨，你好！你已成功加入学生创业俱乐部，用高校小明系统，工作更加便捷！</strong>
+                                                </div>
+                                                <div class="alert alert-info" role="alert">
+                                                    <div class="entypo-calendar" style="margin-bottom: 4px;font-size:14px;">&nbsp;2016-08-03&nbsp;&nbsp;20:37</div>
+                                                    <strong>欢迎使用高校小明系统，首次登陆请<a href="#/info_a" class="alert-link">点击此处</a>对个人信息进行完善！</strong>
+                                                </div>
+                                                <div class="alert alert-info" role="alert">
+                                                    <div class="entypo-calendar" style="margin-bottom: 4px;font-size:14px;">&nbsp;2016-08-03&nbsp;&nbsp;20:37</div>
+                                                    <strong>欢迎使用高校小明！</strong>-->
+                                                <!--</div>-->
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--系统消息结束-->
+                    <div role="tabpanel" class="tab-pane" id="apply_message">
+                        <div style="overflow:hidden;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="nest">
+                                        <div class="body-nest">
+                                            <div class="messages-box">
+                                                <div class="alert alert-info chosen" ng-repeat="apMsg in sMessage.applyMessageList" ng-click="sMessage.checkInfo(apMsg.name,apMsg.position,apMsg.department,apMsg.id,apMsg.handle,apMsg.agree);sMessage.showApplyData()" role="alert"  data-toggle="modal" style="cursor: pointer;">
+                                                    <div class="entypo-calendar" style="margin-bottom: 4px;font-size:14px;" ng-bind="apMsg.handleTime"></div>
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <strong ng-bind="apMsg.name" class="name_one"></strong> 申请加入 <span class="department_one" ng-bind="apMsg.department"></span>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <span>点击查看详情</span>
+                                                        </div>
+                                                        <div class="col-sm-offset-5 col-sm-1">
+                                                            <span  ng-show="apMsg.handle && apMsg.agree==true || sMessage.agOrRe[apMsg.id].id==apMsg.id && sMessage.agOrRe[apMsg.id].handle && sMessage.agOrRe[apMsg.id].agree==true">同意</span>
+                                                            <span  ng-show="apMsg.handle && apMsg.agree==false || sMessage.agOrRe[apMsg.id].id==apMsg.id && sMessage.agOrRe[apMsg.id].handle && sMessage.agOrRe[apMsg.id].agree==false">拒绝</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <set-page conf="sMessage.pageApplyConfig" style="text-align: center;"></set-page>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade choose-staff" id="chosen_per">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title entypo-users">&nbsp;&nbsp;申请表</h4>
+            </div>
+            <div class="modal-body">
+                <div class="staff-list-wrap">
+                    <div class="skin skin-flat">
+                        <!--<h3>
+                    <span class="entypo-users">&nbsp;&nbsp;人员列表</span>
+                </h3>-->
+                        <div class="list-group">
+                            <p class="list-group-item-heading">姓名：<span id="name_two" ng-model="sMessage.per.name" ng-bind="sMessage.per.name"></span></p>
+                            <p class="list-group-item-heading">学校：<span id="school_two"></span></p>
+                            <p class="list-group-item-heading">专业：<span id="major_two"></span></p>
+                            <p class="list-group-item-heading">年级：<span id="grade_two"></span></p>
+                            <p class="list-group-item-heading">申请加入的组织：<span id="org_two"></span></p>
+                            <p class="list-group-item-heading">部门：<span id="department_two" ng-model="sMessage.per.department" ng-bind="sMessage.per.department"></span></p>
+                            <p class="list-group-item-heading">职位：<span id="position_two" ng-model="sMessage.per.position" ng-bind="sMessage.per.position"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+               <div ng-show="sMessage.per.handle==false  && !(sMessage.agOrRe[sMessage.per.id].agree || sMessage.agOrRe[sMessage.per.id].agree==false) ">
+                   <button type="button" class="btn btn-primary oRBtn" data-dismiss="modal" ng-click="sMessage.dealApply(sMessage.per.id,true,'ok')">同意</button>
+                   <button type="button" class="btn btn-primary oRBtn" data-dismiss="modal" ng-click="sMessage.dealApply(sMessage.per.id,false,'no')">拒绝</button>
+               </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="assets/js/toggle_close.js"></script>
+<script src="assets/js/wizard/lib/jquery.cookie-1.3.1.js"></script>
+<script script="assets/js/myApp/member/easyscroll.js"></script>
+<script src="assets/js/footable/js/footable.js?v=2-0-1" type="text/javascript"></script>
+<!--<script src="assets/js/footable/js/footable.sort.js?v=2-0-1" type="text/javascript"></script>-->
+<script src="assets/js/footable/js/footable.filter.js?v=2-0-1" type="text/javascript"></script>
+<script src="assets/js/footable/js/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+
+<script type="text/javascript">
+$(function() {
+    $('.footable-res').footable();
+
+});
+</script>

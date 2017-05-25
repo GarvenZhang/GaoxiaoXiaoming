@@ -1,0 +1,176 @@
+<!-- 模板组件中的css -->
+<link href="assets/js/footable/css/footable.core.css?v=2-0-1" rel="stylesheet" type="text/css">
+<link href="assets/js/footable/css/footable.standalone.css" rel="stylesheet" type="text/css">
+<link href="assets/js/footable/css/footable-demos.css" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="assets/css/myApp/admin/staff.css"/>
+<link rel="stylesheet" href="assets/css/myApp/member/contact.css"/>
+
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="fontawesome-group"></span>
+                <span>组织通讯录</span>
+            </h2>
+        </div>
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="nest">
+            <div class="body-nest">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="/#current-staff" aria-controls="current-staff" role="tab" data-toggle="tab">当届通讯录</a></li>
+                    <li role="presentation"><a href="/#past-staff" aria-controls="past-staff" role="tab" data-toggle="tab">往届通讯录</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" ng-controller="contactNowCtrlM as con" class="tab-pane active" id="current-staff">
+                        <div class="row">
+                            <div class="col-sm-3 pull-left">
+                                <!--<form class="form-horizontal" role="form" action="">-->
+                                    <!--<input type="text" class="form-control" id="search-by-name-1" placeholder="按姓名搜索"  ng-model="nowData">-->
+                                    <!--1:{{nowData}}-->
+                                <!--</form>-->
+                            </div>
+                            <div class=" pull-right">
+                                <button class="btn btn-primary entypo-download">&nbsp;&nbsp;下载通讯录</button>
+                            </div>
+                            <div class=" pull-right">
+                                <h6 class="entypo-user">&nbsp;&nbsp人数：{{con.recordCount}}</h6>
+                            </div>
+                            <div class="col-sm-12">
+                                <form action="" class="staff-form">
+                                    <table class="table-striped footable" id="table-current" data-filter="#search-by-name-1" data-page-size="6">
+                                        <thead>
+                                            <tr>
+                                                <th>姓名</th>
+                                                <th>部门</th>
+                                                <th>职位</th>
+                                                <th>专业</th>
+                                                <th>年级</th>
+                                                <th>联系方式</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="conNowData in con.contactNowDataList" id="mendInput">
+                                                <!--<td><input type="text" ng-value="conNowData.name" class="nowName"></td>-->
+                                                <!--<td><input type="text" ng-value="conNowData.department" class="nowDe"></td>-->
+                                                <!--<td><input type="text" ng-value="conNowData.position" class="nowPo"></td>-->
+                                                <!--<td><input type="text" ng-value="conNowData.major" class="nowMa"></td>-->
+                                                <!--<td><input type="text" ng-value="conNowData.grade" class="nowGra"></td>-->
+                                                <!--<td><input type="text" ng-value="conNowData.phoneNumber" class="nowNum"></td>-->
+                                                <td ng-bind="conNowData.name"></td>
+                                                <td ng-bind="conNowData.department"></td>
+                                                <td ng-bind="conNowData.position"></td>
+                                                <td ng-bind="conNowData.major"></td>
+                                                <td ng-bind="conNowData.grade"></td>
+                                                <td ng-bind="conNowData.phoneNumber"></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                            <td colspan="6">
+                                                <!--分页指令-->
+                                                <set-page conf="con.pageNowConfig"></set-page>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel"  ng-controller="contactOldCtrlM as cOld" class="tab-pane" id="past-staff">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-3 pull-left">
+                                    <!--<form class="form-horizontal" role="form" action="">-->
+                                        <!--<input type="text" class="form-control" id="search-by-name-2" placeholder="按姓名搜索" ng-model="oldData">-->
+                                    <!--</form>-->
+                                </div>
+                                <div class=" pull-right">
+                                    <button class="btn btn-primary entypo-download">&nbsp;&nbsp;下载通讯录</button>
+                                </div>
+                                <div class="col-sm-4 pull-right">
+                                    <form class="form-horizontal" role="form" action="">
+                                        <div class="form-group" style="margin-bottom: 0;">
+                                            <label for="" class="col-sm-4" ></label>
+                                            <div class="col-sm-8 ui-select" ng-controller="saveData as sData">
+                                                <select id="user_time_zone" ng-model="editionData" ng-change="sData.changeEdition(editionData)" class="form-control" ng-options="editionData for editionData in sData.allEdition">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-12">
+                                    <table class="table-striped footable" id="table-past" data-filter="#search-by-name-2" data-page-size="6">
+                                        <thead>
+                                            <tr>
+                                                <th>姓名</th>
+                                                <th>部门</th>
+                                                <th>职位</th>
+                                                <th>专业</th>
+                                                <th>年级</th>
+                                                <th>联系方式</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr ng-repeat="conOldData in cOld.contactOldDataList">
+                                                <td ng-bind="conOldData.name"></td>
+                                                <td ng-bind="conOldData.department"></td>
+                                                <td ng-bind="conOldData.position"></td>
+                                                <td ng-bind="conOldData.major"></td>
+                                                <td ng-bind="conOldData.grade"></td>
+                                                <td ng-bind="conOldData.phoneNumber"></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                            <td colspan="6">
+                                                    <set-page conf="cOld.pageOldConfig"></set-page>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- GAGE -->
+<script src="assets/js/footable/js/footable.js?v=2-0-1" type="text/javascript"></script>
+<!--<script src="assets/js/footable/js/footable.sort.js?v=2-0-1" type="text/javascript"></script>-->
+<script src="assets/js/footable/js/footable.filter.js?v=2-0-1" type="text/javascript"></script>
+<script src="assets/js/footable/js/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+    $(function() {
+        
+        $('#table-current').footable();
+        $('#table-past').footable();
+        
+    });
+</script>

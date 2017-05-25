@@ -1,0 +1,423 @@
+
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/myApp/member/main.css">
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+</div>
+<!-- TOP NAVBAR -->
+<nav role="navigation" class="navbar navbar-static-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle" type="button">
+                <span class="entypo-menu"></span>
+            </button>
+
+            <button class="navbar-toggle toggle-menu-mobile toggle-left" type="button">
+                <span class="entypo-list-add"></span>
+            </button>
+
+            <div id="logo-mobile" class="visible-xs">
+                <h1>高校小明<span>v2.0</span></h1>
+            </div>
+
+        </div>
+
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+
+                <li class="dropdown">
+
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i title="用户消息" style="font-size:20px;" class="icon-conversation"></i><div class="noft-red">23</div></a>
+
+
+                    <ul style="margin: 11px 0 0 9px;" role="menu" class="dropdown-menu dropdown-wrap">
+                        <li>
+                            <a href="#">
+                                <img alt="" class="img-msg img-circle" src="">Jhon Doe <b>Just Now</b>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <img alt="" class="img-msg img-circle" src="">Jeniffer <b>3 Min Ago</b>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <img alt="" class="img-msg img-circle" src="">Dave <b>2 Hours Ago</b>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <img alt="" class="img-msg img-circle" src=""><i>Keanu</i>  <b>1 Day Ago</b>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <img alt="" class="img-msg img-circle" src=""><i>Masashi</i>  <b>2 Mounth Ago</b>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div>查看所有用户消息</div>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i style="font-size:19px;" class="icon-warning tooltitle"></i><div class="noft-green">5</div></a>
+                    <ul style="margin: 12px 0 0 0;" role="menu" class="dropdown-menu dropdown-wrap">
+                        <li>
+                            <a href="#">
+                                <span style="background:#DF2135" class="noft-icon maki-bus"></span><i>From Station</i>  <b>01B</b>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <span style="background:#AB6DB0" class="noft-icon maki-ferry"></span><i>Departing at</i>  <b>9:00 AM</b>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <span style="background:#FFA200" class="noft-icon maki-aboveground-rail"></span><i>Delay for</i>  <b>09 Min</b>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <span style="background:#86C440" class="noft-icon maki-airport"></span><i>Take of</i>  <b>08:30 AM</b>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <span style="background:#0DB8DF" class="noft-icon maki-bicycle"></span><i>Take of</i>  <b>08:30 AM</b>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div>查看所有系统消息</div>
+                        </li>
+                    </ul>
+                </li>
+
+
+            </ul>
+            <div id="nt-title-container" class="navbar-left running-text visible-lg">
+                <ul class="date-top">
+                    <li class="entypo-calendar" style="margin-right:5px"></li>
+                    <li id="Date"></li>
+                </ul>
+                <ul id="digital-clock" class="digital " ng-class="{'date-top':main.defaultData.role==='ORG_USER'}">
+                    <li class="entypo-clock" style="margin-right:5px"></li>
+                    <li id="hour" class="hour"></li>
+                    <li>:</li>
+                    <li id="min" class="min"></li>
+                    <li>:</li>
+                    <li id="sec" class="sec"></li>
+                    <li id="meridiem" class="meridiem"></li>
+                </ul>
+                <div id="joinedOrgBox"  ng-if="main.defaultData.role==='ORG_USER'">
+                    <a style="cursor: pointer" id="showDropMenu"  class="dropdown-toggle" ng-click="main.clickDropdown($event)">
+                        已加入的组织 <b class="caret"></b>
+                    </a>
+                    <ul id="joinedOrgs" style="margin-top:14px;" role="menu" class="dropdown-menu open" aria-labelledby="showDropMenu">
+                        <li ng-repeat="org in main.orgs" style="cursor:pointer;">
+                            <a  ng-bind="org.name" ng-click="main.changeOrg(org.id)"></a>
+                        </li>
+                        <li class="divider" ></li>
+                        <li style="cursor:pointer;">
+                            <a id="showApplyPage" class="send-to" data-toggle="modal" ng-click="main.showApplyData()">
+                                申请加入新组织</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <ul style="margin-right:0;" class="nav navbar-nav navbar-right">
+                <li>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="">
+                        <img alt="" class="admin-pic img-circle" src="">您好, <span ng-bind="main.user.realName"></span> <b class="caret"></b>
+                    </a>
+                    <ul style="margin-top:14px;" role="menu" class="dropdown-setting dropdown-menu">
+                        <li>
+                            <a href="#/main/info_m">
+                                <span class="entypo-user"></span>&#160;&#160;帐号信息</a>
+                        </li>
+                        <li>
+                            <a href="#/main/password_m">
+                                <span class="entypo-lifebuoy"></span>&#160;&#160;修改密码</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="" ng-click="main.logout()">
+                                <span class="entypo-logout"></span>&#160;&#160; 退出登录</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="">
+                        <span class="icon-gear"></span>&#160;&#160;更换主题</a>
+                    <ul role="menu" class="dropdown-setting dropdown-menu">
+
+                        <li class="theme-bg">
+                            <div ng-repeat="bg in main.skinList" id="button-bg{{$index}}" ng-click="main.setSkin($index)"></div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<!-- 申请加入新组织开始 -->
+<div class="modal fade org-apply" id="org_apply">
+    <div class="modal-dialog modal-sm" style="width: 50%;margin-top: 10%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title entypo-users">加入组织</h4>
+            </div>
+            <div class="modal-body">
+                <div class="staff-list-wrap">
+                    <div class="skin skin-flat">
+
+                        <form id="joinOrgForm"  name="joinOrgForm" class="form-horizontal bucket-form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="">学校：</label>
+                                <div class="col-sm-6">
+                                    <select  readonly class="form-control" >
+                                        <option ng-bind="main.defaultData.university"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="">校区：</label>
+                                <div class="col-sm-6">
+                                    <select readonly class="form-control" >
+                                        <option ng-bind="main.defaultData.campus"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="">组织：</label>
+                                <div class="col-sm-6">
+                                    <select required name="orgSelect" ng-options="x.id as x.name for x in main.orgsData" ng-model="main.joinOrgData.id" ng-change="main.getDeparData(main.joinOrgData.id)" class="form-control">
+                                        <option value="">请选择组织</option>
+                                    </select>
+                                    <div ng-show="joinOrgForm.orgSelect.$error.required&&main.submintted" class="help-block alert alert-danger">
+                                        请选择一个组织选项!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="">部门：</label>
+                                <div class="col-sm-6">
+                                    <select required name="departSelect" ng-options="x.id as x.name for x in main.depart" ng-model="main.joinOrgData.userInfo.departmentId"  class="form-control">
+                                        <option value="">请选择部门</option>
+                                    </select>
+                                    <div ng-show="joinOrgForm.departSelect.$error.required&&main.submintted" class="help-block alert alert-danger">
+                                        请选择一个部门选项!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="">职位：</label>
+                                <div class="col-sm-6">
+                                    <input required name="positionInp" placeholder="请填写正确的职位名称"  ng-model="main.joinOrgData.userInfo.position" class="form-control" type="text">
+                                    <div ng-show="joinOrgForm.positionInp.$error.required&&main.submintted" class="help-block alert alert-danger">
+                                        请填写职位!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="">姓名：</label>
+                                <div class="col-sm-6">
+                                    <input name="" readonly ng-value="main.defaultData.realName"  class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="">联系方式：</label>
+                                <div class="col-sm-6">
+                                    <input  name=""  ng-value="main.defaultData.phoneNumber" placeholder="Tel:0757-********" readonly  class="form-control" type="text">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" >
+                <span style="display: none;" id="successTip">您的申请已成功提交，请耐心等待审核！<strong id="second"></strong>s后将自动关闭弹窗！</span>
+                <button id="postApplyBtn" ng-click="joinOrgForm.$valid?main.joinOrg(main.joinOrgData,'close','second','successTip'):main.submintted=true" type="button" class="btn btn-primary" >提交申请</button>
+                <!-- 错误提示重置 -->
+                <button id="resetBtn" style="display: none;" ng-click="main.submintted=false" type="button">重置</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 申请加入新组织结束 -->
+<!-- /END OF TOP NAVBAR -->
+
+<!-- SIDE MENU -->
+<div id="skin-select">
+    <div id="logo">
+        <h1>高校小明 &nbsp;<span>v2.0</span></h1>
+    </div>
+
+    <a id="toggle">
+        <span class="entypo-menu"></span>
+    </a>
+
+
+
+
+    <div class="skin-part">
+        <div id="tree-wrap">
+            <side-bar></side-bar>
+        </div>
+    </div>
+</div>
+<!-- END OF SIDE MENU -->
+
+
+
+<!--  PAPER WRAP -->
+<div class="wrap-fluid">
+    <div class="container-fluid paper-wrap bevel tlbr">
+
+        <!-- CONTENT -->
+        
+        
+
+        <!-- MAIN-WRAP START-->
+        <div class="content-wrap" ui-view>
+        </div>
+        <!-- MAIN-WRAP END-->
+
+
+
+
+        <div class="content-wrap">
+            <!-- FOOTER -->
+            <div class="footer-space"></div>
+            <div id="footer">
+                <div class="devider-footer-left"></div>
+                <div class="time">
+                    <p id="spanDate">
+                    <p id="clock">
+                </div>
+                <div class="copyright">Make with Love
+                    <span class="entypo-heart"></span>Collect from <a href="" title="" target="_blank">昌老师团队</a> All Rights Reserved</div>
+                <div class="devider-footer"></div>
+            </div>
+            <!-- / END OF FOOTER -->
+        </div>
+        
+    </div>
+</div>
+<!--  END OF PAPER WRAP -->
+<div style="text-align:center;">
+<p>Any questions? Contact with us <a href="" target="_blank" title="">昌老师团队</a></p>
+</div>
+
+<div class="modal fade feedback">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">用户反馈</h4>
+      </div>
+      <div class="modal-body row">
+        <div class="col-sm-12">
+            <div class="body-nest">
+                <form action="" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="fb-contact">联系方式：</label>
+                        <input id="fb-contact" class="form-control" type="text" placeholder="邮箱或手机号码">
+                    </div>
+                    <div class="form-group">
+                        <label for="fb-content">反馈内容：</label>
+                        <textarea name="" id="fb-content" rows="4" class="form-control" style="height:auto !important;resize:none;" placeholder="您有什么建议想跟我们说？  200字以内"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"  class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary">提交反馈</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--用于触发表单事件清空的按钮、标签-->
+<button type="button" class="btn btn-info" ng-hide="true" id="enrollF"  ng-click="enCtrl.enrolled=false"></button>
+<button type="button" class="btn btn-info" ng-hide="true" id="enrolled"  ng-click="enCtrl.enrolled=true"></button>
+
+<!-- END OF RIGHT SLIDER CONTENT-->
+<script type="text/javascript" src="resources/js/jQuery.md5.js"></script>
+<script src="assets/js/progress-bar/src/jquery.velocity.min.js"></script>
+<script src="assets/js/progress-bar/number-pb.js"></script>
+<script src="assets/js/progress-bar/progress-app.js"></script>
+
+
+
+<!-- MAIN EFFECT -->
+<script type="text/javascript" src="assets/js/preloader.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="assets/js/app.js"></script>
+<script type="text/javascript" src="assets/js/load.js"></script>
+<script type="text/javascript" src="assets/js/main.js"></script>
+
+<script src="assets/js/jhere-custom.js"></script>
+
+<script type="text/javascript">
+$(function(){
+    var output, started, duration, desired;
+
+    // Constants
+    duration = 5000;
+    desired = '50';
+
+    // Initial setup
+    output = $('#speed');
+    started = new Date().getTime();
+
+    // Animate!
+    animationTimer = setInterval(function() {
+        // If the value is what we want, stop animating
+        // or if the duration has been exceeded, stop animating
+        if (output.text().trim() === desired || new Date().getTime() - started > duration) {
+            console.log('animating');
+            // Generate a random string to use for the next animation step
+            output.text('' + Math.floor(Math.random() * 60)
+
+            );
+
+        } else {
+            console.log('animating');
+            // Generate a random string to use for the next animation step
+            output.text('' + Math.floor(Math.random() * 120)
+
+            );
+        }
+    }, 5000);
+
+
+});
+</script>
+

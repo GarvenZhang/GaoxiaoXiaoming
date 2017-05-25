@@ -1,0 +1,231 @@
+/* 公共 */
+h3,h4{
+    font-family: "Microsoft Yahei" !important;
+    cursor: default;
+}
+.tab-pane {
+    padding-top: 20px;
+}
+/* 主体头部开始 */
+.tittle-middle-header strong#host{
+    font: 30px/1 "Open Sans, Arial, sans-serif !important " ;
+}
+/* 主体头部结束 */
+/* 我的报名开始 */
+@media screen and  (max-width: 904px){
+    .tabcontrol > .content{
+        overflow: auto;
+    }
+}
+textarea.form-control{
+    height: 100px!important;
+    /* reset */
+    resize: none;
+}
+.tabcontrol > .content{
+    padding-left: 10%;
+}
+@media screen and (min-width: 1177px) and (max-width: 1310px){
+    .tabcontrol > .content{
+        padding-left: 0;
+    }
+}
+.pplList_txt{
+    font-size: 25px!important;
+}
+/* 信息项开始 */
+.infoTerm{
+    padding: 0;
+}
+.infoTerm>.form_center{
+    margin: 0;
+    width: auto;
+}
+.infoTerm>.form_center>.well{
+    padding: 0;
+    margin-bottom: 0;
+    background: rgba(255, 255, 255, .15) !important;
+}
+div.tagsinput{
+    min-height: 0!important;
+}
+ input[data-default] {
+    width: auto !important;
+}
+/*div.tagsinput span.tag{
+    text-align: center;
+    color: #fff!important;
+    border: 1px solid #C7D5E0;
+    background: #65C3DF;
+    cursor: default;
+}*/
+.sureBtn{
+    margin-top: 3%;
+}
+a.list-group-item{
+    color: #CCCCCC!important;
+    border: none!important;
+}
+.box-wrap {
+    padding: 10px;
+}
+/* 我发起的报告开始 */
+.reportRaise_wrap,.reportInv_wrap{
+    border: 1px transparent;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    height: 500px;
+    overflow: auto;
+}
+.reportRaise,.reportInv{
+    padding-bottom: 15px;
+    padding-right: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: #e9e9e9;
+}
+.reportRaise h4,.reportInv h4 {
+   margin: 15px 0; 
+   color: #6f6e6b;
+}
+.reportRaise .list-group,.reportInv .list-group{
+    background: #ffffff!important;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+.list-group-item-heading {
+    font-family: "Microsoft Yahei" !important;
+    font-size: 15px;
+    color: #555 !important;
+    margin-bottom: 8px !important;
+}
+.reportRaise .list-group p,.reportInv .list-group p{
+    margin-bottom: 0;
+    color: #9e9e9e;
+}
+.reportRaise>h3,.reportInv>h3{
+    color: lightgrey;
+}
+.reportRaise>h4:hover,.reportInv>h4:hover{
+    color:#acaba7;
+}
+.fileOutp{
+    color: #428bca ;
+    cursor: pointer;
+}
+.fileOutp:hover{
+    text-decoration: underline !important;
+    color: #2a6496 !important;
+}
+#enrolling form {
+    margin-top: 20px;
+}
+/* 我发起的报告结束 */
+
+
+/*滚动条*/
+::-webkit-scrollbar {
+    width:6px;
+}
+::-webkit-scrollbar-track {
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    background:rgb(228,226,222); 
+}            
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    background:#ccc; 
+               
+}
+::-webkit-scrollbar-thumb:active {
+background: #ccc7bf;              
+}
+::-webkit-scrollbar-thumb:hover {
+background: #ccc7bf;              
+}
+::-webkit-scrollbar-thumb:window-inactive {
+background: #ccc7bf;              
+} 
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+/*选择人员模态框*/
+.choose-staff .modal-body {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: #f3f3f3;
+}
+.staff-list-wrap {
+    margin-left: 4px;
+}
+.choose-staff h3 {
+    color: #ffffff;
+    font-size: 13px;
+    font-style: normal;
+    margin: 7px 0;
+}
+.choose-staff h3 span {
+    background: rgba(70, 72, 72, 0.3) none repeat scroll 0 0;
+    border-radius: 11px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: normal;
+    margin: 0 0 20px;
+    padding: 2px 10px 4px;
+}
+.list {
+    padding: 0;
+    width: 99%;
+    border: 1px transparent;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background: #fff;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.list li {
+    padding-left: 15px;
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+.list li label {
+    width: 100%;
+    height: 100%;
+    margin: 0 0 0 10px !important;
+    line-height: 40px;
+    font-size: 13px !important;
+    cursor: pointer;
+}
+.icheckbox_flat-blue {
+    top: 10px;
+}
+.list .staff-name {
+    display: inline-block;
+    width: 60px;
+}
+.list .staff-position {
+    display: inline-block;
+    font-weight: normal;
+    font-size: 12px;
+    margin-left: 16px;
+    color: #c7c7c7;
+}
+.list li:hover {
+    background: #b3d6ff;
+    color: #fff;
+}
+.list li:hover span {
+    color: #fff;
+}

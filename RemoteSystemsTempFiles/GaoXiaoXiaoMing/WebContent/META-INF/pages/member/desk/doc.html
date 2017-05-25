@@ -1,0 +1,193 @@
+    <link rel="stylesheet" href="assets/js/tree/treetable/stylesheets/jquery.treetable.css">
+<link rel="stylesheet" href="assets/js/tree/treetable/stylesheets/jquery.treetable.theme.default.css">
+<link rel="stylesheet" href="assets/js/dropZone/downloads/css/dropzone.css">
+
+
+<!--TITLE -->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="fontawesome-folder-close"></span>
+                <span>组织文档</span>
+            </h2>
+        </div>
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ TITLE -->
+        
+<div class="row">
+
+    <div class="col-sm-12">
+                
+                
+        <div class="nest">
+            <div class="body-nest" id="tabletree">
+
+                <table id="example-advanced" class="table-striped">
+
+
+
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>大小</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-tt-id='1'>
+                            
+                            <td>
+                                <span class='file'>Acknowledgements.rtf</span>
+                            </td>
+                            <td>File</td>
+                            <td>480.95 KB</td>
+                            <td>
+                                <a href="" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="" class="entypo-share" title="分享到微信"></a>   
+                            </td>
+                        </tr>
+                        
+                        <tr data-tt-id='1'>
+                            
+                            <td>
+                                <span class='file'>Acknowledgements.rtf</span>
+                            </td>
+                            <td>File</td>
+                            <td>480.95 KB</td>
+                            <td>
+                                <a href="" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="" class="entypo-share" title="分享到微信"></a>                                 
+                            </td>
+                        </tr>
+                        
+                        <tr data-tt-id='1'>
+                            
+                            <td>
+                                <span class='file'>Acknowledgements.rtf</span>
+                            </td>
+                            <td>File</td>
+                            <td>480.95 KB</td>
+                            <td>
+                                <a href="" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="" class="entypo-share" title="分享到微信"></a>                                 
+                            </td>
+                        </tr>
+                        
+                        <tr data-tt-id='1'>
+                            
+                            <td>
+                                <span class='file'>Acknowledgements.rtf</span>
+                            </td>
+                            <td>File</td>
+                            <td>480.95 KB</td>
+                            <td>
+                                <a href="" class="entypo-download" title="下载到本地"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="" class="entypo-share" title="分享到微信" sadasdata-toggle="popover"></a>                                 
+                            </td>
+                        </tr>
+                       
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+                
+        
+
+
+
+        <div class="body-nest" id="DropZone">
+
+            <form action="/??" class="dropzone" id="my-dropzone"></form>
+            <button style="margin-top:10px;" class="btn btn-info" id="submit-all">上传所有文件</button>
+
+
+
+
+
+        </div>
+
+                
+
+
+    </div>
+
+</div>
+        
+        
+        
+<script type="text/javascript" src="assets/js/toggle_close.js"></script>
+<script src="assets/js/tree/treetable/vendor/jquery-ui.js"></script>
+<script src="assets/js/tree/treetable/javascripts/src/jquery.treetable.js"></script>
+<script src="assets/js/dropZone/lib/dropzone.js"></script>
+
+
+
+<script type="text/javascript">
+$(function(){
+    
+    var myDropzone = new Dropzone("#my-dropzone", {
+        
+        method: "post",
+
+        // Prevents Dropzone from uploading dropped files immediately
+        autoProcessQueue: false,
+
+        init: function() {
+            var submitButton = document.querySelector("#submit-all")
+            myDropzone = this; // closure
+
+            submitButton.addEventListener("click", function() {
+                myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+            });
+
+            // You might want to show the submit button only when 
+            // files are dropped here:
+            this.on("addedfile", function() {
+                // Show submit button here and/or inform user to click it.
+            });
+
+        },
+        
+        dictDefaultMessage: "将文件拖拽至此（或点击）",
+        
+        addRemoveLinks: true,
+        
+        dictRemoveFile: "删除"
+    });
+    
+    //Dropzone.options.myDropzone = ;
+    
+    $("#example-advanced").treetable({
+        expandable: true
+    });
+    
+    $('.entypo-share').popover({
+        template: '<div class="popover" role="tooltip">'+
+                    '<h3 class="popover-title"></h3>'+
+                    '<div class="popover-content"></div>'+
+                  '</div>',
+        html: true,
+        content: '<img src="" style="height:150px;width:150px;">',
+        placement: "left",
+        trigger: 'hover'
+    });
+
+
+});
+
+
+</script>

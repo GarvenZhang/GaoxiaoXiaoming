@@ -1,0 +1,301 @@
+<!-- 模板组件中的css -->
+<link href="assets/js/footable/css/footable.core.css?v=2-0-1" rel="stylesheet" type="text/css">
+<link href="assets/js/footable/css/footable.standalone.css" rel="stylesheet" type="text/css">
+<link href="assets/js/footable/css/footable-demos.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="assets/js/upload/demos/css/uploader.css">
+<link rel="stylesheet" href="assets/js/upload/demos/css/demo.css">
+
+<link rel="stylesheet" href="assets/css/myApp/admin/staff.css"/>
+
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="fontawesome-user"></span>
+                <span>人员管理</span>
+            </h2>
+
+        </div>
+
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="nest">
+            <div class="body-nest">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="/#current-staff" aria-controls="current-staff" role="tab" data-toggle="tab">当届人员表</a></li>
+                    <li role="presentation"><a href="/#past-staff" aria-controls="past-staff" role="tab" data-toggle="tab">往届人员表</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" ng-controller="staffCtrlNow as stNow" class="tab-pane active" id="current-staff">
+                        <div class="row">
+                            <div class="col-sm-3 pull-left">
+                                <!--<form class="form-horizontal" role="form" action="">-->
+                                    <!--<input type="text" class="form-control" id="search-by-name-1" placeholder="按姓名搜索">-->
+                                <!--</form>-->
+                            </div>
+                            <div class="col-sm-6 pull-right">
+                                <a href="" class="btn btn-info pull-right entypo-floppy"> &nbsp;保存</a>
+                                <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
+                                <a href="" data-backdrop="false" data-toggle="modal" data-target=".upload-staff" class="btn btn-info pull-right entypo-plus-circled" ng-click="stNow.staffService()"> &nbsp;导入人员表</a>
+                            </div>
+                            <div class="col-sm-12">
+                                <form action="" class="staff-form">
+                                    <table class="table-striped footable" id="table-current" data-filter="#search-by-name-1" data-page-size="6">
+                                        <thead>
+                                            <tr>
+                                                <th>姓名</th>
+                                                <th>部门</th>
+                                                <th>职位</th>
+                                                <th>专业</th>
+                                                <th>年级</th>
+                                                <th>联系方式</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="nowData in stNow.contactNowDataList">
+                                                <td><input type="text" value="{{nowData.name}}"></td>
+                                                <td><input type="text" value="{{nowData.department}}"></td>
+                                                <td><input type="text" value="{{nowData.position}}"></td>
+                                                <td><input type="text" value="{{nowData.major}}"></td>
+                                                <td><input type="text" value="{{nowData.grade}}"></td>
+                                                <td><input type="text" value="{{nowData.phoneNumber}}"></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                            <td colspan="6">
+                                               <set-page conf="stNow.pageNowConfig"></set-page>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" ng-controller="staffOld as stOld" class="tab-pane" id="past-staff">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-3 pull-left">
+                                    <!--<form class="form-horizontal" role="form" action="">-->
+                                        <!--<input type="text" class="form-control" id="search-by-name-2" placeholder="按姓名搜索">-->
+                                    <!--</form>-->
+                                </div>
+                                <div class="col-sm-4 pull-right">
+                                    <form class="form-horizontal" role="form" action="">
+                                        <div class="form-group" style="margin-bottom: 0;">
+                                            <label for="" class="col-sm-4" ></label>
+                                            <div class="col-sm-8 ui-select" ng-controller="saveData as sData">
+                                                <select id="user_time_zone" ng-model="editionData" ng-change="sData.changeEdition(editionData)" class="form-control" ng-options="editionData for editionData in sData.allEdition"></select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-12">
+                                    <table class="table-striped footable" id="table-past" data-filter="#search-by-name-2" data-page-size="6">
+                                        <thead>
+                                            <tr>
+                                                <th>姓名</th>
+                                                <th>部门</th>
+                                                <th>职位</th>
+                                                <th>专业</th>
+                                                <th>年级</th>
+                                                <th>联系方式</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="oldData in stOld.contactOldDataList">
+                                                <td ng-bind="oldData.name"></td>
+                                                <td ng-bind="oldData.department"></td>
+                                                <td ng-bind="oldData.position"></td>
+                                                <td ng-bind="oldData.major"></td>
+                                                <td ng-bind="oldData.grade"></td>
+                                                <td ng-bind="oldData.phoneNumber"></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                            <td colspan="6">
+                                                <set-page conf="stOld.pageOldConfig"></set-page>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade upload-staff">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">导入人员表</h4>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-12">
+                    <!-- D&D Zone-->
+                    <div id="drag-and-drop-zone" class="uploader">
+                        <div class="upload-info">
+                            <div>将xls、xlsx格式文件拖拽至此</div>
+                            <div class="or">-或-</div>
+                        </div>
+                        <div class="browser">
+                            <label>
+                                <span>浏览文件</span>
+                                <input type="file" name="files[]" title='浏览文件' accept=".xls,.xlsx">
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /D&D Zone -->
+                </div>
+                <div class="col-md-12">
+                    <div class="panel-default">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">上传进度</h5>
+                        </div>
+                        <div class="panel-body demo-panel-files" id='demo-files'>
+                            <span class="demo-note">还没有添加任何文件...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade submit-change">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提醒</h4>
+            </div>
+            <div class="modal-body">
+                <h5>人员表数据已发生修改，是否保存修改？</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">不保存</button>
+                <button type="button" class="btn btn-primary">保存修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- GAGE -->
+<script src="assets/js/footable/js/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="assets/js/footable/js/footable.sort.js?v=2-0-1" type="text/javascript"></script>
+<script src="assets/js/footable/js/footable.filter.js?v=2-0-1" type="text/javascript"></script>
+<script src="assets/js/footable/js/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<script type="text/javascript" src="assets/js/upload/demos/js/demo.min.js"></script>
+<script type="text/javascript" src="assets/js/upload/src/dmuploader.min.js"></script>
+
+
+
+
+
+<script type="text/javascript">
+    $(function() {
+        
+        $('#table-current').footable();
+        $('#table-past').footable();
+        
+        //监听表格修改
+        $('.staff-form input').change(function(){
+            $('.side-bar a').click(function(e){
+                e.preventDefault();
+                $('.submit-change').modal({
+                    backdrop : false
+                });
+                $('.side-bar a').unbind("click");
+            });
+        });
+        
+        //文件上传
+        $('#drag-and-drop-zone').dmUploader({
+            url: '/assets/js/upload/demos/upload.php',
+            dataType: 'json',
+            allowedTypes: 'application/vnd*',
+            /*extFilter: 'jpg;png;gif',*/
+            onInit: function() {
+                console.log('Plugin initialized correctly');
+            },
+            onBeforeUpload: function(id) {
+                console.log('Starting the upload of #' + id);
+
+                $.danidemo.updateFileStatus(id, 'default', '上传中...');
+            },
+            onNewFile: function(id, file) {
+                $.danidemo.addFile('#demo-files', id, file);
+            },
+            onComplete: function() {
+                console.log('All pending tranfers completed');
+            },
+            onUploadProgress: function(id, percent) {
+                var percentStr = percent + '%';
+
+                $.danidemo.updateFileProgress(id, percentStr);
+            },
+            onUploadSuccess: function(id, data) {
+                console.log('Upload of file #' + id + ' completed');
+
+                console.log('Server Response for file #' + id + ': ' + JSON.stringify(data));
+
+                $.danidemo.updateFileStatus(id, 'success', '导入成功');
+
+                $.danidemo.updateFileProgress(id, '100%');
+                
+                $(".upload-info").html("导入成功");
+                
+                $('.upload-staff button').click(function(){
+                    window.location.reload();
+                });
+            },
+            onUploadError: function(id, message) {
+                $.danidemo.updateFileStatus(id, 'error', "出错,"+message);
+
+                console.log('Failed to Upload file #' + id + ': ' + message);
+                
+            },
+            onFileTypeError: function(file) {
+                console.log('File /' + file.name + '/'+ 'cannot be added: must be an image');
+            },
+            onFileSizeError: function(file) {
+                console.log('File /' + file.name + '/'+' cannot be added: size excess limit');
+            },
+            /*onFileExtError: function(file){
+            $.danidemo.addLog('#demo-debug', 'error', 'File /'' + file.name + '/' has a Not Allowed Extension');
+            // },*/
+            // onFallbackMode: function(message) {
+            //     $.danidemo.addLog('#demo-debug', 'info', 'Browser not supported(do something else here!): ' + message);
+            // }
+        });
+    });
+</script>

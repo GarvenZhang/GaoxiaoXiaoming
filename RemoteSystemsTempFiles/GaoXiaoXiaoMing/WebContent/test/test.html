@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="/GaoXiaoXiaoMing/resources/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript"
+	src="/GaoXiaoXiaoMing/resources/js/jQuery.json.js"></script>
+	<script type="text/javascript"
+	src="/GaoXiaoXiaoMing/resources/js/jQuery.md5.js"></script>
+	
+</head>
+<body>
+<!-- 发送json的 -->
+<div id="errorTimes">0</div>
+<table>
+	<tr>
+		<td>action:</td>
+		<td><input type="text" id="action"></td>
+	</tr>
+	<tr>
+		<td>json:</td>
+		<td><input type="text" id="json"></td>
+	</tr>
+</table>
+<button onclick="sendManyTimes(50)">发送</button>
+
+<hr>
+<div id="result"></div>
+
+
+<script type="text/javascript">
+//location = "http://119.29.20.34:8080/GaoXiaoXiaoMing";
+errorTimers = 0;
+
+window.onload = function(){
+	$.ajax({
+		type:"post",
+		url:"/GaoXiaoXiaoMing/user_login.action",
+		contentType: "json/application; charset=utf-8",
+		data:$.toJSON(
+					{
+						"loginName":"abc",
+						"password":$.md5(123456)
+						}
+				),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		});
+}
+
+function addResult(result){
+	if(result.status== "false"){
+		errorTimes += 1;
+		console.log(errorTimes);
+		$("#result").append('<p style="color:red">'+JSON.stringify(result)+"</p>");
+	}else{
+		$("#result").append('<p>'+JSON.stringify(result)+"</p>");
+		}
+}
+
+function sendManyTimes(n){
+	errorTimes = 0;
+	for(i=0;i<n;i++){
+		send();
+		}
+	console.log("error times:"+errorTimes);
+}
+
+function send(){
+	$.ajax({
+		type:"post",
+		url:"/GaoXiaoXiaoMing/university_list.action",
+		contentType: "json/application; charset=utf-8",
+		data:$.toJSON(
+					{
+						}
+				),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		});
+	
+	$.ajax({
+		type:"post",
+		url:"/GaoXiaoXiaoMing/university_campus.action",
+		contentType: "json/application; charset=utf-8",
+		data:$.toJSON(
+					{
+						"id":"1" 
+						}
+				),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+				addResult(returnData);
+				}
+			}
+		});
+		
+	$.ajax({
+		type:"post",
+		url:"/GaoXiaoXiaoMing/userInfo_show.action",
+		contentType: "json/application; charset=utf-8",
+		data:$.toJSON(
+					{
+						}
+				),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		});
+	$.ajax({
+		type:"post",
+		url:"/GaoXiaoXiaoMing/unread_query.action",
+		contentType: "json/application; charset=utf-8",
+		data:$.toJSON(
+					{
+						}
+				),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		});
+	$.ajax({
+		type:"post",
+		url:"/GaoXiaoXiaoMing/department_list.action",
+		contentType: "json/application; charset=utf-8",
+		data:$.toJSON(
+					{
+						}
+				),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		});
+	$.ajax({
+		type:"post",
+		url:"/GaoXiaoXiaoMing/university_grade.action",
+		contentType: "json/application; charset=utf-8",
+		data:$.toJSON(
+					{
+						}
+				),
+		dataType:"json",
+		success:function(returnData,status){
+			if("success" == status){
+					$("#result").append('<p>'+JSON.stringify(returnData)+"</p>");
+				}
+			}
+		});
+	}
+
+</script>
+</body>
+</html>

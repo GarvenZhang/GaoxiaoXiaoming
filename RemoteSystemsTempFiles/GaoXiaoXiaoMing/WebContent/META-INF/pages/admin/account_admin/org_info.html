@@ -1,0 +1,202 @@
+<!--<link href="assets/js/iCheck/flat/all.css" rel="stylesheet">
+<link href="assets/js/iCheck/line/all.css" rel="stylesheet">
+
+<link href="assets/js/colorPicker/bootstrap-colorpicker.css" rel="stylesheet">
+<link href="assets/js/validate/validate.css" rel="stylesheet">
+<link href="assets/js/idealform/css/jquery.idealforms.css" rel="stylesheet">-->
+
+<link href="assets/js/switch/bootstrap-switch.css" rel="stylesheet">
+<link href="assets/css/myApp/admin/org_info.css" rel="stylesheet">
+
+<!--组织基础信息标题 开始-->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="fontawesome-list-alt"></span>
+                <span>组织基本信息</span>
+            </h2>
+        </div>
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--组织基础信息标题 结束-->
+
+<!--组织基本信息页面开始-->
+<div class="nest" id="elementClose">
+    <div class="title-alt"></div>
+    <!-- 主要内容开始-->
+    <div class="body-nest" id="element">
+        <div class="panel-body">
+            <form method="get" id="orInfo" class="form-horizontal bucket-form">
+                <!-- 组织全称 开始-->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="or_name">组织全称：</label>
+                    <div class="col-sm-6">
+                        <input   ng-focus="orgInfo.initData(orgInfo.userData.name)"  ng-blur="orgInfo.checkBlankString(orgInfo.getValue('name'))?orgInfo.newData('name',1,orgInfo.getValue('name')):postionBlank=true" ng-value="orgInfo.userData.name" placeholder="机构对外联系人" readonly="readonly" id="name" class="form-control" type="text">
+                        <div id="orgName_fialTip" style="display: none;" ng-show="(!orgInfo.checkBlankString(orgInfo.getValue('name'))&&!(orgInfo.correctedData()&&orgInfo.correctedId()=='name'))?main.defaultHide('orgName_fialTip'):false" class="help-block alert alert-danger">
+                            修改失败：内容为空 或 请点击输入框后再次点击输入框外的位置以提交！
+                        </div>
+                        <div id="orgName_successTip" style="display: none;" ng-show="orgInfo.correctedData()&&orgInfo.correctedId()=='name'?main.defaultHide('orgName_successTip'):false" class="help-block alert alert-success">
+                            修改成功
+                        </div>
+
+                    </div>
+                </div>
+                <!-- 组织全称 结束-->
+                <!-- 组织所属学校和校区 开始-->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="or_name">学校与校区：</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <select  ng-model="orgInfo.userData.university.id" ng-options="x.id as x.name for x in orgInfo.univList"
+                                         ng-change="orgInfo.changeSchool(orgInfo.userData.university.id)"
+                                         class="form-control" id="universityId">
+                                </select>
+
+                                <div id="universityId_successTip" style="display: none;" ng-show="orgInfo.correctedData()&&orgInfo.correctedId()=='universityId'?main.defaultHide('universityId_successTip'):false"  class="help-block alert alert-success">
+                                    修改成功
+                                </div>
+                                <div id="universityId_fialTip" style="display: none;" ng-show="orgInfo.defaultShow()=='universityId'&&!(orgInfo.correctedData()&&orgInfo.correctedId()=='universityId')?main.defaultHide('universityId_fialTip'):false" class="help-block alert alert-danger">
+                                    修改失败,请重修修改!
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <select
+                                        ng-model="orgInfo.userData.campus.id" ng-options="x.id as x.name for x in orgInfo.campusList"
+                                        ng-focus="orgInfo.initData(orgInfo.userData.campus.id)"  ng-blur="orgInfo.newData('campusId',orgInfo.campusList)"
+                                        id="campusId" class="form-control " >
+                                </select>
+                                <div id="campusId_successTip" style="display: none;" ng-show="orgInfo.correctedData()&&orgInfo.correctedId()=='campusId'?main.defaultHide('campusId_successTip'):false"  class="help-block alert alert-success">
+                                    修改成功
+                                </div>
+                                <div id="campusId_fialTip" style="display: none;" ng-show="orgInfo.defaultShow()=='campusId'&&!(orgInfo.correctedData()&&orgInfo.correctedId()=='campusId')?main.defaultHide('campusId_fialTip'):false" class="help-block alert alert-danger">
+                                    修改失败,请重修修改!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 组织所属学校和校区 结束-->
+                <!-- 组织对外联系人 开始-->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="or_rel">对外联系人：</label>
+                    <div class="col-sm-6">
+                        <input   ng-focus="orgInfo.initData(orgInfo.userData.contactName)"  ng-blur="orgInfo.checkBlankString(orgInfo.getValue('contactName'))?orgInfo.newData('contactName',1,orgInfo.getValue('contactName')):postionBlank=true" ng-value="orgInfo.userData.contactName" placeholder="机构对外联系人" readonly="readonly" id="contactName" class="form-control" type="text">
+                        <div id="contactName_submTip" style="display: none;" ng-show="(!orgInfo.checkBlankString(orgInfo.getValue('contactName'))&&!(orgInfo.correctedData()&&orgInfo.correctedId()=='contactName'))?main.defaultHide('contactName_submTip'):false" class="help-block alert alert-danger">
+                            请输入内容完毕后点击输入框外的位置以提交（不能为空）！
+                        </div>
+                        <div id="contactName_successTip" style="display: none;" ng-show="orgInfo.correctedData()&&orgInfo.correctedId()=='contactName'?main.defaultHide('contactName_successTip'):false" class="help-block alert alert-success">
+                            修改成功
+                        </div>
+                    </div>
+                </div>
+                <!-- 组织对外联系人 结束-->
+                <!-- 组织对外联系方式 开始-->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="or_tel">对外联系方式：</label>
+                    <div class="col-sm-6">
+                        <input  name="phone" ng-keypress="main.onlyNum($event)"  ng-focus="orgInfo.initData(orgInfo.userData.phone)"  ng-blur="orgInfo.checkPhoneNum(orgInfo.getValue('contact'))?orgInfo.newData('phone',1,orgInfo.getValue('contact')):phoneNumStyle=true"  ng-value="orgInfo.userData.phone" placeholder="Tel:0757-********" maxLength="11" readonly="readonly" id="contact" class="form-control" type="text">
+                        <!--1.不修改时成功与失败都不出现 2.成功与失败不可同时出现 3.整个页面中在修改时成功只出现一次；而对于单个表单来说，如果修改失败的，直到成功才会消失-->
+                        <div id="contact_submTip" style="display: none;" ng-show="(!orgInfo.checkPhoneNum(orgInfo.getValue('contact'))&&!(orgInfo.correctedData()&&orgInfo.correctedId()=='phone'))?main.defaultHide('contact_submTip'):false" class="help-block alert alert-danger">
+                            内容为空  或者  号码不完整
+                        </div>
+                        <div id="contact_successTip" style="display: none;" ng-show="orgInfo.correctedData()&&orgInfo.correctedId()=='phone'?main.defaultHide('contact_successTip'):false" class="help-block alert alert-success">
+                            修改成功
+                        </div>
+                    </div>
+                </div>
+                <!-- 办公地址 开始-->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="or_addresss">办公地址：</label>
+                    <div class="col-sm-6">
+                        <input   ng-focus="orgInfo.initData(orgInfo.userData.officeAddress)"  ng-blur="orgInfo.checkBlankString(orgInfo.getValue('officeAddress'))?orgInfo.newData('officeAddress',1,orgInfo.getValue('officeAddress')):postionBlank=true" ng-value="orgInfo.userData.officeAddress" placeholder="办公地址" readonly="readonly" id="officeAddress" class="form-control" type="text">
+                        <div id="officeAddress_submTip" style="display: none;" ng-show="(!orgInfo.checkBlankString(orgInfo.getValue('officeAddress'))&&!(orgInfo.correctedData()&&orgInfo.correctedId()=='officeAddress'))?main.defaultHide('officeAddress_submTip'):false" class="help-block alert alert-danger">
+                            请输入内容完毕后点击输入框外的位置以提交（不能为空）！
+                        </div>
+                        <div id="officeAddress_successTip" style="display: none;" ng-show="orgInfo.correctedData()&&orgInfo.correctedId()=='officeAddress'?main.defaultHide('officeAddress_successTip'):false" class="help-block alert alert-success">
+                            修改成功
+                        </div>
+                    </div>
+                </div>
+                <!-- 办公地址 结束-->
+                <!-- 组织对外联系方式 结束-->
+                <!-- 添加照片 开始-->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">组织LOGO：</label>
+                    <div class="col-sm-6 or_logo">
+                        <img class="pull-left" ng-src="{{orgInfo.userData.logoUrl}}"  width="100" height="100" alt="组织logo">
+                        <div class="btn btn-primary file_selected col-sm-2">
+                            <span>选择文件</span>
+                            <input type="file" name="file" id="or_logo" class="file_btn">
+                        </div>
+                        <p class="col-sm-5">&#40;请上传小于2M的文件&#41;</p>
+                    </div>
+                </div>
+                <!-- 添加照片 结束-->
+                <!-- 组织介绍 开始-->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="or_intro">组织介绍：</label>
+                    <div class="col-sm-6">
+                        <input   ng-focus="orgInfo.initData(orgInfo.userData.orgDescription)"  ng-blur="orgInfo.checkBlankString(orgInfo.getValue('orgDescription'))?orgInfo.newData('orgDescription',1,orgInfo.getValue('orgDescription')):postionBlank=true" ng-value="orgInfo.userData.orgDescription" placeholder="组织介绍" readonly="readonly" id="orgDescription" class="form-control" type="text">
+                        <div id="orgDescription_numTip" style="display: none;" ng-show="(!orgInfo.checkBlankString(orgInfo.getValue('orgDescription'))&&!(orgInfo.correctedData()&&orgInfo.correctedId()=='orgDescription'))?main.defaultHide('orgDescription_numTip'):false" class="help-block alert alert-danger">
+                            请输入完毕后点击输入框外的位置以提交！
+                        </div>
+                        <div id="orgDescription_successTip" style="display: none;" ng-show="orgInfo.correctedData()&&orgInfo.correctedId()=='orgDescription'?main.defaultHide('orgDescription_successTip'):false" class="help-block alert alert-success">
+                            修改成功
+                        </div>
+                    </div>
+                </div>
+                <!-- 组织介绍 结束-->
+                <!-- 联系方式是否公开 开始-->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label te_center" for="or_yes">公开联系方式：</label>
+                    <div class="col-sm-6" id="switch">
+                        <div class="make-switch" data-on="info" data-off="default" ng-click="orgInfo.newData('public',2,'public')">
+                            <input type="checkbox" checked="" id="public" >
+                        </div>
+                        <div id="public_successTip" style="display: none;" ng-show="orgInfo.correctedData()&&orgInfo.correctedId()=='public'?main.defaultHide('public_successTip'):false"  class="help-block alert alert-success">
+                            修改成功为：{{orgInfo.onOrOff}}
+                        </div>
+                        <div id="public_failTip" style="display: none;" ng-show="orgInfo.defaultShow()=='public'&&!(orgInfo.correctedData()&&orgInfo.correctedId()=='public')?main.defaultHide('public_failTip'):false" class="help-block alert alert-danger">
+                            修改失败,请重修修改!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 联系方式是否公开 结束-->
+            </form>
+        </div>
+
+    </div>
+    <!-- 主要内容结束-->
+</div>
+<!--组织基本信息页面结束-->
+<script type="text/javascript" src="assets/js/switch/bootstrap-switch.js"></script>
+
+<script>
+    $('input[readonly]').each(function () {
+        $(this).data('orInformation', $.trim($('input[readonly]').val()));
+    }).focus(function () {
+        $(this).removeAttr('readonly');
+        if($.trim($(this).val())===$(this).data('orInformation')){
+            $(this).val('');
+        }
+    }).blur(function () {
+        if($.trim($(this).val())===''){
+            $(this).val($.trim($(this).data('orInformation')));
+        }
+        $(this).attr('readonly','readonly');
+    });
+
+</script>

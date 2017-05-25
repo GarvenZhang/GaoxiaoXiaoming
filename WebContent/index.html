@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>高校小明学生组织管理系统</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/js/progress-bar/number-pb.css">
+    <link rel="shortcut icon" href="assets/ico/minus.png">
+</head>
+
+<body ng-app="xiaoMing"> 
+<div ui-view>
+    
+</div>
+
+
+<script type="text/javascript" src="assets/js/jquery.js"></script>
+
+
+<!-- angular -->
+<script src="assets/js/angular.js"></script>
+<script src="assets/js/myApp/plugin/angular-ui-router.js"></script>
+<script src="assets/js/myApp/plugin/oclazyload.min.js"></script>
+<script src="assets/js/myApp/plugin/myPagination.js"></script>
+<script src="assets/js/myApp/config.js"></script>
+<script src="assets/js/myApp/route.js"></script>
+<!--<script src="assets/js/myApp/directives.js"></script>
+<script src="assets/js/myApp/services.js"></script>
+<script src="assets/js/myApp/controllers.js"></script>-->
+
+
+<script type='text/ng-template' id='memberSideBar'>
+    <div class="side-bar member-side-bar">
+
+        <ul class="topnav menu-left-nest">
+            <li>
+                <a href="#/main/home" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>首页</span>
+                    <i data-toggle="tooltip" class="pull-right config-wrap fontawesome-home"></i>
+
+                </a>
+            </li>
+        </ul>
+        
+        <ul class="topnav menu-left-nest">
+            <li>
+                <a href="" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>工作台</span>
+                    <i data-toggle="tooltip" class="entypo-gauge pull-right config-wrap"></i>
+
+                </a>
+            </li>
+
+            <li>
+                <a class="tooltip-tip2 ajax-load" href="#/main/work" title="工作安排">
+                    <i class="fontawesome-edit"></i>
+                    <span>工作安排<span ng-if="main.unreadList.members[0].assignment>0" class="badge">{{main.unreadList.members[0].assignment}}</span></span>
+
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/inform" title="通知">
+                    <i class="entypo-comment"></i>
+                    <span>通知<span ng-if="main.unreadList.members[0].message>0" class="badge">{{main.unreadList.members[0].message}}</span></span>
+
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/doc_m" title="组织文档">
+                    <i class="fontawesome-folder-close"></i>
+                    <span>组织文档</span>
+
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/enroll" title="活动报名">
+                    <i class="entypo-vcard"></i>
+                    <span>活动报名<span ng-if="main.unreadList.members[0].activity>0" class="badge">{{main.unreadList.members[0].activity}}</span></span>
+
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/leave" title="请假">
+                    <i class="entypo-tag"></i>
+                    <span>请假<span ng-if="main.unreadList.members[0].absence>0" class="badge">{{main.unreadList.members[0].absence}}</span></span>
+
+                </a>
+            </li>
+        </ul>
+        
+        <ul class="topnav menu-left-nest">
+            <li>
+                <a href="" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>组织中心</span>
+                    <i data-toggle="tooltip" class="entypo-bookmarks pull-right config-wrap"></i>
+
+                </a>
+            </li>
+
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/info_o" title="组织基本信息">
+                    <i class="fontawesome-list-alt"></i>
+                    <span>组织基本信息</span>
+
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/contact" title="组织通讯录">
+                    <i class="fontawesome-group"></i>
+                    <span>组织通讯录</span>
+                </a>
+            </li>
+
+            <!-- <li>
+                <a class="tooltip-tip ajax-load" href="#/main/freetime_m" ng- title="组织空闲表">
+                    <i class="fontawesome-list-ul"></i>
+                    <span>组织空闲表</span>
+                </a>
+            </li> -->
+
+            <li>
+                <a class="tooltip-tip " href="#/main/invite_m" title="成员邀请">
+                    <i class="entypo-user-add"></i>
+                    <span>成员邀请</span>
+                </a>
+            </li>
+        </ul>
+
+        <ul id="menu-showhide" class="topnav menu-left-nest">
+            <li>
+                <a href="" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>帐号中心</span>
+                    <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i>
+
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/info_m" title="个人基本信息">
+                    <i class="fontawesome-list-alt"></i>
+                    <span>个人基本信息</span>
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/message" title="系统消息">
+                    <i class="fontawesome-bell"></i>
+                    <span>系统消息<span ng-if="main.unreadList.systemMessage>0" class="badge">{{main.unreadList.systemMessage}}</span></span>
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/password_m" title="修改密码">
+                    <i class="fontawesome-cogs"></i>
+                    <span>修改密码</span>
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/log_m" title="操作日志">
+                    <i class="fontawesome-tasks"></i>
+                    <span>操作日志</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="topnav menu-left-nest">
+            <li>
+                <a href="" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>使用过程中遇到了问题？</span>
+                    <i data-toggle="tooltip" class="pull-right config-wrap fontawesome-question-sign"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="topnav menu-left-nest">
+            <li>
+                <a href="" data-backdrop="false" data-toggle="modal" data-target=".feedback" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>用户反馈</span>
+                    <i data-toggle="tooltip" class="pull-right config-wrap fontawesome-leaf"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</script>
+<script type='text/ng-template' id='adminSideBar'> 
+    <div class="side-bar admin-side-bar">
+
+        <ul class="topnav menu-left-nest">
+            <li>
+                <a href="#/main/home" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>首页</span>
+                    <i data-toggle="tooltip" class="pull-right config-wrap fontawesome-home"></i>
+
+                </a>
+            </li>
+        </ul>
+        
+        <ul class="topnav menu-left-nest">
+            <li>
+                <a href="" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>组织中心</span>
+                    <i data-toggle="tooltip" class="entypo-bookmarks pull-right config-wrap"></i>
+
+                </a>
+            </li>
+
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/staff" title="人员管理">
+                    <i class="fontawesome-user"></i>
+                    <span>人员管理</span>
+
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/materials" title="物资管理">
+                    <i class="fontawesome-table"></i>
+                    <span>物资管理</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/doc_a" ng- title="文档管理">
+                    <i class="fontawesome-folder-open"></i>
+                    <span>文档管理</span>
+                </a>
+            </li>
+
+            <!-- <li>
+                <a class="tooltip-tip " href="#/main/freetime_a" title="组织空闲表">
+                    <i class="fontawesome-list"></i>
+                    <span>组织空闲表</span>
+                </a>
+            </li> -->
+
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/organizations" title="同校组织列表">
+                    <i class="fontawesome-list-ul"></i>
+                    <span>同校组织列表</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/statistics" title="数据统计">
+                    <i class="fontawesome-bar-chart"></i>
+                    <span>数据统计</span>
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/invite_a" title="成员邀请">
+                    <i class="entypo-user-add"></i>
+                    <span>成员邀请</span>
+                </a>
+            </li>
+        </ul>
+        
+        <ul class="topnav menu-left-nest">
+            <li>
+                <a href="" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>消息中心</span>
+                    <i data-toggle="tooltip" class="entypo-chat pull-right config-wrap"></i>
+
+                </a>
+            </li>
+
+            <!-- <li>
+                <a class="tooltip-tip2 ajax-load" href="#/main/org_trends" title="同校组织动态">
+                    <i class="entypo-flickr"></i>
+                    <span>同校组织动态</span>
+
+                </a>
+            </li> -->
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/sys_message" title="系统消息">
+                    <i class="entypo-bell"></i>
+                    <span>系统消息<span class="badge">1</span></span>
+
+                </a>
+            </li>
+        </ul>
+
+        <ul id="menu-showhide" class="topnav menu-left-nest">
+            <li>
+                <a href="" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>帐号中心</span>
+                    <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i>
+
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/info_a" title="组织基本信息">
+                    <i class="fontawesome-list-alt"></i>
+                    <span>组织基本信息</span>
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/password_a" title="修改管理员密码">
+                    <i class="fontawesome-cogs"></i>
+                    <span>修改管理员密码</span>
+                </a>
+            </li>
+            <li>
+                <a class="tooltip-tip ajax-load" href="#/main/log_a" title="操作日志">
+                    <i class="fontawesome-tasks"></i>
+                    <span>操作日志</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="topnav menu-left-nest">
+            <li>
+                <a href="" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>使用过程中遇到了问题？</span>
+                    <i data-toggle="tooltip" class="pull-right config-wrap fontawesome-question-sign"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="topnav menu-left-nest">
+            <li>
+                <a href="" data-backdrop="false" data-toggle="modal" data-target=".feedback" style="border-left:0px solid!important;" class="title-menu-left">
+
+                    <span>用户反馈</span>
+                    <i data-toggle="tooltip" class="pull-right config-wrap fontawesome-leaf"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</script>
+
+</body>
+
+</html>

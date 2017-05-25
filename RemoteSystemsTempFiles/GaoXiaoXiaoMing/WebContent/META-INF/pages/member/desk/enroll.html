@@ -1,0 +1,302 @@
+<!-- 模板中对应的css -->
+<link href="assets/js/iCheck/flat/all.css" rel="stylesheet">
+<!-- 自定义信息项组件css -->
+<link rel="stylesheet" type="text/css" href="assets/js/tag/jquery.tagsinput.css">
+<!-- 新加原生css -->
+<link rel="stylesheet" href="assets/css/myApp/member/enroll.css" />
+
+<!-- 头条开始 -->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="entypo-vcard"></span>
+                <span>活动报名</span>
+            </h2>
+        </div>
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 头条结束 -->
+<!-- 主体内容开始 -->
+<div class="row" ng-controller="enrollCtrlM as enCtrl">
+    <div class="col-sm-12">
+        <div class="nest" id="tabClose">
+            <div class="body-nest" id="tab">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active" id="myEnrollment"><a href="/#my-enroll" aria-controls="my-enroll" role="tab" data-toggle="tab">我的报名</a></li>
+                    <li role="presentation"><a href="/#enrolling" aria-controls="enrolling" role="tab" data-toggle="tab">发起活动报名</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id="enrolling">
+                        <div style="overflow:hidden;">
+                            <!-- 左边-表单栏开始 -->
+                            <form  novalidate action="" name="enForm" role="form" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="">活动名称</label>
+                                    <div class="col-sm-6 controls">
+                                        <input type="text" id="title" name="acName" class="form-control" ng-model="enCtrl.applyData.title" required/>
+                                        <div ng-show="enForm.acName.$error.required && enCtrl.enrolled" class="help-block alert alert-danger">
+                                            请输入活动名称
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="">发送给</label>
+                                    <div class="col-sm-6 controls">
+                                        <input type="text" name="people" id="member" class="form-control send-to" ng-model="enCtrl.applyData.member" placeholder="点击选择人员" data-toggle="modal" required/>
+                                        <input type="text" ng-hide="true" id="send-toId" ng-model="enCtrl.applyData.memberId" class="form-control send-toId" placeholder="点击选择人员Id" data-toggle="modal" data-target=".choose-staff" />
+                                        <div ng-show="enForm.people.$error.required && enCtrl.enrolled" class="help-block alert alert-danger">
+                                            请选择发送的人员
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="">内容介绍</label>
+                                    <div class="col-sm-6 controls">
+                                        <textarea name="content" id="content" cols="30" rows="10" placeholder="写点啥吧。。。" class="form-control" required ng-model="enCtrl.applyData.content"></textarea>
+                                        <div ng-show="enForm.content.$error.required && enCtrl.enrolled" class="help-block alert alert-danger">
+                                            请输入活动内容介绍
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="">信息项</label>
+                                    <div class="col-sm-6 controls">
+                                        <input id="tags_1" name="infos" type="text" class="form-control tags" ng-model="enCtrl.applyData.infos">
+                                        <div ng-show="enForm.info2.$error.required && enCtrl.enrolled" class="help-block alert alert-danger">
+                                           请输入报名人员需要填写的信息项，如：身份证、手机号码
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--模拟信息项输入，控制提示框的出现与隐藏 开始-->
+                                <div class="form-group" ng-hide="true">
+                                    <label class="col-sm-3 control-label" for="">信息项</label>
+                                    <div class="col-sm-6 controls">
+                                        <input  id="tags" name="info2" type="text" class="form-control tags" ng-model="enCtrl.applyData.info" required>
+                                    </div>
+                                </div>
+                                <!--模拟信息项输入，控制提示框的出现与隐藏 结束-->
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label"></label>
+                                    <div class="col-sm-6">
+                                        <button type="button" id="startEn" class="btn btn-info"  ng-click="enCtrl.makeSureEnroll()">发起报名</button>
+                                        <button  ng-hide="true" type="button" id="enrolled" class="btn btn-info"  ng-click="enCtrl.enrolled=true">发起报名</button>
+                                        <button  ng-hide="true" type="button" id="enrollF" class="btn btn-info"  ng-click="enCtrl.enrolled=false">发起报名</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- 左边-表单栏结束 -->
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane active" id="my-enroll">
+                        <div style="overflow:auto;">
+                            <div class="col-sm-6 box-wrap" id="canEnroll" style="min-width: 308px;">
+                                <div class="col-sm-12 reportInv">
+                                    <!-- 我参与的报名开始 -->
+                                    <h4>可报名的活动</h4>
+                                    <div class="reportInv_wrap" id="canEnrollOut_wrap">
+                                       <div id="canEnrollIn_wrap">
+                                           <div class="list-group canEnList_group" ng-repeat="canEn in enCtrl.canEnrollData_C">
+                                               <a class="list-group-item">
+                                                   <p class="list-group-item-heading" ng-bind="canEn.title"></p>
+                                                   <div class="row">
+                                                       <div class="col-sm-4">
+                                                           <p><span class="glyphicon glyphicon-time" ng-bind="enCtrl.splitTime(canEn.createTime,'0')"></span></p>
+                                                       </div>
+                                                       <div class="col-sm-4">
+                                                           <p ng-bind="enCtrl.splitTime(canEn.createTime,'1')"></p>
+                                                       </div>
+                                                       <div class="row">
+                                                           <div class="col-sm-4">
+                                                               <button class="btn btn-primary enrollments" ng-click='enCtrl.show(canEn.title,canEn.content,canEn.id,canEn.info,canEn.title)' type="button">报名</button>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </a>
+                                           </div>
+                                       </div>
+                                    </div>
+                                    <!-- 我参与的报名结束 -->
+                                </div>
+                            </div>
+                            <div class="col-sm-6 box-wrap" id="myEnroll" style="min-width: 308px;">
+                                <div class="col-sm-12 reportRaise">
+                                    <!-- 我发起的报告开始 -->
+                                    <h4>我发起的报名</h4>
+                                    <div class="reportRaise_wrap" id="enrollOut_wrap">
+                                       <div id="enrollIn_wrap">
+                                           <div class="list-group" ng-repeat="mEn in enCtrl.canEnrollData_M">
+                                               <div class="list-group-item" style="padding: 16px 8px;">
+                                                   <p class="list-group-item-heading" ng-bind="mEn.title"></p>
+                                                   <div class="row">
+                                                       <div class="col-sm-4">
+                                                           <p><span class="glyphicon glyphicon-time" ng-bind="enCtrl.splitTime(mEn.createTime,'0')"></span></p>
+                                                       </div>
+                                                       <div class="col-sm-4">
+                                                           <p ng-bind="enCtrl.splitTime(mEn.createTime,'1')"></p>
+                                                       </div>
+                                                       <div class="col-sm-4">
+                                                           <p class="fileOutp">
+                                                               <a href="activity_download.action?id={{mEn.id}}" target="_blank">导出文件</a>
+                                                           </p>
+                                                       </div>
+                                                   </div>
+                                               </div>
+
+                                           </div>
+                                       </div>
+                                    </div>
+                                    <!-- 我发起的报告结束 -->
+                                </div>
+                            </div>
+                            <!-- 报名页开始 -->
+                            <div class="col-sm-12 box-wrap" id="enroll_box" style="display: none;">
+                                <div class="body-nest staffLend" id="materials">
+                                        <form  novalidate class="form-horizontal bucket-form" role="form" name="enrollmentFrom">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">活动名称</label>
+                                                <div class="col-sm-6">
+                                                    <input id="activity_name" readonly type="text" class="form-control" ng-value="enCtrl.myEnData.title">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">内容</label>
+                                                <div class="col-sm-6">
+                                                    <textarea name="" id="contents" cols="30" rows="10" readonly class="form-control" ng-bind="enCtrl.myEnData.content"></textarea>
+                                                </div>
+                                            </div>
+                                            <div ng-repeat="data in enCtrl.showData" class="form-group">
+                                                <label class="col-sm-3 control-label infoLabel" ng-bind="data" for="{{data}}"></label>
+                                                <div class="col-sm-6 controls">
+                                                    <input type="text"  name="{{data}}" id="{{data}}" ng-model="$parent.showList.data[$index]"  class="form-control diInfos" required>
+                                                    <div class="alert help-block alert-danger" ng-show="enrollmentFrom.{{data}}.$error.required && enCtrl.submitted">
+                                                        请输入信息
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-hide="true">
+                                                <label class="col-sm-3 control-label" for="">活动的id</label>
+                                                <div class="col-sm-6 controls">
+                                                    <input id="acId" type="text" disabled class="form-control" ng-value="enCtrl.myEnData.id">
+                                                </div>
+                                            </div>
+                                            <div ng-init="$parent.showList.data[$index]=1" class="form-group">
+                                                <label class="col-sm-5 control-label"></label>
+                                                <get-value flavor="$parent.showList.data[$index]" ng-hide="true"></get-value>
+                                                <div class="col-sm-1">
+                                                    <button class="btn btn-primary submitBtn"   id="enSub"
+                                                            ng-click="enrollmentFrom.$valid?
+                                                            (
+                                                            enCtrl.makeSureEnrollment($parent.showList.data)?
+                                                            $parent.showList.data={}:
+                                                            enCtrl.submitted=true
+                                                            ) :
+                                                            enCtrl.submitted=true" value="提交" type="submit" >
+                                                    报名</button>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <input class="btn btn-primary" id="backtoRec" ng-click="enCtrl.hide()?$parent.showList.data={}:b=3" value="返回" type="submit">
+                                                    <button ng-hide="true" class="btn btn-primary" id="helpBtn" ng-click="enCtrl.submitted=false" value="返回" type="submit">帮助</button>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                            </div>
+                            <!-- 报名页结束 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade choose-staff" id="myModel" ng-controller="enrollCtrlM as enCtrl">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title entypo-users">&nbsp;&nbsp;人员列表</h4>
+            </div>
+            <div class="modal-body">
+                <div class="staff-list-wrap">
+                    <div class="skin skin-flat">
+                        <!--<h3>
+                    <span class="entypo-users">&nbsp;&nbsp;人员列表</span>
+                </h3>-->
+                        <ul class="list">
+                            <form>
+                                <li ng-repeat="ppData in enCtrl.ppListData" ng-rended="enCtrl.rended()">
+                                    <input tabindex="{{ppData.id}}" type="checkbox" id="flat-checkbox-{{ppData.id}}" ng-value="ppData.name">
+                                    <label for="flat-checkbox-{{ppData.id}}">
+                                        <span class="staff-name" ng-bind="ppData.name"></span>
+                                        <span class="staff-position" ng-bind="ppData.position"></span>
+                                        <span ng-hide="true" class="pId" ng-bind="ppData.id"></span>
+                                    </label>
+                                </li>
+                            </form>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN EFFECT -->
+<script src="assets/js/wizard/lib/jquery.cookie-1.3.1.js"></script>
+<script src="assets/js/myApp/member/easyscroll.js"></script>
+<script type="text/javascript" src="assets/js/iCheck/jquery.icheck.js"></script>
+<script type="text/javascript" src="assets/js/tag/jquery.tagsinput.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        //将选中的任选显示到文本框中
+        $('.choose-staff').on("hidden.bs.modal",function(){
+            var str = "",idArr=[];
+            $('div .checked').each(function(idx){
+                if(idx < $('div .checked').length-1){
+                    str += $(this).parent().find('.staff-name').html() + "、";
+                    idArr.push($(this).parent().find('.pId').html());
+                }else{
+                    str = str + $(this).parent().find('.staff-name').html();
+                    idArr.push($(this).parent().find('.pId').html());
+                }
+            });
+            $('.send-to').val(str);
+            $('.send-toId').val(idArr);
+        });
+        
+//        $('.skin-flat input').each(function(){
+//            var self = $(this);
+//            self.iCheck({
+//                checkboxClass: 'icheckbox_flat-blue'
+//            });
+//        });
+
+        $('#tags_1').tagsInput({
+            width: 'auto',
+            defaultText:"点击添加信息项"
+        });
+//        $('#tags_2').tagsInput({
+//            width: 'auto',
+//            defaultText:"点击添加信息项"
+//        });
+
+    });
+</script>
+

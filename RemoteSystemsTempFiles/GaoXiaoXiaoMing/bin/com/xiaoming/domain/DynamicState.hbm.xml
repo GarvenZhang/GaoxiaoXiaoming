@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-5 17:00:51 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.DynamicState" table="DYNAMICSTATE">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="description" type="java.lang.String">
+            <column name="DESCRIPTION" />
+        </property>
+        <many-to-one name="member" class="com.xiaoming.domain.Member" fetch="join">
+            <column name="MEMBER" />
+        </many-to-one>
+        <many-to-one name="project" class="com.xiaoming.domain.Project" fetch="join">
+            <column name="PROJECT" />
+        </many-to-one>
+        <many-to-one name="assignment" class="com.xiaoming.domain.Assignment" fetch="join">
+            <column name="ASSIGNMENT" />
+        </many-to-one>
+        <property name="operaTime" type="java.util.Date">
+            <column name="OPERATIME" />
+        </property>
+    </class>
+</hibernate-mapping>

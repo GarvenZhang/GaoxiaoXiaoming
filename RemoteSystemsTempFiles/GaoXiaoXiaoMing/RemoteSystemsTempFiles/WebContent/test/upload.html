@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="/xiaoming/resources/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript"
+	src="/xiaoming/resources/js/jQuery.json.js"></script>
+<script type="text/javascript"
+	src="/xiaoming/resources/js/jQuery.form.js"></script>
+</head>
+<body>
+	<h1>上传logo</h1>
+
+	<input id="img" type="file" size="45" name="img" class="input">
+	<button class="button" id="buttonUpload"
+		onclick="return ajaxFileUpload();">Upload</button>
+
+<form action="/xiaoming/org_user/image_upload.action" enctype="multipart/form-data" method="post" >
+	<input type="file" name="file" />
+	<input type="submit" value="submit">
+</form>
+	
+	<script>
+function ajaxFileUpload()
+{
+   $.ajaxFileUpload
+      (
+        {
+             url:'/xiaoming/org_user/image_upload.action', //你处理上传文件的服务端
+             secureuri:false,
+             fileElementId:'img',
+             dataType: 'json',
+             success: function (data)
+                   {
+                     alert(data.file_infor);
+                   }
+                }
+          )
+
+        return false;
+  } 
+</script>
+</body>
+</html>

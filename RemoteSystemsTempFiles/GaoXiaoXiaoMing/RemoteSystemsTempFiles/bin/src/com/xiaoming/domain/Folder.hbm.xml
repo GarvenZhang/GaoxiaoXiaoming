@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-21 11:47:26 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.xiaoming.domain.Folder" table="FOLDER">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="date" type="java.util.Date">
+            <column name="DATE" />
+        </property>
+        <property name="avariable" type="java.lang.Boolean">
+            <column name="AVARIABLE" />
+        </property>
+        <property name="isPublic" type="java.lang.Boolean">
+            <column name="ISPUBLIC" />
+        </property>
+        <many-to-one name="organization" class="com.xiaoming.domain.Organization" fetch="join">
+            <column name="ORGANIZATION" />
+        </many-to-one>
+        <many-to-one name="parent" class="com.xiaoming.domain.Folder" fetch="join">
+            <column name="PARENT" />
+        </many-to-one>
+        
+        
+        <!--上层目录，自己对应自己  -->
+        <set name="childers" table="FOLDER" inverse="false" lazy="true" access="field">
+        	<key>
+        		<column name="PARENT" /> 
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.Folder" />
+        </set>
+        
+        <!-- 文件集合 -->
+        <set name="documents" table="DOCUMENT" inverse="false" lazy="false" access="field">
+        	<key>
+        		<column name="FOLDER" />
+        	</key>
+        	<one-to-many class="com.xiaoming.domain.Document" />
+        </set>
+    </class>
+</hibernate-mapping>

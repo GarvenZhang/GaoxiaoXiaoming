@@ -1,0 +1,218 @@
+<link href="assets/js/footable/css/footable.core.css?v=2-0-1" rel="stylesheet" type="text/css">
+<link href="assets/js/footable/css/footable.standalone.css" rel="stylesheet" type="text/css">
+<link href="assets/js/footable/css/footable-demos.css" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="assets/js/dataTable/lib/jquery.dataTables/css/DT_bootstrap.css">
+<link rel="stylesheet" href="assets/js/dataTable/css/datatables.responsive.css">
+
+<link href="assets/js/stackable/stacktable.css" rel="stylesheet">
+<link href="assets/js/stackable/responsive-table.css" rel="stylesheet">
+
+<link type="text/css" rel="stylesheet" href="assets/css/myApp/admin/statistics.css">
+
+<!--数据统计标题 开始-->
+<div class="row">
+    <div id="paper-top">
+        <div class="col-lg-3">
+            <h2 class="tittle-content-header">
+                <span class="fontawesome-bar-chart"></span>
+                <span>数据统计</span>
+            </h2>
+        </div>
+        <div class="col-lg-9">
+            <div class="devider-vertical visible-lg"></div>
+            <div class="tittle-middle-header visible-lg">
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span class="tittle-alert entypo-info-circled"></span> 欢迎回来,&nbsp;
+                    <strong style="font-family: san-serif;" ng-bind="main.user.realName"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--数据统计标题 结束-->
+<!--数据统计 开始-->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="nest" id="FootableClose">
+            <div class="body-nest" id="Footable">
+                <div class="body-nest">
+                    <form class="row">
+                        <div class="form-inline" class="row">
+                            <div class="pull-left">
+                                <input class="form-control" id="filter" placeholder="按姓名搜索" type="text">
+                            </div>
+                            <div class="pull-right">
+                                <label for="time" class="control-label">时间：</label>
+                                <select class="filter-status form-control" id="time">
+                                    <option value="la_threeDay">最近三天</option>
+                                    <option value="la_oneWeek">最近一周</option>
+                                    <option value="la_oneMonth">最近一个月</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <table class="table-striped footable-res footable metro-blue" data-page-size="6">
+                    <thead>
+                            <tr>
+                        <th>姓名</th>
+                        <th>安排工作数</th>
+                        <th>接受工作数</th>
+                        <th>按时完成工作数</th>
+                        <th>延期完成工作数</th>
+                        <th>不完成工作数</th>
+                        <th>请假次数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>张</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>张</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>张</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>张</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>张</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>张</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>张</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>张</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7">
+                                <div class="pagination pagination-centered"></div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+<!--数据统计 结束-->
+
+<!-- /MAIN EFFECT -->
+<!-- GAGE -->
+<script type="text/javascript" src="assets/js/stackable/stacktable.js"></script>
+
+<script type="text/javascript" src="assets/js/toggle_close.js"></script>
+<script src="assets/js/footable/js/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="assets/js/footable/js/footable.sort.js?v=2-0-1" type="text/javascript"></script>
+<script src="assets/js/footable/js/footable.filter.js?v=2-0-1" type="text/javascript"></script>
+<script src="assets/js/footable/js/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<script src="assets/js/footable/js/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function() {
+        $('.footable-res').footable();
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('#footable-res2').footable().bind('footable_filtering', function(e) {
+            var selected = $('.filter-status').find(':selected').text();
+            if (selected && selected.length > 0) {
+                e.filter += (e.filter && e.filter.length > 0) ? ' ' + selected : selected;
+                e.clear = !e.filter;
+            }
+        });
+
+        $('.clear-filter').click(function(e) {
+            e.preventDefault();
+            $('.filter-status').val('');
+            $('table.demo').trigger('footable_clear_filter');
+        });
+
+        $('.filter-status').change(function(e) {
+            e.preventDefault();
+            $('table.demo').trigger('footable_filter', {
+                filter: $('#filter').val()
+            });
+        });
+
+        $('.filter-api').click(function(e) {
+            e.preventDefault();
+
+            //get the footable filter object
+            var footableFilter = $('table').data('footable-filter');
+
+            alert('about to filter table by "tech"');
+            //filter by 'tech'
+            footableFilter.filter('tech');
+
+            //clear the filter
+            if (confirm('clear filter now?')) {
+                footableFilter.clearFilter();
+            }
+        });
+    });
+</script>
